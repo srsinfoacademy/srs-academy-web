@@ -27,7 +27,7 @@ type VariantConfig = {
 const variants: Record<HeroVariant, VariantConfig> = {
   editorial: {
     padding: "pt-[var(--srs-section)] pb-[var(--srs-section-loose)]",
-    title: "type-display-l",
+    title: "type-h1",
     grid: true,
     network: true,
   },
@@ -104,7 +104,7 @@ export function PageHero({
           <Breadcrumb items={breadcrumb} className="mb-8" />
         ) : null}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 lg:max-w-[58%]">
           {eyebrow ? (
             <IndexLabel index={index} node={!index} tone="lime" as="p">
               {eyebrow}

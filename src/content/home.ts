@@ -1,10 +1,11 @@
 import type {
   KnowledgeNode,
-  Program,
   StageId,
   Statistic,
   SystemStage,
 } from "@/types/home";
+
+export { programs } from "@/content/programs";
 
 /**
  * Homepage content.
@@ -130,82 +131,7 @@ export const systemStages: SystemStage[] = [
   },
 ];
 
-/**
- * Program placeholders. One data source feeds this list, the catalogue page
- * and the footer. No fees, duration, accreditation or outcome is asserted.
- */
-const programMeta = [
-  { label: "Duration", value: "[DURATION]" },
-  { label: "Mode", value: "[MODE]" },
-  { label: "Intake", value: "[INTAKE]" },
-];
 
-export const programs: Program[] = [
-  {
-    num: "01",
-    slug: "web-and-software-development",
-    name: "Web & Software Development",
-    category: "ENGINEERING",
-    level: "[LEVEL]",
-    visualType: "grid",
-    artLabel: "MODULAR GRID ARCHITECTURE",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — front-end through deployment as one continuous build.]",
-    pathway: ["LEARN", "BUILD", "PROVE"],
-    meta: programMeta,
-  },
-  {
-    num: "02",
-    slug: "artificial-intelligence",
-    name: "Artificial Intelligence",
-    category: "APPLIED AI",
-    level: "[LEVEL]",
-    visualType: "nodes",
-    artLabel: "NODES & RELATIONSHIPS",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — applied machine learning and AI tooling in real products.]",
-    pathway: ["LEARN", "BUILD", "CREATE"],
-    meta: programMeta,
-  },
-  {
-    num: "03",
-    slug: "technology-programs",
-    name: "Technology Programs",
-    category: "SYSTEMS",
-    level: "[LEVEL]",
-    visualType: "signals",
-    artLabel: "SYSTEMS & SIGNALS",
-    shortDescription: "[PROGRAM DESCRIPTION — systems, data and cloud fundamentals.]",
-    pathway: ["LEARN", "PROVE"],
-    meta: programMeta,
-  },
-  {
-    num: "04",
-    slug: "business-and-entrepreneurship",
-    name: "Business & Entrepreneurship",
-    category: "VENTURE",
-    level: "[LEVEL]",
-    visualType: "direction",
-    artLabel: "DIRECTIONAL STRUCTURE",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — turning technical capability into an operating business.]",
-    pathway: ["LEARN", "CREATE", "ADVANCE"],
-    meta: programMeta,
-  },
-  {
-    num: "05",
-    slug: "digital-skills",
-    name: "Digital Skills",
-    category: "FOUNDATION",
-    level: "[LEVEL]",
-    visualType: "modular",
-    artLabel: "MODULAR SIGNALS",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — short foundational tracks with a route into longer programs.]",
-    pathway: ["DISCOVER", "LEARN"],
-    meta: programMeta,
-  },
-];
 
 export const journeyStages = [
   {

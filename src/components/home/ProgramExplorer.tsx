@@ -5,7 +5,7 @@ import { useCallback, useId, useRef, useState } from "react";
 import { ProgramArt } from "@/components/home/ProgramArt";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { programs } from "@/content/home";
+import { categoryOf, programMetaRows, programs } from "@/content/programs";
 import { routes } from "@/lib/routes";
 
 /**
@@ -90,7 +90,7 @@ export function ProgramExplorer() {
       >
         <div className="flex items-baseline justify-between gap-4">
           <p className="type-index text-lime">
-            {active.num} / {active.category}
+            {active.num} / {categoryOf(active).label.toUpperCase()}
           </p>
           <p className="type-index">{active.level}</p>
         </div>
@@ -104,7 +104,7 @@ export function ProgramExplorer() {
         <p className="type-body-s mt-3 max-w-[56ch]">{active.shortDescription}</p>
 
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line-hairline pt-5 sm:grid-cols-3">
-          {active.meta.map((row) => (
+          {programMetaRows(active).map((row) => (
             <div key={row.label} className="flex flex-col gap-1.5">
               <dt className="type-index">{row.label}</dt>
               <dd className="type-body-s text-primary">{row.value}</dd>
