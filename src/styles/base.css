@@ -33,8 +33,20 @@
     overflow-x: clip;
   }
 
-  /* Locked while the mobile navigation overlay is open. */
+  /*
+   * Locked while the mobile navigation overlay is open.
+   *
+   * Hiding overflow on either the document or the body clamps the scroll
+   * position to zero, losing the reader's place. Taking the body out of flow
+   * at a negative offset holds the page exactly where it was; the offset is
+   * supplied by the overlay and the position is restored on close.
+   */
   body[data-scroll-locked="true"] {
+    position: fixed;
+    top: var(--srs-scroll-lock-top, 0);
+    left: 0;
+    right: 0;
+    width: 100%;
     overflow: hidden;
     touch-action: none;
   }

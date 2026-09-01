@@ -68,3 +68,38 @@
     }
   }
 }
+
+@layer utilities {
+  /*
+   * Knowledge OS network motion. Both animations resolve to 1ms under
+   * reduced motion via the token layer, and the pulse iteration count is
+   * capped by the global reduced-motion rule in base.css.
+   */
+  .kos-node-pulse {
+    animation: kos-pulse 3.2s var(--srs-ease-standard) infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @keyframes kos-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  .kos-line-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: kos-draw var(--srs-duration-deliberate) var(--srs-ease-entrance) both;
+  }
+
+  @keyframes kos-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
