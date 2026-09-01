@@ -1,0 +1,80 @@
+/*
+ * SRS ACADEMY — KNOWLEDGE OS
+ * Global stylesheet entry point.
+ *
+ * Order matters: Tailwind first (it declares the layer order), then the
+ * token layer, then everything that consumes tokens.
+ */
+
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/typography.css";
+@import "../styles/base.css";
+@import "../styles/utilities.css";
+
+/*
+ * The default Tailwind palette is cleared so that no component can reach for
+ * an off-system colour. Every colour utility below resolves to a token.
+ */
+@theme {
+  --color-*: initial;
+  --font-*: initial;
+  --breakpoint-*: initial;
+
+  --breakpoint-sm: 30rem; /* 480  — large phone */
+  --breakpoint-md: 48rem; /* 768  — tablet */
+  --breakpoint-lg: 64rem; /* 1024 — small laptop */
+  --breakpoint-xl: 80rem; /* 1280 — laptop */
+  --breakpoint-2xl: 90rem; /* 1440 — desktop */
+}
+
+@theme inline {
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-inherit: inherit;
+
+  --color-bg: var(--srs-bg);
+  --color-surface-1: var(--srs-surface-1);
+  --color-surface-2: var(--srs-surface-2);
+  --color-surface-elevated: var(--srs-surface-elevated);
+  --color-surface-inverse: var(--srs-surface-inverse);
+
+  --color-primary: var(--srs-text-primary);
+  --color-secondary: var(--srs-text-secondary);
+  --color-muted: var(--srs-text-muted);
+  --color-inverse: var(--srs-text-inverse);
+  --color-on-accent: var(--srs-text-on-accent);
+
+  --color-lime: var(--srs-lime);
+  --color-lime-hover: var(--srs-lime-hover);
+  --color-lime-active: var(--srs-lime-active);
+  --color-lime-dim: var(--srs-lime-dim);
+  --color-violet: var(--srs-violet);
+  --color-violet-soft: var(--srs-violet-soft);
+  --color-violet-dim: var(--srs-violet-dim);
+
+  --color-line: var(--srs-border);
+  --color-line-strong: var(--srs-border-strong);
+  --color-line-hairline: var(--srs-border-hairline);
+  --color-line-active: var(--srs-border-active);
+
+  --color-success: var(--srs-success);
+  --color-warning: var(--srs-warning);
+  --color-error: var(--srs-error);
+
+  --font-display: var(--srs-font-display);
+  --font-sans: var(--srs-font-sans);
+  --font-mono: var(--srs-font-mono);
+
+  --radius-xs: var(--srs-radius-xs);
+  --radius-sm: var(--srs-radius-sm);
+  --radius-md: var(--srs-radius-md);
+  --radius-lg: var(--srs-radius-lg);
+  --radius-xl: var(--srs-radius-xl);
+  --radius-full: var(--srs-radius-full);
+
+  --ease-standard: var(--srs-ease-standard);
+  --ease-entrance: var(--srs-ease-entrance);
+  --ease-exit: var(--srs-ease-exit);
+  --ease-precise: var(--srs-ease-precise);
+}

@@ -1,0 +1,182 @@
+/*
+ * SRS ACADEMY — KNOWLEDGE OS
+ * Type system. Fluid where fluidity helps; fixed where legibility matters.
+ * Verified against 1440 / 1280 / 1024 / 768 / 390 / 360 viewports.
+ */
+
+:root {
+  --srs-font-display: var(--srs-typeface-display), var(--srs-typeface-sans), ui-sans-serif, system-ui, sans-serif;
+  --srs-font-sans: var(--srs-typeface-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --srs-font-mono: var(--srs-typeface-mono), ui-monospace, "SFMono-Regular", "Roboto Mono", monospace;
+
+  /* Sizes */
+  --srs-type-display-xl: clamp(2.75rem, 1.2rem + 6.8vw, 6rem);
+  --srs-type-display-l: clamp(2.25rem, 1.35rem + 4vw, 4.5rem);
+  --srs-type-h1: clamp(2rem, 1.45rem + 2.45vw, 3.5rem);
+  --srs-type-h2: clamp(1.625rem, 1.3rem + 1.45vw, 2.5rem);
+  --srs-type-h3: clamp(1.25rem, 1.13rem + 0.53vw, 1.625rem);
+  --srs-type-h4: clamp(1.0625rem, 1.02rem + 0.2vw, 1.25rem);
+  --srs-type-body-l: clamp(1.0625rem, 1.01rem + 0.25vw, 1.25rem);
+  --srs-type-body: clamp(1rem, 0.99rem + 0.05vw, 1.0625rem);
+  --srs-type-body-s: 0.875rem;
+  --srs-type-label: 0.75rem;
+  --srs-type-nav: 0.9375rem;
+  --srs-type-index: 0.6875rem;
+  --srs-type-button: 0.9375rem;
+
+  /* Line heights */
+  --srs-leading-display: 0.98;
+  --srs-leading-h1: 1.04;
+  --srs-leading-tight: 1.08;
+  --srs-leading-snug: 1.22;
+  --srs-leading-normal: 1.45;
+  --srs-leading-body: 1.6;
+  --srs-leading-relaxed: 1.65;
+
+  /* Tracking */
+  --srs-tracking-display: -0.035em;
+  --srs-tracking-h1: -0.035em;
+  --srs-tracking-h2: -0.03em;
+  --srs-tracking-tight: -0.02em;
+  --srs-tracking-normal: -0.01em;
+  --srs-tracking-wordmark: -0.04em;
+  --srs-tracking-index: 0.16em;
+  --srs-tracking-section: 0.14em;
+  --srs-tracking-breadcrumb: 0.08em;
+  --srs-tracking-label: 0.09em;
+
+  /* Weights */
+  --srs-weight-regular: 400;
+  --srs-weight-medium: 500;
+  --srs-weight-semibold: 600;
+  --srs-weight-bold: 700;
+}
+
+@layer components {
+  .type-display-xl,
+  .type-display-l,
+  .type-h1,
+  .type-h2,
+  .type-h3 {
+    font-family: var(--srs-font-display);
+    color: var(--srs-text-primary);
+    text-wrap: balance;
+  }
+
+  .type-display-xl {
+    font-size: var(--srs-type-display-xl);
+    line-height: var(--srs-leading-display);
+    letter-spacing: var(--srs-tracking-display);
+    font-weight: var(--srs-weight-medium);
+  }
+
+  .type-display-l {
+    font-size: var(--srs-type-display-l);
+    line-height: var(--srs-leading-display);
+    letter-spacing: var(--srs-tracking-display);
+    font-weight: var(--srs-weight-medium);
+  }
+
+  .type-h1 {
+    font-size: var(--srs-type-h1);
+    line-height: var(--srs-leading-h1);
+    letter-spacing: var(--srs-tracking-h1);
+    font-weight: var(--srs-weight-bold);
+  }
+
+  .type-h2 {
+    font-size: var(--srs-type-h2);
+    line-height: var(--srs-leading-tight);
+    letter-spacing: var(--srs-tracking-h2);
+    font-weight: var(--srs-weight-medium);
+  }
+
+  .type-h3 {
+    font-size: var(--srs-type-h3);
+    line-height: var(--srs-leading-snug);
+    letter-spacing: var(--srs-tracking-normal);
+    font-weight: var(--srs-weight-medium);
+  }
+
+  .type-h4 {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-h4);
+    line-height: var(--srs-leading-snug);
+    letter-spacing: var(--srs-tracking-normal);
+    font-weight: var(--srs-weight-semibold);
+    color: var(--srs-text-primary);
+  }
+
+  .type-body-l {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-body-l);
+    line-height: var(--srs-leading-body);
+    letter-spacing: 0;
+    color: var(--srs-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .type-body {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-body);
+    line-height: var(--srs-leading-body);
+    color: var(--srs-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .type-body-s {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-body-s);
+    line-height: var(--srs-leading-normal);
+    color: var(--srs-text-secondary);
+  }
+
+  .type-label {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-label);
+    line-height: 1.3;
+    letter-spacing: var(--srs-tracking-label);
+    text-transform: uppercase;
+    font-weight: var(--srs-weight-semibold);
+    color: var(--srs-text-muted);
+  }
+
+  .type-nav {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-nav);
+    line-height: 1.2;
+    letter-spacing: var(--srs-tracking-normal);
+    font-weight: var(--srs-weight-medium);
+  }
+
+  /* Technical index / metadata voice of the Knowledge OS system. */
+  .type-index {
+    font-family: var(--srs-font-mono);
+    font-size: var(--srs-type-index);
+    line-height: 1.2;
+    letter-spacing: var(--srs-tracking-index);
+    text-transform: uppercase;
+    font-weight: var(--srs-weight-medium);
+    font-variant-numeric: tabular-nums;
+    color: var(--srs-text-muted);
+  }
+
+  /* Breadcrumb trail — mono, but tracked tighter than the section index. */
+  .type-breadcrumb {
+    font-family: var(--srs-font-mono);
+    font-size: 0.625rem;
+    line-height: 1.2;
+    letter-spacing: var(--srs-tracking-breadcrumb);
+    text-transform: uppercase;
+    font-weight: var(--srs-weight-medium);
+    color: var(--srs-text-muted);
+  }
+
+  .type-button {
+    font-family: var(--srs-font-sans);
+    font-size: var(--srs-type-button);
+    line-height: 1;
+    letter-spacing: var(--srs-tracking-normal);
+    font-weight: var(--srs-weight-medium);
+  }
+}

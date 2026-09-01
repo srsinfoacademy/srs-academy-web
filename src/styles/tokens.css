@@ -1,0 +1,178 @@
+/*
+ * SRS ACADEMY — KNOWLEDGE OS
+ * Design tokens. This file is the single source of truth for raw values.
+ * Components must never hard-code colours, radii, durations or easings.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---------------------------------------------------------------
+   * PALETTE — raw ramps (do not consume directly in components)
+   * --------------------------------------------------------------- */
+  --srs-graphite-950: #090c0a;
+  --srs-graphite-900: #0b0e0c;
+  --srs-graphite-850: #0e120f;
+  --srs-graphite-800: #141915;
+  --srs-graphite-750: #1a201b;
+  --srs-graphite-700: #222a23;
+  --srs-graphite-600: #2d372f;
+
+  --srs-warm-050: #f2f4ef;
+  --srs-warm-200: #c3c7bf;
+  --srs-warm-400: #9aa096;
+  --srs-warm-600: #6f736c;
+
+  --srs-lime-400: #d8ff5e;
+  --srs-lime-300: #e4ff85;
+  --srs-lime-600: #c6f24a;
+  --srs-lime-800: #5d7226;
+
+  --srs-violet-400: #b9a6ff;
+  --srs-violet-500: #7c5cff;
+  --srs-violet-800: #3d2f7a;
+
+  /* ---------------------------------------------------------------
+   * SEMANTIC COLOUR
+   * --------------------------------------------------------------- */
+  --srs-bg: var(--srs-graphite-900);
+  --srs-surface-1: var(--srs-graphite-850);
+  --srs-surface-2: var(--srs-graphite-800);
+  --srs-surface-elevated: var(--srs-graphite-750);
+  --srs-surface-inverse: var(--srs-warm-050);
+
+  --srs-text-primary: var(--srs-warm-050);
+  --srs-text-secondary: var(--srs-warm-200);
+  --srs-text-muted: var(--srs-warm-600);
+  --srs-text-inverse: var(--srs-graphite-950);
+  --srs-text-on-accent: var(--srs-graphite-950);
+
+  --srs-lime: var(--srs-lime-400);
+  --srs-lime-hover: var(--srs-lime-300);
+  --srs-lime-active: var(--srs-lime-600);
+  --srs-lime-dim: var(--srs-lime-800);
+  --srs-violet: var(--srs-violet-500);
+  --srs-violet-soft: var(--srs-violet-400);
+  --srs-violet-dim: var(--srs-violet-800);
+
+  --srs-border: color-mix(in oklab, var(--srs-warm-050) 12%, transparent);
+  --srs-border-strong: color-mix(in oklab, var(--srs-warm-050) 22%, transparent);
+  --srs-border-active: var(--srs-lime);
+  --srs-border-accent: color-mix(in oklab, var(--srs-lime) 40%, transparent);
+  --srs-border-hairline: color-mix(in oklab, var(--srs-warm-050) 7%, transparent);
+
+  --srs-focus: var(--srs-lime);
+  --srs-focus-contrast: var(--srs-graphite-950);
+
+  --srs-success: #7ee0a6;
+  --srs-warning: #f0c05a;
+  --srs-error: #ff7a6b;
+
+  /* Knowledge OS structural visuals */
+  --srs-grid-line: color-mix(in oklab, var(--srs-warm-050) 5%, transparent);
+  --srs-grid-line-strong: color-mix(in oklab, var(--srs-warm-050) 9%, transparent);
+  --srs-node: var(--srs-lime);
+  --srs-node-idle: color-mix(in oklab, var(--srs-warm-050) 26%, transparent);
+  --srs-network-line: color-mix(in oklab, var(--srs-warm-050) 14%, transparent);
+
+  --srs-selection-bg: color-mix(in oklab, var(--srs-lime) 82%, transparent);
+  --srs-selection-text: var(--srs-graphite-950);
+
+  /* ---------------------------------------------------------------
+   * SPACE — 4px base, restrained set
+   * --------------------------------------------------------------- */
+  --srs-space-1: 0.25rem;
+  --srs-space-2: 0.5rem;
+  --srs-space-3: 0.75rem;
+  --srs-space-4: 1rem;
+  --srs-space-5: 1.5rem;
+  --srs-space-6: 2rem;
+  --srs-space-7: 2.5rem;
+  --srs-space-8: 3rem;
+  --srs-space-9: 4rem;
+  --srs-space-10: 5rem;
+  --srs-space-11: 6.5rem;
+  --srs-space-12: 8rem;
+
+  /* ---------------------------------------------------------------
+   * LAYOUT — one max width, fluid gutters, three section rhythms
+   * --------------------------------------------------------------- */
+  --srs-content-max: 84rem; /* 1344px */
+  --srs-content-narrow: 52rem; /* long-form reading measure */
+  --srs-content-wide: 96rem; /* edge-to-edge structural bands */
+  --srs-gutter: clamp(1.25rem, 4.2vw, 3.5rem);
+
+  --srs-section-tight: clamp(2.5rem, 5vw, 4rem);
+  --srs-section: clamp(4rem, 8vw, 7rem);
+  --srs-section-loose: clamp(5.5rem, 11vw, 10rem);
+
+  --srs-header-height: 88px;
+  --srs-header-height-compact: 64px;
+  --srs-tap-target: 44px;
+  --srs-control-sm: 40px;
+  --srs-control-md: 44px;
+  --srs-control-lg: 48px;
+
+  /* ---------------------------------------------------------------
+   * RADII — precise, never pill-shaped
+   * --------------------------------------------------------------- */
+  --srs-radius-none: 0px;
+  --srs-radius-xs: 4px; /* chips, focus ring rounding */
+  --srs-radius-sm: 6px; /* metadata chips */
+  --srs-radius-md: 9px; /* compact controls */
+  --srs-radius-lg: 11px; /* primary calls to action */
+  --srs-radius-xl: 14px; /* cards and panels */
+  --srs-radius-full: 999px; /* nodes, dots and pills only */
+
+  /* ---------------------------------------------------------------
+   * BORDER STRENGTHS
+   * --------------------------------------------------------------- */
+  --srs-border-width-hairline: 1px;
+  --srs-border-width: 1px;
+  --srs-border-width-strong: 2px;
+
+  /* ---------------------------------------------------------------
+   * DEPTH — controlled, never soft glow
+   * --------------------------------------------------------------- */
+  --srs-shadow-none: none;
+  --srs-shadow-raised: 0 1px 0 0 var(--srs-border-hairline);
+  --srs-shadow-overlay: 0 24px 60px -24px rgb(0 0 0 / 0.75);
+
+  /* ---------------------------------------------------------------
+   * MOTION
+   * --------------------------------------------------------------- */
+  --srs-duration-instant: 100ms;
+  --srs-duration-fast: 180ms;
+  --srs-duration-base: 240ms;
+  --srs-duration-slow: 380ms;
+  --srs-duration-deliberate: 480ms;
+
+  /* Signature Knowledge OS easing, taken from the approved design set. */
+  --srs-ease-entrance: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --srs-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --srs-ease-exit: cubic-bezier(0.4, 0, 0.9, 0.4);
+  --srs-ease-precise: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---------------------------------------------------------------
+   * ELEVATION ORDER
+   * --------------------------------------------------------------- */
+  --srs-z-base: 0;
+  --srs-z-sticky: 20;
+  --srs-z-header: 50;
+  --srs-z-overlay: 80;
+  --srs-z-skip-link: 100;
+}
+
+/*
+ * Reduced motion is a token-level concern: every duration collapses so that
+ * nothing animates, without each component needing its own media query.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --srs-duration-instant: 1ms;
+    --srs-duration-fast: 1ms;
+    --srs-duration-base: 1ms;
+    --srs-duration-slow: 1ms;
+    --srs-duration-deliberate: 1ms;
+  }
+}
