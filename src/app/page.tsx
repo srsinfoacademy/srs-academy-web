@@ -1,30 +1,30 @@
-import { PageHero } from "@/components/page/PageHero";
-import { Section } from "@/components/ui/Section";
-import { IndexLabel } from "@/components/ui/IndexLabel";
+import { FinalCta } from "@/components/home/FinalCta";
+import { HomeHero } from "@/components/home/HomeHero";
+import { LearningJourney } from "@/components/home/LearningJourney";
+import { Manifesto } from "@/components/home/Manifesto";
+import { PortalTeaser } from "@/components/home/PortalTeaser";
+import { Programs } from "@/components/home/Programs";
+import { Statistics } from "@/components/home/Statistics";
+import { SystemStages } from "@/components/home/SystemStages";
 
 /**
- * Phase 1 placeholder.
+ * SRS Academy homepage.
  *
- * The homepage composition — hero, manifesto, programs explorer, learning
- * journey, statistics, portal teaser and final CTA — is deliberately not
- * built yet. This page exists only so the global foundation can be reviewed
- * in place.
+ * Server-rendered throughout; only the hero network, the program explorer and
+ * the program accordion are client components, because only they carry
+ * interaction.
  */
 export default function HomePage() {
   return (
     <>
-      <PageHero
-        variant="editorial"
-        eyebrow="Foundation review"
-        title="Knowledge OS foundation"
-        lead="Phase 1 establishes the design tokens, typography, layout system, accessibility and motion foundations, global header, mobile navigation, footer and page hero architecture. Page content follows after approval."
-      />
-
-      <Section spacing="tight" ruled>
-        <IndexLabel as="p" node>
-          Development placeholder — no page content in Phase 1
-        </IndexLabel>
-      </Section>
+      <HomeHero />
+      <Manifesto />
+      <SystemStages />
+      <Programs />
+      <LearningJourney />
+      <Statistics />
+      <PortalTeaser />
+      <FinalCta />
     </>
   );
 }

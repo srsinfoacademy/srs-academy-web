@@ -9,7 +9,7 @@ type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 const base = cn(
-  "type-button relative inline-flex items-center justify-center gap-2",
+  "type-button relative inline-flex items-center justify-center gap-2 whitespace-nowrap",
   "border select-none",
   "transition-[background-color,border-color,color,transform] duration-[var(--srs-duration-fast)] ease-standard",
   "active:translate-y-px",
