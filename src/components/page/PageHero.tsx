@@ -15,7 +15,6 @@ type VariantConfig = {
   /** Vertical rhythm, from most editorial to most utilitarian. */
   padding: string;
   title: string;
-  measure: string;
   grid: boolean;
   network: boolean;
 };
@@ -29,28 +28,24 @@ const variants: Record<HeroVariant, VariantConfig> = {
   editorial: {
     padding: "pt-[var(--srs-section)] pb-[var(--srs-section-loose)]",
     title: "type-display-l",
-    measure: "measure",
     grid: true,
     network: true,
   },
   program: {
     padding: "pt-[var(--srs-section-tight)] pb-[var(--srs-section)]",
     title: "type-h1",
-    measure: "measure",
     grid: true,
     network: true,
   },
   information: {
     padding: "pt-[var(--srs-section-tight)] pb-[var(--srs-section)]",
     title: "type-h1",
-    measure: "measure",
     grid: true,
     network: false,
   },
   legal: {
     padding: "pt-[var(--srs-section-tight)] pb-[var(--srs-section-tight)]",
     title: "type-h2",
-    measure: "measure-narrow",
     grid: false,
     network: false,
   },
@@ -109,28 +104,36 @@ export function PageHero({
           <Breadcrumb items={breadcrumb} className="mb-8" />
         ) : null}
 
-        <div className={cn("flex flex-col gap-5", config.measure)}>
+        <div className="flex flex-col gap-3">
           {eyebrow ? (
-            <IndexLabel index={index} node={!index} as="p">
+            <IndexLabel index={index} node={!index} tone="lime" as="p">
               {eyebrow}
             </IndexLabel>
           ) : null}
 
-          <h1 id="page-hero-title" className={config.title}>
+          {/* Measures come from the design set: 20ch title, 62ch lead. */}
+          <h1 id="page-hero-title" className={cn(config.title, "max-w-[20ch]")}>
             {title}
           </h1>
 
-          {lead ? <p className="type-body-l">{lead}</p> : null}
+          {lead ? <p className="type-body-l mt-2 max-w-[62ch]">{lead}</p> : null}
 
           {children ? <div className="mt-3 flex flex-wrap gap-3">{children}</div> : null}
         </div>
 
         {meta && meta.length > 0 ? (
-          <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-line-hairline pt-6 sm:grid-cols-4">
+          <dl className="mt-5 flex flex-wrap gap-2.5">
             {meta.map((item) => (
-              <div key={item.label} className="flex flex-col gap-1.5">
-                <dt className="type-index">{item.label}</dt>
-                <dd className="type-body-s text-primary">{item.value}</dd>
+              <div
+                key={item.label}
+                className={cn(
+                  "type-breadcrumb inline-flex items-center gap-1.5",
+                  "rounded-[var(--srs-radius-sm)] border border-line px-[11px] py-1.5",
+                  "text-secondary",
+                )}
+              >
+                <dt className="sr-only-srs">{item.label}</dt>
+                <dd>{item.value}</dd>
               </div>
             ))}
           </dl>

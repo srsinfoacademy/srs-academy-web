@@ -26,22 +26,30 @@
 
   /* Line heights */
   --srs-leading-display: 0.98;
+  --srs-leading-h1: 1.04;
   --srs-leading-tight: 1.08;
   --srs-leading-snug: 1.22;
   --srs-leading-normal: 1.45;
+  --srs-leading-body: 1.6;
   --srs-leading-relaxed: 1.65;
 
   /* Tracking */
   --srs-tracking-display: -0.035em;
+  --srs-tracking-h1: -0.035em;
+  --srs-tracking-h2: -0.03em;
   --srs-tracking-tight: -0.02em;
   --srs-tracking-normal: -0.01em;
+  --srs-tracking-wordmark: -0.04em;
   --srs-tracking-index: 0.16em;
+  --srs-tracking-section: 0.14em;
+  --srs-tracking-breadcrumb: 0.08em;
   --srs-tracking-label: 0.09em;
 
   /* Weights */
   --srs-weight-regular: 400;
   --srs-weight-medium: 500;
   --srs-weight-semibold: 600;
+  --srs-weight-bold: 700;
 }
 
 @layer components {
@@ -71,15 +79,15 @@
 
   .type-h1 {
     font-size: var(--srs-type-h1);
-    line-height: var(--srs-leading-tight);
-    letter-spacing: var(--srs-tracking-tight);
-    font-weight: var(--srs-weight-medium);
+    line-height: var(--srs-leading-h1);
+    letter-spacing: var(--srs-tracking-h1);
+    font-weight: var(--srs-weight-bold);
   }
 
   .type-h2 {
     font-size: var(--srs-type-h2);
     line-height: var(--srs-leading-tight);
-    letter-spacing: var(--srs-tracking-tight);
+    letter-spacing: var(--srs-tracking-h2);
     font-weight: var(--srs-weight-medium);
   }
 
@@ -102,7 +110,7 @@
   .type-body-l {
     font-family: var(--srs-font-sans);
     font-size: var(--srs-type-body-l);
-    line-height: var(--srs-leading-relaxed);
+    line-height: var(--srs-leading-body);
     letter-spacing: 0;
     color: var(--srs-text-secondary);
     text-wrap: pretty;
@@ -111,7 +119,7 @@
   .type-body {
     font-family: var(--srs-font-sans);
     font-size: var(--srs-type-body);
-    line-height: var(--srs-leading-relaxed);
+    line-height: var(--srs-leading-body);
     color: var(--srs-text-secondary);
     text-wrap: pretty;
   }
@@ -150,6 +158,17 @@
     text-transform: uppercase;
     font-weight: var(--srs-weight-medium);
     font-variant-numeric: tabular-nums;
+    color: var(--srs-text-muted);
+  }
+
+  /* Breadcrumb trail — mono, but tracked tighter than the section index. */
+  .type-breadcrumb {
+    font-family: var(--srs-font-mono);
+    font-size: 0.625rem;
+    line-height: 1.2;
+    letter-spacing: var(--srs-tracking-breadcrumb);
+    text-transform: uppercase;
+    font-weight: var(--srs-weight-medium);
     color: var(--srs-text-muted);
   }
 

@@ -10,7 +10,7 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const base = cn(
   "type-button relative inline-flex items-center justify-center gap-2",
-  "rounded-[var(--srs-radius-md)] border select-none",
+  "border select-none",
   "transition-[background-color,border-color,color,transform] duration-[var(--srs-duration-fast)] ease-standard",
   "active:translate-y-px",
   "disabled:pointer-events-none aria-disabled:pointer-events-none",
@@ -23,10 +23,11 @@ const variantClass: Record<ButtonVariant, string> = {
     "hover:bg-lime-hover hover:border-lime-hover",
     "active:bg-lime-active active:border-lime-active",
   ),
+  // Lime on a 40% lime hairline — the outline treatment in the design set.
   secondary: cn(
-    "bg-transparent text-primary border-line-strong",
-    "hover:border-lime hover:text-lime",
-    "active:bg-surface-2",
+    "bg-transparent text-lime border-[var(--srs-border-accent)] font-medium",
+    "hover:border-lime hover:bg-lime/8",
+    "active:bg-lime/12",
   ),
   ghost: cn(
     "bg-transparent text-secondary border-transparent",
@@ -35,11 +36,18 @@ const variantClass: Record<ButtonVariant, string> = {
   ),
 };
 
-/** Heights meet the 44px minimum target on touch; sm is padded via tap-safe. */
+/*
+ * Control heights and radii from the design set. The 40px small size sits
+ * below the 44px minimum target, so it carries `tap-safe`, which expands the
+ * hit area without changing the visual size.
+ */
 const sizeClass: Record<ButtonSize, string> = {
-  sm: "h-9 px-3.5 text-[0.875rem]",
-  md: "h-11 px-5",
-  lg: "h-[52px] px-7",
+  sm: cn(
+    "h-[var(--srs-control-sm)] px-4 text-[0.8125rem]",
+    "rounded-[var(--srs-radius-md)]",
+  ),
+  md: cn("h-[var(--srs-control-md)] px-5", "rounded-[var(--srs-radius-md)]"),
+  lg: cn("h-[var(--srs-control-lg)] px-[22px]", "rounded-[var(--srs-radius-lg)]"),
 };
 
 type CommonProps = {

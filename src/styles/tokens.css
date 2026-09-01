@@ -58,6 +58,7 @@
   --srs-border: color-mix(in oklab, var(--srs-warm-050) 12%, transparent);
   --srs-border-strong: color-mix(in oklab, var(--srs-warm-050) 22%, transparent);
   --srs-border-active: var(--srs-lime);
+  --srs-border-accent: color-mix(in oklab, var(--srs-lime) 40%, transparent);
   --srs-border-hairline: color-mix(in oklab, var(--srs-warm-050) 7%, transparent);
 
   --srs-focus: var(--srs-lime);
@@ -108,17 +109,20 @@
   --srs-header-height: 88px;
   --srs-header-height-compact: 64px;
   --srs-tap-target: 44px;
+  --srs-control-sm: 40px;
+  --srs-control-md: 44px;
+  --srs-control-lg: 48px;
 
   /* ---------------------------------------------------------------
    * RADII — precise, never pill-shaped
    * --------------------------------------------------------------- */
   --srs-radius-none: 0px;
-  --srs-radius-xs: 2px;
-  --srs-radius-sm: 4px;
-  --srs-radius-md: 8px;
-  --srs-radius-lg: 12px;
-  --srs-radius-xl: 18px;
-  --srs-radius-full: 999px; /* nodes and dots only */
+  --srs-radius-xs: 4px; /* chips, focus ring rounding */
+  --srs-radius-sm: 6px; /* metadata chips */
+  --srs-radius-md: 9px; /* compact controls */
+  --srs-radius-lg: 11px; /* primary calls to action */
+  --srs-radius-xl: 14px; /* cards and panels */
+  --srs-radius-full: 999px; /* nodes, dots and pills only */
 
   /* ---------------------------------------------------------------
    * BORDER STRENGTHS

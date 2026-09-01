@@ -14,19 +14,19 @@ export function Wordmark({ className }: { className?: string }) {
       href={routes.home}
       aria-label={`${site.name} — home`}
       className={cn(
-        "group inline-flex items-center gap-2.5 rounded-[var(--srs-radius-xs)]",
+        "group inline-flex items-center gap-[9px] rounded-[var(--srs-radius-xs)]",
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "size-2 shrink-0 rounded-full bg-lime",
+          "size-[7px] shrink-0 rounded-full bg-lime",
           "transition-transform duration-[var(--srs-duration-base)] ease-entrance",
           "group-hover:scale-125",
         )}
       />
-      <span className="font-display text-[1.35rem] font-semibold leading-none tracking-[-0.02em] text-primary">
+      <span className="font-display text-[1.1875rem] font-bold leading-none tracking-[var(--srs-tracking-wordmark)] text-primary">
         {site.shortName}
       </span>
     </Link>

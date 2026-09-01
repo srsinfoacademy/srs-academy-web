@@ -8,6 +8,11 @@ type IndexLabelProps = {
   /** Renders the lime node marker that opens the label. */
   node?: boolean;
   tone?: "muted" | "primary" | "lime";
+  /**
+   * Section-index treatment from the design set: the label is followed by a
+   * hairline rule running to the end of the column.
+   */
+  rule?: boolean;
   as?: "span" | "p" | "div";
   className?: string;
   children: ReactNode;
@@ -27,12 +32,20 @@ export function IndexLabel({
   index,
   node = false,
   tone = "muted",
+  rule = false,
   as: Component = "span",
   className,
   children,
 }: IndexLabelProps) {
   return (
-    <Component className={cn("type-index inline-flex items-center gap-2", toneClass[tone], className)}>
+    <Component
+      className={cn(
+        "type-index items-center gap-2",
+        rule ? "flex tracking-[var(--srs-tracking-section)]" : "inline-flex",
+        toneClass[tone],
+        className,
+      )}
+    >
       {node ? (
         <span
           aria-hidden="true"
@@ -41,6 +54,9 @@ export function IndexLabel({
       ) : null}
       {index ? <span className="text-lime">{index}</span> : null}
       <span>{children}</span>
+      {rule ? (
+        <span aria-hidden="true" className="ml-1 h-px flex-1 bg-line-hairline" />
+      ) : null}
     </Component>
   );
 }

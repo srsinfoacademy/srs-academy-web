@@ -84,7 +84,7 @@ export const legalNav: NavItem[] = [
  * without repeating strings at every call site.
  */
 export const routeLabels: Record<string, string> = {
-  [routes.home]: "Academy",
+  [routes.home]: "Home",
   [routes.about]: "About",
   [routes.programs]: "Programs",
   [routes.admissions]: "Admissions",

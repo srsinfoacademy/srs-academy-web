@@ -15,10 +15,10 @@ type BreadcrumbProps = {
  * with aria-current and is not a link.
  */
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
-  const trail: BreadcrumbItem[] = [{ label: "Academy", href: routes.home }, ...items];
+  const trail: BreadcrumbItem[] = [{ label: "Home", href: routes.home }, ...items];
 
   return (
-    <nav aria-label="Breadcrumb" className={cn("type-index", className)}>
+    <nav aria-label="Breadcrumb" className={cn("type-breadcrumb", className)}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
         {trail.map((item, i) => {
           const isLast = i === trail.length - 1;
@@ -43,7 +43,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                   {item.label}
                 </Link>
               ) : (
-                <span aria-current={isLast ? "page" : undefined} className="text-secondary">
+                <span aria-current={isLast ? "page" : undefined} className="text-primary">
                   {item.label}
                 </span>
               )}
