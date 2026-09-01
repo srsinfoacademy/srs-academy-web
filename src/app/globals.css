@@ -50,7 +50,7 @@
   --color-lime-active: var(--srs-lime-active);
   --color-lime-dim: var(--srs-lime-dim);
   --color-violet: var(--srs-violet);
-  --color-violet-soft: var(--srs-violet-soft);
+  --color-violet-text: var(--srs-violet-text);
   --color-violet-dim: var(--srs-violet-dim);
 
   --color-line: var(--srs-border);

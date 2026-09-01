@@ -25,8 +25,11 @@ const toneClass = {
 } as const;
 
 /**
- * The technical voice of the Knowledge OS system: a mono, uppercase,
- * wide-tracked label used to index sections and metadata.
+ * The technical voice of the Knowledge OS system.
+ *
+ * Format is always `NN / WORD`, one per section, never nested. The handoff
+ * requires it to be aria-hidden: it is a visual index, and the real heading
+ * always sits beside it, so exposing it would duplicate the section name.
  */
 export function IndexLabel({
   index,
@@ -39,6 +42,7 @@ export function IndexLabel({
 }: IndexLabelProps) {
   return (
     <Component
+      aria-hidden="true"
       className={cn(
         "type-index items-center gap-2",
         rule ? "flex tracking-[var(--srs-tracking-section)]" : "inline-flex",
@@ -52,7 +56,14 @@ export function IndexLabel({
           className="size-[5px] shrink-0 rounded-full bg-lime"
         />
       ) : null}
-      {index ? <span className="text-lime">{index}</span> : null}
+      {index ? (
+        <>
+          <span className="text-lime">{index}</span>
+          <span aria-hidden="true" className="text-muted">
+            /
+          </span>
+        </>
+      ) : null}
       <span>{children}</span>
       {rule ? (
         <span aria-hidden="true" className="ml-1 h-px flex-1 bg-line-hairline" />

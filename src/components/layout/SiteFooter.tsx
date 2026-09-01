@@ -34,9 +34,9 @@ export function SiteFooter() {
 
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:gap-x-14">
             {footerNav.map((group) => (
-              <nav key={group.title} aria-labelledby={`footer-${group.title}`}>
-                <IndexLabel as="p" className="mb-4" >
-                  <span id={`footer-${group.title}`}>{group.title}</span>
+              <nav key={group.title} aria-label={group.title}>
+                <IndexLabel as="p" className="mb-4">
+                  {group.title}
                 </IndexLabel>
 
                 <ul className="flex flex-col gap-2.5">

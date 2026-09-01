@@ -13,7 +13,7 @@ export function SkipToContent() {
         "bg-lime text-on-accent font-semibold",
         "-translate-y-[200%] focus-visible:translate-y-0",
         "transition-transform duration-[var(--srs-duration-fast)] ease-entrance",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-soft",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--srs-focus-on-lime)]",
       ].join(" ")}
     >
       Skip to content
