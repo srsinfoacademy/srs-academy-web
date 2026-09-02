@@ -42,7 +42,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header
+    <header data-site-header
       data-compact={compact}
       style={
         {

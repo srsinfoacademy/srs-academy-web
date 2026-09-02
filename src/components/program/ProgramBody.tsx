@@ -1,12 +1,13 @@
 import Link from "next/link";
 
-import { Disclosure } from "@/components/program/Disclosure";
+import { Disclosure } from "@/components/ui/Disclosure";
 import { DetailRows, DetailSection, NodeList } from "@/components/program/DetailSection";
-import { SectionNav } from "@/components/program/SectionNav";
+import { SectionNav } from "@/components/ui/SectionNav";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { cn } from "@/lib/cn";
+import { detailSections } from "@/content/program-detail";
 import { categoryOf, programs } from "@/content/programs";
 import { routes } from "@/lib/routes";
 import type { Program, ProgramDetail } from "@/types/program";
@@ -50,7 +51,7 @@ export function ProgramBody({
     <Container className="pb-[var(--srs-section-loose)]">
       <div className="grid gap-10 xl:grid-cols-12 xl:gap-12">
         <div className="xl:col-span-3">
-          <SectionNav />
+          <SectionNav sections={detailSections} />
         </div>
 
         <div className="flex flex-col gap-12 xl:col-span-9">

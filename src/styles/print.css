@@ -1,0 +1,75 @@
+/*
+ * SRS ACADEMY — print
+ *
+ * Applies to the pages people actually print: update notices and legal
+ * documents. Chrome, decoration and calls to action are dropped; the title,
+ * metadata, body and the reference details a printed copy needs are kept.
+ */
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Navigation and decoration carry no meaning on paper. */
+  header[data-site-header],
+  footer[data-site-footer] nav,
+  [data-print-hidden],
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Knowledge OS geometry is decorative; it only costs ink. */
+  svg[aria-hidden="true"],
+  [data-decorative] {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li,
+  dt,
+  dd,
+  span {
+    color: #000000 !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline;
+  }
+
+  /* Keep the destination of a link that survives to paper. */
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+  }
+
+  /* Never break a heading from the text it introduces. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  section,
+  li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

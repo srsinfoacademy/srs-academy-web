@@ -11,6 +11,7 @@
 @import "../styles/typography.css";
 @import "../styles/base.css";
 @import "../styles/utilities.css";
+@import "../styles/print.css";
 
 /*
  * The default Tailwind palette is cleared so that no component can reach for

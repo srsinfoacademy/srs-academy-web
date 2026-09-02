@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/cn";
-import { detailSections } from "@/content/program-detail";
 
 /**
  * In-page section navigation.
@@ -16,12 +15,14 @@ import { detailSections } from "@/content/program-detail";
  * scroll maths, and `scroll-padding-top` on the document keeps a jumped-to
  * heading clear of the compact header, so focus is never obscured.
  */
-export function SectionNav() {
-  const [active, setActive] = useState<string>(detailSections[0].id);
+export type NavSection = { id: string; label: string };
+
+export function SectionNav({ sections }: { sections: readonly NavSection[] }) {
+  const [active, setActive] = useState<string>(sections[0]?.id ?? "");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const targets = detailSections
+    const targets = sections
       .map((section) => document.getElementById(section.id))
       .filter((el): el is HTMLElement => el !== null);
 
@@ -41,11 +42,11 @@ export function SectionNav() {
 
     targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
-  }, []);
+  }, [sections]);
 
   const links = (
     <ul className="flex flex-col">
-      {detailSections.map((section) => {
+      {sections.map((section) => {
         const isActive = active === section.id;
 
         return (

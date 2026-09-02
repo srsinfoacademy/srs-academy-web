@@ -16,7 +16,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative isolate mt-auto overflow-hidden border-t border-line-hairline bg-surface-1">
+    <footer data-site-footer className="relative isolate mt-auto overflow-hidden border-t border-line-hairline bg-surface-1">
       <GridBackground fade="top" size={88} />
 
       <Container className="relative py-[var(--srs-section)]">
