@@ -25,8 +25,14 @@ export async function generateMetadata({
   const detail = detailFor(slug);
   if (!program || !detail) return {};
 
+  // The category is only worth adding when it says something the program
+  // name does not — several programs are named after their category, and
+  // repeating it produces "X — X — SRS Academy".
+  const category = categoryOf(program).name;
+  const title = category === program.name ? program.name : `${program.name} — ${category}`;
+
   return pageMetadata({
-    title: `${program.name} — ${categoryOf(program).name}`,
+    title,
     description: detail.overview,
     path: routes.program(program.slug),
   });
