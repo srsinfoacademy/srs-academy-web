@@ -9,7 +9,7 @@ export function SkipToContent() {
       href="#main-content"
       className={[
         "type-index absolute left-[var(--srs-gutter)] top-3 z-[var(--srs-z-skip-link)]",
-        "inline-flex h-10 items-center rounded-[var(--srs-radius-md)] px-4",
+        "inline-flex h-11 items-center rounded-[var(--srs-radius-md)] px-4",
         "bg-lime text-on-accent font-semibold",
         "-translate-y-[200%] focus-visible:translate-y-0",
         "transition-transform duration-[var(--srs-duration-fast)] ease-entrance",

@@ -37,3 +37,54 @@ export type Program = {
   /** Stages this program moves through, drawn from the node system. */
   pathway: string[];
 };
+
+export type CurriculumModule = {
+  num: string;
+  title: string;
+  body: string;
+  topics?: string[];
+};
+
+export type FaqItem = { q: string; a: string };
+
+export type AdmissionStep = { num: string; title: string; body: string };
+
+export type Fees = {
+  program: string;
+  registration: string;
+  paymentTerms: string;
+  tax: string;
+} | null;
+
+export type ProgramDetail = {
+  /** Two sentences under the hero title. */
+  overview: string;
+  /** Longer "About this program" body. */
+  about: string;
+  audience: string[];
+  learningOutcomes: string[];
+  modules: CurriculumModule[];
+  /** Applied/project work. Omitted where a program has none. */
+  projectExperience?: string;
+  eligibility: string[];
+  certification: {
+    name: string;
+    issuedBy: string;
+    verification: string;
+  };
+  /**
+   * Null where fees are not published. The page then shows an honest
+   * fallback and points at admissions rather than inventing a price.
+   */
+  fees: Fees;
+  admissionsSteps: AdmissionStep[];
+  /** Optional — the section is omitted entirely when empty. */
+  importantDates?: { label: string; value: string }[];
+  /** Optional — omitted when empty. */
+  downloads?: { name: string; note: string }[];
+  faq: FaqItem[];
+  /** Slugs of related programs. Invalid slugs are dropped at render. */
+  relatedPrograms: string[];
+  startDate?: string;
+  primaryCta: string;
+};

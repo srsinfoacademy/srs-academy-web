@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PageHero } from "@/components/page/PageHero";
-import { Button } from "@/components/ui/Button";
-import { Section } from "@/components/ui/Section";
+import { MobileCtaBar } from "@/components/program/MobileCtaBar";
+import { ProgramBody } from "@/components/program/ProgramBody";
+import { ProgramHero } from "@/components/program/ProgramHero";
+import { detailFor } from "@/content/program-detail";
 import { categoryOf, programs } from "@/content/programs";
 import { pageMetadata } from "@/lib/metadata";
 import { routes } from "@/lib/routes";
@@ -12,64 +13,49 @@ export function generateStaticParams() {
   return programs.map((program) => ({ slug: program.slug }));
 }
 
+/**
+ * Metadata is derived from the program record, so a program cannot be
+ * described differently in the page and in its share preview.
+ */
 export async function generateMetadata({
   params,
 }: PageProps<"/programs/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const program = programs.find((p) => p.slug === slug);
-  if (!program) return {};
+  const detail = detailFor(slug);
+  if (!program || !detail) return {};
 
   return pageMetadata({
-    title: program.name,
-    description: program.shortDescription,
+    title: `${program.name} — ${categoryOf(program).name}`,
+    description: detail.overview,
     path: routes.program(program.slug),
   });
 }
 
 /**
- * Program detail — placeholder.
+ * Program detail.
  *
- * Phase 4 builds this page in full. It exists now so that every link out of
- * the catalogue resolves rather than 404ing, and it says plainly that the
- * content is still to come rather than implying an empty program.
+ * Server-rendered throughout except the curriculum and FAQ disclosures, the
+ * in-page navigation and the mobile CTA bar, which carry the interaction.
  */
 export default async function ProgramDetailPage({
   params,
 }: PageProps<"/programs/[slug]">) {
   const { slug } = await params;
   const program = programs.find((p) => p.slug === slug);
-  if (!program) notFound();
-
-  const category = categoryOf(program);
+  const detail = detailFor(slug);
+  if (!program || !detail) notFound();
 
   return (
     <>
-      <PageHero
-        variant="program"
-        index="04"
-        eyebrow="Program"
-        title={program.name}
-        lead={program.shortDescription}
-        breadcrumb={[{ label: "Programs", href: routes.programs }, { label: program.name }]}
-        meta={[
-          { label: "Level", value: program.level },
-          { label: "Duration", value: program.duration },
-          { label: "Mode", value: program.mode },
-          { label: "Category", value: category.name },
-        ]}
+      <ProgramHero program={program} detail={detail} />
+      <ProgramBody program={program} detail={detail} />
+      {/* Bottom padding clears the sticky bar so it never covers content. */}
+      <div aria-hidden="true" className="h-20 xl:hidden" />
+      <MobileCtaBar
+        label={detail.primaryCta}
+        pending="[PRIMARY PROGRAM CTA DESTINATION]"
       />
-
-      <Section spacing="tight" ruled>
-        <p className="type-body-l measure">
-          [PROGRAM DETAIL CONTENT — curriculum, eligibility, certification, fees,
-          admissions journey and FAQ are built in a later phase.]
-        </p>
-        <div className="mt-8">
-          <Button href={routes.programs} variant="secondary" size="md">
-            ← All programs
-          </Button>
-        </div>
-      </Section>
     </>
   );
 }

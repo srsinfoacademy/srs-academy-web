@@ -40,7 +40,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                     // be the element itself.
                     "inline-flex min-h-11 items-center rounded-[var(--srs-radius-xs)] text-muted",
                     "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-                    "hover:text-primary",
+                    "hover:text-lime",
                   )}
                 >
                   {item.label}

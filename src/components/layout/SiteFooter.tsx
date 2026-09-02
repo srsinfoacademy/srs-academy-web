@@ -39,7 +39,7 @@ export function SiteFooter() {
                   {group.title}
                 </IndexLabel>
 
-                <ul className="flex flex-col gap-2.5">
+                <ul className="-my-1.5 flex flex-col">
                   {group.items.map((item) => (
                     <li key={item.label}>
                       <TextLink
@@ -48,7 +48,7 @@ export function SiteFooter() {
                         external={item.external}
                         tone="muted"
                         bare
-                        className="type-body-s"
+                        className="type-body-s inline-flex min-h-11 items-center"
                       >
                         {item.label}
                       </TextLink>
