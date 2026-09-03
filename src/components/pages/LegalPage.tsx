@@ -38,7 +38,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-12 xl:col-span-9">
+          <div className="legal-fade flex flex-col gap-12 xl:col-span-9">
             {document.sections.map((section) => (
               <section
                 key={section.id}
