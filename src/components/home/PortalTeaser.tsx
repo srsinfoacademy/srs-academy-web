@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/Button";
+import { PortalLayer, PortalLayers } from "@/components/home/PortalLayers";
+import { Reveal } from "@/components/motion/Reveal";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { Section } from "@/components/ui/Section";
 import { portalTeaser } from "@/content/home";
@@ -23,7 +25,7 @@ export function PortalTeaser() {
 
   return (
     <Section spacing="loose" ruled aria-labelledby="portal-title">
-      <div className="grid items-center gap-x-10 gap-y-14 lg:grid-cols-12">
+      <Reveal as="div" className="grid items-center gap-x-10 gap-y-14 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <IndexLabel index={portalTeaser.index} as="p">
             {portalTeaser.eyebrow}
@@ -66,19 +68,18 @@ export function PortalTeaser() {
 
         {/* Conceptual layers — not a dashboard. Three z-steps, 12px offsets. */}
         <div className="lg:col-span-6">
-          <div
-            aria-hidden="true"
-            className="relative mx-auto h-[220px] w-full max-w-md sm:h-[300px] lg:h-[340px]"
-          >
-            <div
+          <PortalLayers>
+            <PortalLayer
+              depth={0.6}
               className={cn(
                 "absolute inset-0 rounded-[var(--srs-radius-xl)] blur-3xl",
                 "bg-[rgb(124_92_255_/_0.12)] md:bg-[rgb(124_92_255_/_0.16)]",
               )}
             />
             {[0, 1, 2].map((layer) => (
-              <div
+              <PortalLayer
                 key={layer}
+                depth={1 + layer}
                 className={cn(
                   "absolute inset-x-0 rounded-[var(--srs-radius-xl)] border",
                   "border-[rgb(185_166_255_/_0.2)] bg-surface-elevated",
@@ -93,9 +94,9 @@ export function PortalTeaser() {
                 }}
               />
             ))}
-          </div>
+          </PortalLayers>
         </div>
-      </div>
+      </Reveal>
     </Section>
   );
 }

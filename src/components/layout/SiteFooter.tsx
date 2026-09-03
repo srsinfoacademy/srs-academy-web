@@ -1,5 +1,6 @@
 import { GridBackground } from "@/components/knowledge-os/GridBackground";
 import { Wordmark } from "@/components/layout/Wordmark";
+import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { TextLink } from "@/components/ui/TextLink";
@@ -32,7 +33,11 @@ export function SiteFooter() {
             </address>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:gap-x-14">
+          <Reveal
+            as="div"
+            stagger
+            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:gap-x-14"
+          >
             {footerNav.map((group) => (
               <nav key={group.title} aria-label={group.title}>
                 <IndexLabel as="p" className="mb-4">
@@ -57,7 +62,7 @@ export function SiteFooter() {
                 </ul>
               </nav>
             ))}
-          </div>
+          </Reveal>
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-line-hairline pt-6 sm:flex-row sm:items-center sm:justify-between">
