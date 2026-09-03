@@ -23,7 +23,7 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "rounded-[var(--srs-radius-xl)] border border-line p-8 text-center sm:p-10",
+        "rise-in rounded-[var(--srs-radius-xl)] border border-line p-8 text-center sm:p-10",
         className,
       )}
     >
