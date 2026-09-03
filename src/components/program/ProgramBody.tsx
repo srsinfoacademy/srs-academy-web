@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Reveal } from "@/components/motion/Reveal";
 import { Disclosure } from "@/components/ui/Disclosure";
 import { DetailRows, DetailSection, NodeList } from "@/components/program/DetailSection";
 import { SectionNav } from "@/components/ui/SectionNav";
@@ -219,7 +220,8 @@ export function ProgramBody({
           </DetailSection>
 
           {related.length > 0 ? (
-            <section
+            <Reveal
+              as="section"
               aria-labelledby="related-title"
               className="scroll-mt-28 border-t border-line-hairline pt-10"
             >
@@ -250,11 +252,12 @@ export function ProgramBody({
                   </li>
                 ))}
               </ul>
-            </section>
+            </Reveal>
           ) : null}
 
           {/* Closing CTA. Also the point where the mobile bar stands down. */}
-          <section
+          <Reveal
+            as="section"
             id="program-cta"
             aria-labelledby="program-cta-title"
             className="rounded-[var(--srs-radius-xl)] border border-line bg-surface-1 p-8 sm:p-10"
@@ -273,7 +276,7 @@ export function ProgramBody({
                 All programs
               </Button>
             </div>
-          </section>
+          </Reveal>
         </div>
       </div>
     </Container>

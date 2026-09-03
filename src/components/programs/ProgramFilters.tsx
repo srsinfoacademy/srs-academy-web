@@ -78,7 +78,7 @@ export function ProgramFilters({
               "h-11 w-full rounded-[var(--srs-radius-md)] border border-line bg-surface-2",
               "pl-3 pr-10 type-body-s text-primary placeholder:text-muted",
               "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-              "hover:border-line-strong",
+              "hover:border-line-strong focus-visible:border-lime",
             )}
           />
           {filters.query ? (
@@ -86,7 +86,7 @@ export function ProgramFilters({
               type="button"
               onClick={() => set({ query: "" })}
               className={cn(
-                "absolute right-1 top-1/2 grid size-9 -translate-y-1/2 place-items-center",
+                "rise-in absolute right-1 top-1/2 grid size-9 -translate-y-1/2 place-items-center",
                 "rounded-[var(--srs-radius-sm)] text-muted",
                 "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
                 "hover:text-primary",
