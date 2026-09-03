@@ -144,18 +144,18 @@ export function ProgramBody({
               />
             ) : (
               /*
-                No invented pricing. When fees are unpublished the page says so
-                plainly and points at the people who can answer.
+                No invented pricing. Confirmed messaging only: the fee itself
+                is not yet announced, and the page points at a real contact
+                route rather than a placeholder.
               */
               <div className="rounded-[var(--srs-radius-xl)] border border-line p-6">
-                <p className="type-index text-lime">[FEES NOT PUBLISHED]</p>
+                <p className="type-index text-lime">Program fee — To be announced</p>
                 <p className="type-body-s mt-3 measure">
-                  Fees for this program have not been published yet. Contact admissions
-                  for current figures and payment terms.
+                  Contact SRS Academy for current fee and enrollment information.
                 </p>
                 <div className="mt-6">
-                  <Button pending="[ADMISSIONS CONTACT]" size="sm" variant="secondary">
-                    Contact admissions
+                  <Button href={routes.contact} size="sm" variant="secondary">
+                    Contact SRS Academy
                   </Button>
                 </div>
               </div>

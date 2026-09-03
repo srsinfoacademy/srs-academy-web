@@ -63,12 +63,17 @@ const pending = {
 export const programs: Program[] = [
   {
     num: "01",
-    slug: "web-and-software-development",
-    name: "Web & Software Development",
+    slug: "full-stack-web-development",
+    name: "Full Stack Web Development",
     category: "web-software-development",
     shortDescription:
-      "[PROGRAM DESCRIPTION — front-end through deployment as one continuous build.]",
-    ...pending,
+      "A practical, project-based path from web fundamentals to full-stack development — frontend, backend, databases and deployment.",
+    level: "Beginner to Intermediate",
+    mode: "Online",
+    // Approximate — the schedule has not been finalised, so this is not
+    // presented as a guaranteed timeline.
+    duration: "Approximately 4–6 months",
+    eligibility: "[ELIGIBILITY]",
     status: "pending",
     visualType: "grid",
     artLabel: "MODULAR GRID ARCHITECTURE",
