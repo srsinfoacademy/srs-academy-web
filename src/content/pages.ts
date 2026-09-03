@@ -25,32 +25,52 @@ export type EditorialPage = {
 export const aboutPage: EditorialPage = {
   kicker: "About SRS Academy",
   title: "About SRS Academy",
-  intro: "[ABOUT INTRO — one to two sentences, placeholder.]",
-  ctaLabel: "[EXPLORE PROGRAMS]",
+  intro:
+    "SRS Academy is the academic and training initiative of SPRS INFOTECH PVT LTD, bringing practical technology experience into structured, skill-focused learning programs.",
+  ctaLabel: "Explore Programs",
   sections: [
     {
       num: "01",
       heading: "Our Story",
-      body: "[OUR STORY — placeholder narrative. No historical claims until confirmed.]",
+      body: "SRS Academy is the academic and professional training initiative of SPRS INFOTECH PVT LTD. It was created to bring the practical technology experience of SPRS Infotech into a structured learning environment for students and aspiring professionals. SPRS INFOTECH PVT LTD works across web development, application development, software solutions, UI/UX and digital design, prototypes, mock-ups, and related technology services. Through SRS Academy, this practical industry experience is transformed into accessible, skill-focused learning programs designed to help learners understand modern tools, build practical capabilities, and prepare for technology-driven opportunities. SRS Academy operates primarily as an online learning academy, with presence and support associated with Kolkata and Mumbai.",
     },
     {
       num: "02",
       heading: "Relationship with SPRS INFOTECH PVT LTD",
-      body: "[OFFICIAL DESCRIPTION OF THE RELATIONSHIP WITH SPRS INFOTECH PVT LTD — CONFIRM EXACT WORDING BEFORE PUBLISH.]",
+      body: "SRS Academy is the academic and training initiative of SPRS INFOTECH PVT LTD, created to extend its practical experience in technology, software development, digital products, and design into structured learning programs.",
     },
-    { num: "03", heading: "Mission", body: "[MISSION STATEMENT — PLACEHOLDER.]" },
-    { num: "04", heading: "Vision", body: "[VISION STATEMENT — PLACEHOLDER.]" },
+    {
+      num: "03",
+      heading: "Mission",
+      body: "To make practical, technology-focused education accessible to learners who want to build relevant skills, understand modern digital tools, and turn knowledge into real-world capability.",
+    },
+    {
+      num: "04",
+      heading: "Vision",
+      body: "To build a modern learning ecosystem where education, technology, practical experience, and continuous skill development work together to prepare learners for an evolving digital world.",
+    },
     {
       num: "05",
       heading: "Values",
-      body: "[VALUES — PLACEHOLDER SET.]",
-      list: ["[VALUE 1]", "[VALUE 2]", "[VALUE 3]", "[VALUE 4]"],
+      body: "SRS Academy is guided by six core values.",
+      list: [
+        "Practical Learning — Education should connect knowledge with meaningful application.",
+        "Continuous Growth — Technology changes constantly, and learning should evolve with it.",
+        "Clarity — Complex ideas should be taught in a structured, understandable way.",
+        "Accessibility — Quality learning should be available beyond geographical limitations.",
+        "Curiosity — Strong learners ask questions, experiment, and explore.",
+        "Responsibility — Technology should be approached professionally, ethically, and thoughtfully.",
+      ],
     },
     {
       num: "06",
       heading: "Learn / Build / Advance",
-      body: "[PHILOSOPHY STATEMENT FOR EACH WORD — PLACEHOLDER.]",
-      list: ["LEARN — [STATEMENT]", "BUILD — [STATEMENT]", "ADVANCE — [STATEMENT]"],
+      body: "SRS Academy's approach to teaching follows a simple system.",
+      list: [
+        "LEARN WITH PURPOSE — Understand the concepts, systems, and tools behind modern digital work.",
+        "BUILD THROUGH PRACTICE — Develop capability through exercises, projects, experimentation, and practical application.",
+        "ADVANCE CONTINUOUSLY — Use what you learn as a foundation for deeper skills, professional development, and future opportunities.",
+      ],
     },
     {
       num: "07",
