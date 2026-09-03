@@ -16,7 +16,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative isolate mt-auto overflow-hidden border-t border-line-hairline bg-surface-1">
+    <footer data-site-footer className="relative isolate mt-auto overflow-hidden border-t border-line-hairline bg-surface-1">
       <GridBackground fade="top" size={88} />
 
       <Container className="relative py-[var(--srs-section)]">
@@ -34,12 +34,12 @@ export function SiteFooter() {
 
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:gap-x-14">
             {footerNav.map((group) => (
-              <nav key={group.title} aria-labelledby={`footer-${group.title}`}>
-                <IndexLabel as="p" className="mb-4" >
-                  <span id={`footer-${group.title}`}>{group.title}</span>
+              <nav key={group.title} aria-label={group.title}>
+                <IndexLabel as="p" className="mb-4">
+                  {group.title}
                 </IndexLabel>
 
-                <ul className="flex flex-col gap-2.5">
+                <ul className="-my-1.5 flex flex-col">
                   {group.items.map((item) => (
                     <li key={item.label}>
                       <TextLink
@@ -48,7 +48,7 @@ export function SiteFooter() {
                         external={item.external}
                         tone="muted"
                         bare
-                        className="type-body-s"
+                        className="type-body-s inline-flex min-h-11 items-center"
                       >
                         {item.label}
                       </TextLink>

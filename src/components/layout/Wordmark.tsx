@@ -14,7 +14,7 @@ export function Wordmark({ className }: { className?: string }) {
       href={routes.home}
       aria-label={`${site.name} — home`}
       className={cn(
-        "group inline-flex items-center gap-[9px] rounded-[var(--srs-radius-xs)]",
+        "group inline-flex min-h-11 items-center gap-[9px] rounded-[var(--srs-radius-xs)]",
         className,
       )}
     >

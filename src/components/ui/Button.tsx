@@ -9,7 +9,7 @@ type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 const base = cn(
-  "type-button relative inline-flex items-center justify-center gap-2",
+  "type-button relative inline-flex items-center justify-center gap-2 whitespace-nowrap",
   "border select-none",
   "transition-[background-color,border-color,color,transform] duration-[var(--srs-duration-fast)] ease-standard",
   "active:translate-y-px",
@@ -37,17 +37,14 @@ const variantClass: Record<ButtonVariant, string> = {
 };
 
 /*
- * Control heights and radii from the design set. The 40px small size sits
- * below the 44px minimum target, so it carries `tap-safe`, which expands the
- * hit area without changing the visual size.
+ * Control heights from the component sheet: 52px minimum for primary actions,
+ * 60px for the large variant, 12px radius throughout. The 44px small size is
+ * the absolute floor allowed by the accessibility handoff.
  */
 const sizeClass: Record<ButtonSize, string> = {
-  sm: cn(
-    "h-[var(--srs-control-sm)] px-4 text-[0.8125rem]",
-    "rounded-[var(--srs-radius-md)]",
-  ),
-  md: cn("h-[var(--srs-control-md)] px-5", "rounded-[var(--srs-radius-md)]"),
-  lg: cn("h-[var(--srs-control-lg)] px-[22px]", "rounded-[var(--srs-radius-lg)]"),
+  sm: cn("h-[var(--srs-control-sm)] px-4 text-[0.875rem]", "rounded-[var(--srs-radius-lg)]"),
+  md: cn("h-[var(--srs-control-md)] px-6", "rounded-[var(--srs-radius-lg)]"),
+  lg: cn("h-[var(--srs-control-lg)] px-8", "rounded-[var(--srs-radius-lg)]"),
 };
 
 type CommonProps = {
@@ -100,7 +97,6 @@ export function Button(props: ButtonProps) {
     variantClass[variant],
     sizeClass[size],
     block && "w-full",
-    size === "sm" && "tap-safe",
     className,
   );
 

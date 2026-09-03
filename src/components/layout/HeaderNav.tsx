@@ -16,7 +16,7 @@ export function HeaderNav() {
 
   return (
     <nav aria-label="Primary" className="hidden lg:block">
-      <ul className="flex items-center gap-1">
+      <ul className="flex items-center">
         {primaryNav.map((item) => {
           const href = item.href ?? "/";
           const active = isRouteActive(pathname, href);
@@ -27,7 +27,8 @@ export function HeaderNav() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "type-nav relative inline-flex h-11 items-center gap-2 rounded-[var(--srs-radius-sm)] px-3",
+                  "type-nav relative inline-flex h-11 items-center gap-2 rounded-[var(--srs-radius-sm)]",
+                  "px-2 xl:px-3",
                   "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
                   active ? "text-primary" : "text-secondary hover:text-primary",
                 )}

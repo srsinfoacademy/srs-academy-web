@@ -1,19 +1,29 @@
 import type { MetadataRoute } from "next";
 
+import { programs } from "@/content/programs";
 import { site } from "@/content/site";
-import { staticRoutes } from "@/lib/routes";
+import { routes, staticRoutes } from "@/lib/routes";
 
 /**
- * Static routes only. Program and update detail pages register their own
- * entries once their content sources exist.
+ * Static routes plus every program detail page. Update detail pages join once
+ * their content source exists.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  return staticRoutes.map((route) => ({
+  const staticEntries = staticRoutes.map((route) => ({
     url: new URL(route, site.url).toString(),
     lastModified,
-    changeFrequency: route === "/" ? "weekly" : "monthly",
+    changeFrequency: (route === "/" ? "weekly" : "monthly") as "weekly" | "monthly",
     priority: route === "/" ? 1 : 0.7,
   }));
+
+  const programEntries = programs.map((program) => ({
+    url: new URL(routes.program(program.slug), site.url).toString(),
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...programEntries];
 }

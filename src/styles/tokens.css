@@ -38,12 +38,12 @@
   --srs-bg: var(--srs-graphite-900);
   --srs-surface-1: var(--srs-graphite-850);
   --srs-surface-2: var(--srs-graphite-800);
-  --srs-surface-elevated: var(--srs-graphite-750);
+  --srs-surface-elevated: rgb(22 26 23 / 0.92);
   --srs-surface-inverse: var(--srs-warm-050);
 
-  --srs-text-primary: var(--srs-warm-050);
-  --srs-text-secondary: var(--srs-warm-200);
-  --srs-text-muted: var(--srs-warm-600);
+  --srs-text-primary: var(--srs-warm-050); /* 15.6:1 */
+  --srs-text-secondary: rgb(242 244 239 / 0.72); /* 9.4:1 */
+  --srs-text-muted: rgb(242 244 239 / 0.45); /* 5.1:1 */
   --srs-text-inverse: var(--srs-graphite-950);
   --srs-text-on-accent: var(--srs-graphite-950);
 
@@ -51,18 +51,18 @@
   --srs-lime-hover: var(--srs-lime-300);
   --srs-lime-active: var(--srs-lime-600);
   --srs-lime-dim: var(--srs-lime-800);
-  --srs-violet: var(--srs-violet-500);
-  --srs-violet-soft: var(--srs-violet-400);
+  --srs-violet: var(--srs-violet-500); /* depth, glows, bars — never type */
+  --srs-violet-text: var(--srs-violet-400); /* the only text-safe violet, 8.1:1 */
   --srs-violet-dim: var(--srs-violet-800);
 
-  --srs-border: color-mix(in oklab, var(--srs-warm-050) 12%, transparent);
-  --srs-border-strong: color-mix(in oklab, var(--srs-warm-050) 22%, transparent);
-  --srs-border-active: var(--srs-lime);
-  --srs-border-accent: color-mix(in oklab, var(--srs-lime) 40%, transparent);
-  --srs-border-hairline: color-mix(in oklab, var(--srs-warm-050) 7%, transparent);
+  --srs-border: rgb(242 244 239 / 0.10);
+  --srs-border-strong: rgb(242 244 239 / 0.20);
+  --srs-border-active: rgb(216 255 94 / 0.42);
+  --srs-border-accent: rgb(216 255 94 / 0.42);
+  --srs-border-hairline: rgb(242 244 239 / 0.06);
 
   --srs-focus: var(--srs-lime);
-  --srs-focus-contrast: var(--srs-graphite-950);
+  --srs-focus-on-lime: var(--srs-violet-400);
 
   --srs-success: #7ee0a6;
   --srs-warning: #f0c05a;
@@ -97,31 +97,32 @@
   /* ---------------------------------------------------------------
    * LAYOUT — one max width, fluid gutters, three section rhythms
    * --------------------------------------------------------------- */
-  --srs-content-max: 84rem; /* 1344px */
+  --srs-content-max: 82rem; /* 1312px */
   --srs-content-narrow: 52rem; /* long-form reading measure */
   --srs-content-wide: 96rem; /* edge-to-edge structural bands */
-  --srs-gutter: clamp(1.25rem, 4.2vw, 3.5rem);
+  /* 16 → 32 → 48 → 64, matching the responsive grid in the handoff. */
+  --srs-gutter: 1rem;
 
-  --srs-section-tight: clamp(2.5rem, 5vw, 4rem);
-  --srs-section: clamp(4rem, 8vw, 7rem);
-  --srs-section-loose: clamp(5.5rem, 11vw, 10rem);
+  --srs-section-tight: clamp(3rem, 6vw, 4rem);
+  --srs-section: clamp(4rem, 8vw, 6rem); /* 96 */
+  --srs-section-loose: clamp(5rem, 10vw, 8rem); /* 128 */
 
   --srs-header-height: 88px;
   --srs-header-height-compact: 64px;
   --srs-tap-target: 44px;
-  --srs-control-sm: 40px;
-  --srs-control-md: 44px;
-  --srs-control-lg: 48px;
+  --srs-control-sm: 44px;
+  --srs-control-md: 52px;
+  --srs-control-lg: 60px;
 
   /* ---------------------------------------------------------------
    * RADII — precise, never pill-shaped
    * --------------------------------------------------------------- */
   --srs-radius-none: 0px;
-  --srs-radius-xs: 4px; /* chips, focus ring rounding */
-  --srs-radius-sm: 6px; /* metadata chips */
-  --srs-radius-md: 9px; /* compact controls */
-  --srs-radius-lg: 11px; /* primary calls to action */
-  --srs-radius-xl: 14px; /* cards and panels */
+  --srs-radius-xs: 4px; /* focus ring rounding */
+  --srs-radius-sm: 6px; /* chips and tags — never pills */
+  --srs-radius-md: 10px; /* compact controls */
+  --srs-radius-lg: 12px; /* buttons */
+  --srs-radius-xl: 16px; /* cards and panels */
   --srs-radius-full: 999px; /* nodes, dots and pills only */
 
   /* ---------------------------------------------------------------
@@ -141,11 +142,12 @@
   /* ---------------------------------------------------------------
    * MOTION
    * --------------------------------------------------------------- */
-  --srs-duration-instant: 100ms;
-  --srs-duration-fast: 180ms;
-  --srs-duration-base: 240ms;
-  --srs-duration-slow: 380ms;
-  --srs-duration-deliberate: 480ms;
+  /* micro 120–250 · component 250–500 · story ~900 (scroll-linked) */
+  --srs-duration-instant: 120ms;
+  --srs-duration-fast: 200ms;
+  --srs-duration-base: 250ms;
+  --srs-duration-slow: 420ms;
+  --srs-duration-deliberate: 900ms;
 
   /* Signature Knowledge OS easing, taken from the approved design set. */
   --srs-ease-entrance: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -167,6 +169,24 @@
  * Reduced motion is a token-level concern: every duration collapses so that
  * nothing animates, without each component needing its own media query.
  */
+@media (min-width: 48rem) {
+  :root {
+    --srs-gutter: 2rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --srs-gutter: 3rem;
+  }
+}
+
+@media (min-width: 90rem) {
+  :root {
+    --srs-gutter: 4rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --srs-duration-instant: 1ms;

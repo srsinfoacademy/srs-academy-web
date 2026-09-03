@@ -19,7 +19,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 
   return (
     <nav aria-label="Breadcrumb" className={cn("type-breadcrumb", className)}>
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+      <ol className="-my-2 flex flex-wrap items-center gap-x-2">
         {trail.map((item, i) => {
           const isLast = i === trail.length - 1;
 
@@ -35,9 +35,12 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                 <Link
                   href={item.href}
                   className={cn(
-                    "rounded-[var(--srs-radius-xs)] text-muted",
+                    // A real 44px box, not a pseudo-element overlay: the
+                    // pseudo is not hit-tested reliably, so the target has to
+                    // be the element itself.
+                    "inline-flex min-h-11 items-center rounded-[var(--srs-radius-xs)] text-muted",
                     "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-                    "hover:text-primary",
+                    "hover:text-lime",
                   )}
                 >
                   {item.label}
