@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useId, useState } from "react";
 
 import { cn } from "@/lib/cn";
 
@@ -20,6 +21,8 @@ export type NavSection = { id: string; label: string };
 export function SectionNav({ sections }: { sections: readonly NavSection[] }) {
   const [active, setActive] = useState<string>(sections[0]?.id ?? "");
   const [open, setOpen] = useState(false);
+  const markerId = useId();
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const targets = sections
@@ -44,39 +47,48 @@ export function SectionNav({ sections }: { sections: readonly NavSection[] }) {
     return () => observer.disconnect();
   }, [sections]);
 
-  const links = (
-    <ul className="flex flex-col">
-      {sections.map((section) => {
-        const isActive = active === section.id;
+  // Rendered twice (mobile disclosure, desktop rail); each instance needs its
+  // own layoutId namespace so Motion never tries to animate the marker
+  // between two simultaneously-mounted lists.
+  function renderLinks(scope: string) {
+    return (
+      <ul className="flex flex-col">
+        {sections.map((section) => {
+          const isActive = active === section.id;
 
-        return (
-          <li key={section.id}>
-            <a
-              href={`#${section.id}`}
-              aria-current={isActive ? "true" : undefined}
-              onClick={() => setOpen(false)}
-              className={cn(
-                "flex min-h-11 items-center gap-3 rounded-[var(--srs-radius-sm)] px-2",
-                "type-body-s",
-                "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-                isActive ? "text-primary" : "text-muted hover:text-secondary",
-              )}
-            >
-              {/* Active state carries a marker as well as colour. */}
-              <span
-                aria-hidden="true"
+          return (
+            <li key={section.id}>
+              <a
+                href={`#${section.id}`}
+                aria-current={isActive ? "true" : undefined}
+                onClick={() => setOpen(false)}
                 className={cn(
-                  "h-px w-4 shrink-0 transition-all duration-[var(--srs-duration-fast)]",
-                  isActive ? "bg-lime" : "bg-line-strong",
+                  "flex min-h-11 items-center gap-3 rounded-[var(--srs-radius-sm)] px-2",
+                  "type-body-s",
+                  "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+                  isActive ? "text-primary" : "text-muted hover:text-secondary",
                 )}
-              />
-              {section.label}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
+              >
+                {/* Active state carries a marker as well as colour. Glides
+                    between items via Motion's shared layout animation. */}
+                <span className="relative h-px w-4 shrink-0 bg-line-strong">
+                  {isActive ? (
+                    <motion.span
+                      layoutId={reduceMotion ? undefined : `${markerId}-${scope}`}
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-lime"
+                      transition={{ duration: 0.2, ease: [0.2, 0.8, 0.2, 1] }}
+                    />
+                  ) : null}
+                </span>
+                {section.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
 
   return (
     <>
@@ -105,7 +117,7 @@ export function SectionNav({ sections }: { sections: readonly NavSection[] }) {
           </span>
         </button>
         <nav id="section-nav-panel" hidden={!open} aria-label="On this page" className="mt-3">
-          {links}
+          {renderLinks("mobile")}
         </nav>
       </div>
 
@@ -115,7 +127,7 @@ export function SectionNav({ sections }: { sections: readonly NavSection[] }) {
         className="hidden xl:sticky xl:top-[calc(var(--srs-header-height-compact)+2rem)] xl:block"
       >
         <p className="type-index mb-4">On this page</p>
-        {links}
+        {renderLinks("desktop")}
       </nav>
     </>
   );

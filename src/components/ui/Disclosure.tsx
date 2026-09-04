@@ -81,8 +81,17 @@ export function Disclosure({
               </button>
             </Heading>
 
-            <div id={panelId} hidden={!isOpen} className="pb-6 pl-0 sm:pl-12">
-              {item.content}
+            <div className="accordion-panel" data-open={isOpen}>
+              <div>
+                <div
+                  id={panelId}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen ? true : undefined}
+                  className="accordion-panel-content pb-6 pl-0 sm:pl-12"
+                >
+                  {item.content}
+                </div>
+              </div>
             </div>
           </li>
         );

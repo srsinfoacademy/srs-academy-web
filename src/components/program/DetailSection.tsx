@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 
+import { Reveal } from "@/components/motion/Reveal";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { cn } from "@/lib/cn";
 
 /**
  * One titled block of the program detail template. The id is the anchor the
- * in-page navigation targets.
+ * in-page navigation targets. Reveals once, on first entry into the
+ * viewport — a major-section entrance, not a per-paragraph one.
  */
 export function DetailSection({
   id,
@@ -23,7 +25,8 @@ export function DetailSection({
   className?: string;
 }) {
   return (
-    <section
+    <Reveal
+      as="section"
       id={id}
       aria-labelledby={`${id}-title`}
       className={cn("scroll-mt-28 border-t border-line-hairline pt-10", className)}
@@ -35,7 +38,7 @@ export function DetailSection({
         {title}
       </h2>
       <div className="mt-6">{children}</div>
-    </section>
+    </Reveal>
   );
 }
 

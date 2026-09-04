@@ -41,31 +41,50 @@ export function ProgramHero({
       <GridBackground fade="radial" size={88} />
 
       <Container className="relative">
-        <Breadcrumb
-          items={[{ label: "Programs", href: routes.programs }, { label: program.name }]}
-        />
+        <div className="hero-enter">
+          <Breadcrumb
+            items={[{ label: "Programs", href: routes.programs }, { label: program.name }]}
+          />
+        </div>
 
         <div className="mt-10 grid gap-x-10 gap-y-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <IndexLabel index="04" as="p">
+            <IndexLabel index="04" as="p" className="hero-enter">
               Program
             </IndexLabel>
 
-            <p className="type-index mt-6 text-secondary">{category.name}</p>
+            <p
+              className="type-index hero-enter mt-6 text-secondary"
+              style={{ animationDelay: "60ms" }}
+            >
+              {category.name}
+            </p>
 
-            <h1 id="program-title" className="type-h1 mt-3 max-w-[18ch]">
+            <h1
+              id="program-title"
+              className="type-h1 hero-enter mt-3 max-w-[18ch]"
+              style={{ animationDelay: "120ms" }}
+            >
               {program.name}
             </h1>
 
-            <p className="type-body-l mt-6 max-w-[58ch]">{detail.overview}</p>
+            <p
+              className="type-body-l hero-enter mt-6 max-w-[58ch]"
+              style={{ animationDelay: "180ms" }}
+            >
+              {detail.overview}
+            </p>
 
             {/* Status is text, never colour alone. */}
-            <p className="type-index mt-6 inline-flex items-center gap-2">
+            <p
+              className="type-index hero-enter mt-6 inline-flex items-center gap-2"
+              style={{ animationDelay: "220ms" }}
+            >
               <span aria-hidden="true" className="size-1.5 rounded-full bg-lime" />
               {statusLabel[program.status]}
             </p>
 
-            <div className="mt-8">
+            <div className="hero-enter mt-8" style={{ animationDelay: "260ms" }}>
               <Button pending="[PRIMARY PROGRAM CTA DESTINATION]" size="md">
                 {detail.primaryCta}
               </Button>
@@ -78,10 +97,11 @@ export function ProgramHero({
           <div className="lg:col-span-5">
             <div
               className={cn(
-                "group h-44 rounded-[var(--srs-radius-xl)] border border-line bg-surface-2 p-6",
+                "hero-enter group h-44 rounded-[var(--srs-radius-xl)] border border-line bg-surface-2 p-6",
                 "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
                 "hover:border-line-strong sm:h-56",
               )}
+              style={{ animationDelay: "300ms" }}
             >
               <ProgramArt type={program.visualType} />
             </div>

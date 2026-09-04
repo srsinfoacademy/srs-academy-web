@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/Reveal";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { cn } from "@/lib/cn";
 import type { PageSection } from "@/content/pages";
@@ -17,8 +18,9 @@ export function EditorialSections({
   return (
     <div className={cn("flex flex-col gap-14", className)}>
       {sections.map((section) => (
-        <section
+        <Reveal
           key={section.num}
+          as="section"
           id={`section-${section.num}`}
           aria-labelledby={`section-${section.num}-title`}
           className="scroll-mt-28 border-t border-line-hairline pt-8"
@@ -34,7 +36,7 @@ export function EditorialSections({
           <p className="type-body measure mt-5">{section.body}</p>
 
           {section.list?.length ? (
-            <ul className="mt-8 grid gap-x-10 gap-y-4 md:grid-cols-2">
+            <Reveal as="ul" stagger className="mt-8 grid gap-x-10 gap-y-4 md:grid-cols-2">
               {section.list.map((item, i) => (
                 <li
                   key={`${item}-${i}`}
@@ -44,9 +46,9 @@ export function EditorialSections({
                   <span className="type-body-s">{item}</span>
                 </li>
               ))}
-            </ul>
+            </Reveal>
           ) : null}
-        </section>
+        </Reveal>
       ))}
     </div>
   );

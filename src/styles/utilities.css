@@ -55,6 +55,108 @@
 
 @layer utilities {
   /*
+   * Scroll-triggered section reveal (see Reveal.tsx). The observer adds
+   * [data-revealed] once, on first intersection, so this is a run-once
+   * entrance rather than a continuous scroll-linked effect. Reduced motion
+   * collapses the transition duration to 1ms at the token level, so the
+   * final geometry below is always what reduced-motion users land on —
+   * content is never gated behind the transition completing.
+   */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity var(--srs-duration-slow) var(--srs-ease-entrance),
+      transform var(--srs-duration-slow) var(--srs-ease-entrance);
+  }
+
+  .reveal[data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Small stagger for a handful of direct children (columns, stat cells,
+     stage cards, value tiles). Capped — this is not meant for long lists. */
+  .reveal-stagger[data-revealed="true"] > :nth-child(1) { transition-delay: 0ms; }
+  .reveal-stagger[data-revealed="true"] > :nth-child(2) { transition-delay: 60ms; }
+  .reveal-stagger[data-revealed="true"] > :nth-child(3) { transition-delay: 120ms; }
+  .reveal-stagger[data-revealed="true"] > :nth-child(4) { transition-delay: 180ms; }
+  .reveal-stagger[data-revealed="true"] > :nth-child(5) { transition-delay: 240ms; }
+  .reveal-stagger[data-revealed="true"] > :nth-child(6) { transition-delay: 300ms; }
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    transition:
+      opacity var(--srs-duration-slow) var(--srs-ease-entrance),
+      transform var(--srs-duration-slow) var(--srs-ease-entrance);
+  }
+  .reveal-stagger[data-revealed="true"] > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  /*
+   * Accessible accordion panel motion: the wrapper animates
+   * grid-template-rows (0fr → 1fr) so height can transition without a
+   * measured pixel value, and the inner content gets its own fade + rise.
+   * `inert` (not `hidden`) keeps the collapsed panel out of tab order and
+   * the accessibility tree while remaining animatable.
+   */
+  .accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--srs-duration-slow) var(--srs-ease-standard);
+  }
+
+  .accordion-panel[data-open="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-panel > * {
+    overflow: hidden;
+  }
+
+  .accordion-panel-content {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity var(--srs-duration-base) var(--srs-ease-standard),
+      transform var(--srs-duration-base) var(--srs-ease-standard);
+  }
+
+  .accordion-panel[data-open="true"] .accordion-panel-content {
+    opacity: 1;
+    transform: none;
+    transition-delay: 60ms;
+  }
+
+  /*
+   * Homepage hero intro. Applied via inline animation-delay so the ordered
+   * sequence (grid → eyebrow → headline → lead → CTAs) is a single CSS
+   * timeline with no client component required for the copy column.
+   */
+  .hero-enter {
+    animation: srs-rise-in var(--srs-duration-slow) var(--srs-ease-entrance) both;
+  }
+
+  /* Legal pages: a short, deliberately restrained opacity-only fade — no
+     translate, no stagger. See LegalPage.tsx. */
+  .legal-fade {
+    animation: srs-fade-in 160ms var(--srs-ease-standard) both;
+  }
+
+  @keyframes srs-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@layer utilities {
+  /*
    * Knowledge OS network motion. Both animations resolve to 1ms under
    * reduced motion via the token layer, and the pulse iteration count is
    * capped by the global reduced-motion rule in base.css.
@@ -84,6 +186,66 @@
   @keyframes kos-draw {
     to {
       stroke-dashoffset: 0;
+    }
+  }
+
+  /*
+   * Final CTA convergence: nodes drift inward toward the centre point once,
+   * after the edges have drawn, then the central ring expands once. No
+   * looping — the animation-fill-mode holds the end state.
+   */
+  .kos-converge-node {
+    animation: kos-converge var(--srs-duration-slow) var(--srs-ease-standard) both;
+    animation-delay: 640ms;
+  }
+
+  @keyframes kos-converge {
+    from {
+      transform: translate(var(--kos-from-x, 0), var(--kos-from-y, 0));
+    }
+    to {
+      transform: translate(0, 0);
+    }
+  }
+
+  .kos-converge-ring {
+    animation: kos-ring-expand var(--srs-duration-slow) var(--srs-ease-standard) both;
+    animation-delay: 900ms;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /*
+   * A section below the fold mounts long before it scrolls into view. Left
+   * unpaused, a `both`-filled entrance animation simply finishes offscreen —
+   * by the time the reveal fades the section in, the choreography has
+   * already resolved to its end state instead of playing. `.kos-gated`
+   * pauses every timed child until its `.reveal` ancestor reports
+   * `data-revealed`, at which point they run once from the start.
+   */
+  .kos-gated .kos-line-draw,
+  .kos-gated .kos-converge-node,
+  .kos-gated .kos-converge-ring {
+    animation-play-state: paused;
+  }
+
+  .reveal[data-revealed="true"].kos-gated .kos-line-draw,
+  .reveal[data-revealed="true"].kos-gated .kos-converge-node,
+  .reveal[data-revealed="true"].kos-gated .kos-converge-ring {
+    animation-play-state: running;
+  }
+
+  @keyframes kos-ring-expand {
+    from {
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    60% {
+      opacity: 1;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
     }
   }
 }

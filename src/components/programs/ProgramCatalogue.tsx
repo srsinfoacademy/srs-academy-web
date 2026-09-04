@@ -162,7 +162,7 @@ export function ProgramCatalogue() {
 
 function EmptyState({ filtered, onReset }: { filtered: boolean; onReset: () => void }) {
   return (
-    <div className="rounded-[var(--srs-radius-xl)] border border-line p-10 text-center">
+    <div className="rise-in rounded-[var(--srs-radius-xl)] border border-line p-10 text-center">
       <p className="type-index text-lime">No results</p>
       <p className="type-body-l mt-4 text-primary">
         {filtered

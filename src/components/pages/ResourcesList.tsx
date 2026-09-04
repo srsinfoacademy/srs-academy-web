@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { Reveal } from "@/components/motion/Reveal";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { SearchField } from "@/components/ui/SearchField";
@@ -62,35 +63,38 @@ export function ResourcesList({ resources }: { resources: Resource[] }) {
           </EmptyState>
         )
       ) : (
-        <ul className="border-t border-line">
-          {results.map((resource) => {
-            const isDownload = resource.type === "Download";
+        <Reveal as="ul" className="border-t border-line">
+            {results.map((resource) => {
+              const isDownload = resource.type === "Download";
 
-            return (
-              <li
-                key={resource.slug}
-                className={cn(
-                  "flex min-h-16 flex-col gap-2 border-b border-line py-5",
-                  "sm:flex-row sm:items-baseline sm:gap-6",
-                )}
-              >
-                <span className="type-index shrink-0 sm:w-28">{resource.type}</span>
-                <span className="flex-1">
-                  <span className="type-h4 block text-balance">{resource.title}</span>
-                  <span className="type-body-s mt-1.5 block">{resource.summary}</span>
-                </span>
-                <span
+              return (
+                <li
+                  key={resource.slug}
                   className={cn(
-                    "type-index shrink-0",
-                    isDownload ? "text-[var(--srs-violet-text)]" : "text-lime",
+                    "group flex min-h-16 flex-col gap-2 border-b border-line py-5",
+                    "sm:flex-row sm:items-baseline sm:gap-6",
+                    "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+                    "hover:bg-[rgb(242_244_239_/_0.03)]",
                   )}
                 >
-                  {isDownload ? "Download ↓" : "Read →"}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+                  <span className="type-index shrink-0 sm:w-28">{resource.type}</span>
+                  <span className="flex-1">
+                    <span className="type-h4 block text-balance">{resource.title}</span>
+                    <span className="type-body-s mt-1.5 block">{resource.summary}</span>
+                  </span>
+                  <span
+                    className={cn(
+                      "type-index inline-block shrink-0 transition-transform duration-[var(--srs-duration-fast)] ease-standard",
+                      "group-hover:translate-x-[3px]",
+                      isDownload ? "text-[var(--srs-violet-text)]" : "text-lime",
+                    )}
+                  >
+                    {isDownload ? "Download ↓" : "Read →"}
+                  </span>
+                </li>
+              );
+            })}
+        </Reveal>
       )}
     </div>
   );

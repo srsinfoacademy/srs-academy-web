@@ -35,6 +35,11 @@ export function ProgramPreview({
         className,
       )}
     >
+      {/*
+        Keyed on the program: the body fades and rises in on each selection
+        rather than the shell (border, surface, sticky offset) reloading.
+      */}
+      <div key={program.slug} className="rise-in flex flex-1 flex-col">
       <div className="flex items-baseline justify-between gap-4">
         <p className="type-index text-lime">
           {program.num} / {category.label.toUpperCase()}
@@ -75,6 +80,7 @@ export function ProgramPreview({
         <Button href={routes.program(program.slug)} size="md">
           View Program →
         </Button>
+      </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { IndexLabel } from "@/components/ui/IndexLabel";
+import { Reveal } from "@/components/motion/Reveal";
 import { Section } from "@/components/ui/Section";
 import { journeyStages } from "@/content/home";
 import { cn } from "@/lib/cn";
@@ -21,12 +22,7 @@ export function LearningJourney() {
         One system, five stages
       </h2>
 
-      <ol
-        className={cn(
-          "mt-16 grid gap-x-6 gap-y-10",
-          "md:grid-cols-5",
-        )}
-      >
+      <Reveal as="ol" stagger className={cn("mt-16 grid gap-x-6 gap-y-10", "md:grid-cols-5")}>
         {journeyStages.map((stage, i) => (
           <li key={stage.id} className="relative flex gap-5 md:flex-col md:gap-0">
             {/* Vertical rail below md, horizontal spine at md and above. */}
@@ -54,7 +50,7 @@ export function LearningJourney() {
             </div>
           </li>
         ))}
-      </ol>
+      </Reveal>
     </Section>
   );
 }

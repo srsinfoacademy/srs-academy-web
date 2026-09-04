@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/motion/Reveal";
 import { statistics } from "@/content/home";
 import { cn } from "@/lib/cn";
 
@@ -16,7 +17,7 @@ export function Statistics() {
   return (
     <section aria-label="Academy at a glance" className="rule-top rule-bottom bg-surface-1">
       <Container>
-        <dl className="grid grid-cols-2 md:grid-cols-4">
+        <Reveal as="dl" stagger className="grid grid-cols-2 md:grid-cols-4">
           {statistics.map((stat, i) => (
             <div
               key={stat.label}
@@ -37,7 +38,7 @@ export function Statistics() {
               <dt className="type-index">{stat.label}</dt>
             </div>
           ))}
-        </dl>
+        </Reveal>
       </Container>
     </section>
   );
