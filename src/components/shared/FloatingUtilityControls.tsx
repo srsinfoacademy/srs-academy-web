@@ -136,7 +136,10 @@ function FloatingUtilityControlsInner({ variant }: { variant: Variant }) {
   return (
     <div
       className="fixed right-5 z-40 flex flex-col items-center gap-2 sm:right-6"
-      style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.25rem)" }}
+      style={{
+        bottom:
+          "calc(env(safe-area-inset-bottom, 0px) + 1.25rem + var(--srs-mobile-cta-offset, 0px))",
+      }}
     >
       <Link
         href={counterpartUrl}
