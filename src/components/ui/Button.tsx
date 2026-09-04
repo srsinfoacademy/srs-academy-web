@@ -11,8 +11,8 @@ type ButtonSize = "sm" | "md" | "lg";
 const base = cn(
   "type-button relative inline-flex items-center justify-center gap-2 whitespace-nowrap",
   "border select-none",
-  "transition-[background-color,border-color,color,transform] duration-[var(--srs-duration-fast)] ease-standard",
-  "active:translate-y-px",
+  "transition-[background-color,border-color,color,transform,box-shadow] duration-[var(--srs-duration-fast)] ease-standard",
+  "active:translate-y-0 active:shadow-none",
   "disabled:pointer-events-none aria-disabled:pointer-events-none",
   "disabled:opacity-45 aria-disabled:opacity-45",
 );
@@ -20,13 +20,14 @@ const base = cn(
 const variantClass: Record<ButtonVariant, string> = {
   primary: cn(
     "bg-lime text-on-accent border-lime font-semibold",
-    "hover:bg-lime-hover hover:border-lime-hover",
+    "hover:-translate-y-0.5 hover:bg-lime-hover hover:border-lime-hover",
+    "hover:shadow-[0_8px_20px_-10px_rgb(216_255_94_/_0.45)]",
     "active:bg-lime-active active:border-lime-active",
   ),
   // Lime on a 40% lime hairline — the outline treatment in the design set.
   secondary: cn(
     "bg-transparent text-lime border-[var(--srs-border-accent)] font-medium",
-    "hover:border-lime hover:bg-lime/8",
+    "hover:-translate-y-0.5 hover:border-lime hover:bg-lime/8",
     "active:bg-lime/12",
   ),
   ghost: cn(

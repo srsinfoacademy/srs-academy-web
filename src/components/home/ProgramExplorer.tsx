@@ -64,13 +64,20 @@ export function ProgramExplorer() {
               aria-selected={selected}
               onClick={() => setIndex(i)}
               className={cn(
-                "flex cursor-pointer items-baseline gap-4 border-b border-line-hairline px-6 py-5 last:border-b-0",
-                "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+                "group flex cursor-pointer items-baseline gap-4 border-b border-line-hairline px-6 py-5 last:border-b-0",
+                "transition-[background-color,color,transform] duration-[var(--srs-duration-fast)] ease-standard",
                 selected
-                  ? "bg-[rgb(216_255_94_/_0.07)] text-primary"
-                  : "text-secondary hover:bg-[rgb(242_244_239_/_0.03)]",
+                  ? "translate-x-1.5 bg-[rgb(216_255_94_/_0.07)] text-primary"
+                  : "text-secondary hover:translate-x-1 hover:bg-[rgb(242_244_239_/_0.03)]",
               )}
             >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "h-4 w-0.5 shrink-0 self-center rounded-full transition-[width,background-color] duration-[var(--srs-duration-fast)] ease-standard",
+                  selected ? "w-1 bg-lime" : "bg-line group-hover:w-0.5 group-hover:bg-line-strong",
+                )}
+              />
               <span className={cn("type-index", selected ? "text-lime" : "text-muted")}>
                 {program.num}
               </span>
@@ -88,6 +95,11 @@ export function ProgramExplorer() {
           "xl:col-span-7",
         )}
       >
+        {/*
+          Keyed on the selected program: the whole preview body fades and
+          rises in on selection rather than the shell reloading.
+        */}
+        <div key={active.slug} className="rise-in flex flex-1 flex-col">
         <div className="flex items-baseline justify-between gap-4">
           <p className="type-index text-lime">
             {active.num} / {categoryOf(active).label.toUpperCase()}
@@ -127,6 +139,7 @@ export function ProgramExplorer() {
           <Button href={routes.program(active.slug)} size="md" variant="secondary">
             Explore Program
           </Button>
+        </div>
         </div>
       </div>
     </div>

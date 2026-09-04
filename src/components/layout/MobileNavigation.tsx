@@ -172,7 +172,7 @@ export function MobileNavigation() {
 
               <nav aria-label="Primary" className="pt-4">
                 <ul className="flex flex-col">
-                  {primaryNav.map((item) => {
+                  {primaryNav.map((item, i) => {
                     const href = item.href ?? "/";
                     const active = isRouteActive(pathname, href);
 
@@ -182,10 +182,11 @@ export function MobileNavigation() {
                           href={href}
                           aria-current={active ? "page" : undefined}
                           className={cn(
-                            "flex items-baseline gap-4 py-4",
+                            "hero-enter flex items-baseline gap-4 py-4",
                             "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
                             active ? "text-primary" : "text-secondary",
                           )}
+                          style={{ animationDelay: `${i * 32}ms` }}
                         >
                           <span className="type-index w-6 shrink-0 text-lime">{item.index}</span>
                           <span className="type-h3">{item.label}</span>

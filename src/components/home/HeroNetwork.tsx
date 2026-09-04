@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 
 import { knowledgeEdges, knowledgeNodes } from "@/content/home";
 import { cn } from "@/lib/cn";
+import { usePointerProximity } from "@/lib/usePointerProximity";
 import type { StageId } from "@/types/home";
 
 /**
@@ -33,13 +34,14 @@ const ASPECT = 1.25; // viewBox is 125 × 100, matching the 5:4 box
 export function HeroNetwork({ className }: { className?: string }) {
   const [active, setActive] = useState<StageId>("learn");
   const titleId = useId();
+  const proximityRef = usePointerProximity<HTMLDivElement>();
 
   const byId = new Map(knowledgeNodes.map((node) => [node.id, node]));
   const activeNode = byId.get(active) ?? knowledgeNodes[0];
 
   return (
     <div className={cn("flex flex-col", className)}>
-      <div className="relative aspect-[5/4] w-full">
+      <div ref={proximityRef} className="relative aspect-[5/4] w-full">
         <svg
           viewBox={`0 0 ${100 * ASPECT} 100`}
           aria-hidden="true"
@@ -75,18 +77,28 @@ export function HeroNetwork({ className }: { className?: string }) {
 
         {/* Node dots, in a second SVG so they are never distorted by the
             non-uniform scaling the edge layer needs. */}
-        {knowledgeNodes.map((node) => {
+        {knowledgeNodes.map((node, i) => {
           const isActive = node.id === active;
           return (
             <span
               key={`dot-${node.id}`}
               aria-hidden="true"
               className={cn(
-                "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
-                "transition-all duration-[var(--srs-duration-base)] ease-entrance",
+                "hero-enter absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
+                "transition-[width,height,background-color,transform] duration-[var(--srs-duration-base)] ease-entrance",
                 isActive ? "size-[11px] bg-lime" : "size-[7px] bg-lime/45",
               )}
-              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              style={{
+                left: `${node.x}%`,
+                top: `${node.y}%`,
+                animationDelay: `${180 + i * 60}ms`,
+                // Restrained pointer-proximity drift — desktop only, the
+                // active node only, and never more than a few pixels: see
+                // usePointerProximity. Static (0) everywhere else.
+                transform: isActive
+                  ? "translate(calc(-50% + var(--proximity-x, 0) * 5px), calc(-50% + var(--proximity-y, 0) * 5px))"
+                  : undefined,
+              }}
             />
           );
         })}
@@ -146,13 +158,21 @@ export function HeroNetwork({ className }: { className?: string }) {
         aria-live="polite"
         className="mt-8 max-w-[38ch] border-l border-line-active pl-4"
       >
-        <p className="type-index text-lime">Active / {activeNode.short}</p>
-        <p className="type-body-s mt-2 text-secondary">{activeNode.blurb}</p>
-        <p className="type-index mt-3 flex flex-wrap gap-x-4 gap-y-1">
-          {activeNode.links.map((link) => (
-            <span key={link}>{link}</span>
-          ))}
-        </p>
+        {/*
+          Keyed on the active node so the swap fades and rises in — a
+          content-level re-entrance rather than a continuous animation.
+        */}
+        <div key={active} className="rise-in">
+          <p className="type-index text-lime">Active / {activeNode.short}</p>
+          <p className="type-body-s mt-2 text-secondary">{activeNode.blurb}</p>
+          <p className="type-index mt-3 flex flex-wrap gap-x-4 gap-y-1">
+            {activeNode.links.map((link, i) => (
+              <span key={link} className="rise-in" style={{ animationDelay: `${i * 40}ms` }}>
+                {link}
+              </span>
+            ))}
+          </p>
+        </div>
       </div>
     </div>
   );

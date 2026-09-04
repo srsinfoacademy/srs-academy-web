@@ -26,20 +26,21 @@ export function ProgramRow({ program, selected, id, onSelect }: ProgramRowProps)
       aria-selected={selected}
       onClick={onSelect}
       className={cn(
-        "relative cursor-pointer border-b border-line-hairline last:border-b-0",
+        "group relative cursor-pointer border-b border-line-hairline last:border-b-0",
         "min-h-16 px-5 py-4 sm:px-6 sm:py-5",
-        "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+        "transition-[background-color,transform] duration-[var(--srs-duration-fast)] ease-standard",
         selected
-          ? "bg-[rgb(216_255_94_/_0.07)]"
-          : "hover:bg-[rgb(242_244_239_/_0.03)]",
+          ? "translate-x-1.5 bg-[rgb(216_255_94_/_0.07)]"
+          : "hover:translate-x-1 hover:bg-[rgb(242_244_239_/_0.03)]",
       )}
     >
-      {/* Selection rule — a second, non-colour-dependent signal. */}
+      {/* Selection rule — a second, non-colour-dependent signal. Grows on
+          both selection and hover so the affordance reads before the click. */}
       <span
         aria-hidden="true"
         className={cn(
-          "absolute inset-y-0 left-0 w-0.5",
-          selected ? "bg-lime" : "bg-transparent",
+          "absolute inset-y-0 left-0 transition-[width,background-color] duration-[var(--srs-duration-fast)] ease-standard",
+          selected ? "w-1 bg-lime" : "w-0.5 bg-transparent group-hover:bg-line-strong",
         )}
       />
 

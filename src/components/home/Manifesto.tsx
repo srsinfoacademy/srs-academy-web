@@ -1,3 +1,4 @@
+import { ManifestoReveal } from "@/components/home/ManifestoReveal";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { Section } from "@/components/ui/Section";
 import { manifesto } from "@/content/home";
@@ -6,9 +7,10 @@ import { manifesto } from "@/content/home";
  * Editorial positioning statement.
  *
  * The design specifies a two-step reveal tied to scroll position — no
- * per-word staggering. It is composed here in its resolved state; the reveal
- * is a CSS-only enhancement, so the section reads correctly with no script
- * and under reduced motion.
+ * per-word staggering. Runs once, on first entry into the viewport; see
+ * ManifestoReveal, which composes the same three clauses in their resolved
+ * state so the section reads correctly with no script and under reduced
+ * motion.
  */
 export function Manifesto() {
   return (
@@ -22,11 +24,11 @@ export function Manifesto() {
         {manifesto.eyebrow}
       </IndexLabel>
 
-      <h2 id="manifesto-title" className="type-h2 mt-8 max-w-[22ch]">
-        <span className="text-muted">{manifesto.leadSentence}</span>{" "}
-        <span className="text-primary">{manifesto.resolve}</span>{" "}
-        <span className="text-lime">{manifesto.emphasis}</span>
-      </h2>
+      <ManifestoReveal
+        lead={manifesto.leadSentence}
+        resolve={manifesto.resolve}
+        emphasis={manifesto.emphasis}
+      />
     </Section>
   );
 }

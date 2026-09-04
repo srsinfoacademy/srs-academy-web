@@ -21,22 +21,39 @@ export function HomeHero() {
       <Container className="relative">
         <div className="grid items-start gap-x-8 gap-y-16 lg:grid-cols-12">
           <div className="lg:col-span-6 xl:col-span-6">
-            <IndexLabel index={heroCopy.index} as="p">
+            <IndexLabel index={heroCopy.index} as="p" className="hero-enter">
               {heroCopy.eyebrow}
             </IndexLabel>
 
-            <p className="type-index mt-6 text-secondary">{heroCopy.organisation}</p>
+            <p
+              className="type-index hero-enter mt-6 text-secondary"
+              style={{ animationDelay: "60ms" }}
+            >
+              {heroCopy.organisation}
+            </p>
 
-            <h1 id="hero-title" className="type-display-xl mt-3 max-w-[16ch]">
+            <h1
+              id="hero-title"
+              className="type-display-xl hero-enter mt-3 max-w-[16ch]"
+              style={{ animationDelay: "120ms" }}
+            >
               {heroCopy.headline}
             </h1>
 
-            <p className="type-body-l mt-8 max-w-[52ch]">{heroCopy.lead}</p>
-            <p className="type-body-s mt-3 max-w-[52ch] text-muted">
+            <p
+              className="type-body-l hero-enter mt-8 max-w-[52ch]"
+              style={{ animationDelay: "220ms" }}
+            >
+              {heroCopy.lead}
+            </p>
+            <p
+              className="type-body-s hero-enter mt-3 max-w-[52ch] text-muted"
+              style={{ animationDelay: "260ms" }}
+            >
               {heroCopy.positioning}
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="hero-enter mt-10 flex flex-wrap gap-4" style={{ animationDelay: "320ms" }}>
               <Button href={routes.programs} size="md">
                 {heroCopy.primaryCta}
               </Button>
@@ -45,13 +62,19 @@ export function HomeHero() {
               </Button>
             </div>
 
-            <p className="type-index mt-12 text-muted">Scroll — {heroCopy.scrollNote}</p>
+            <p
+              className="type-index hero-enter mt-12 text-muted"
+              style={{ animationDelay: "380ms" }}
+            >
+              Scroll — {heroCopy.scrollNote}
+            </p>
           </div>
 
           {/*
             The network holds its own column on large screens. Below 1024 it
             moves under the copy and keeps a shorter box, so the headline is
-            always the first thing read.
+            always the first thing read. It settles in after the copy column,
+            per its own internal stagger — see HeroNetwork.
           */}
           <div className="lg:col-span-6">
             <HeroNetwork className="w-full" />

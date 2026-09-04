@@ -71,32 +71,41 @@ export function ProgramAccordionList({
               </button>
             </h3>
 
-            <div id={panelId} hidden={!isOpen} className="pb-6">
-              <div className="h-28 rounded-[var(--srs-radius-lg)] border border-line-hairline p-4">
-                <ProgramArt type={program.visualType} />
-              </div>
-              <p className="type-index mt-3">{program.artLabel}</p>
-
-              <p className="type-body-s mt-4">{program.shortDescription}</p>
-
-              <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
-                {[
-                  { label: "Duration", value: program.duration },
-                  { label: "Mode", value: program.mode },
-                  { label: "Level", value: program.level },
-                  { label: "Eligibility", value: program.eligibility },
-                ].map((row) => (
-                  <div key={row.label} className="flex flex-col gap-1">
-                    <dt className="type-index">{row.label}</dt>
-                    <dd className="type-body-s text-primary">{row.value}</dd>
+            <div className="accordion-panel" data-open={isOpen}>
+              <div>
+                <div
+                  id={panelId}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen ? true : undefined}
+                  className="accordion-panel-content pb-6"
+                >
+                  <div className="h-28 rounded-[var(--srs-radius-lg)] border border-line-hairline p-4">
+                    <ProgramArt type={program.visualType} />
                   </div>
-                ))}
-              </dl>
+                  <p className="type-index mt-3">{program.artLabel}</p>
 
-              <div className="mt-6">
-                <Button href={routes.program(program.slug)} size="md" block>
-                  View Program →
-                </Button>
+                  <p className="type-body-s mt-4">{program.shortDescription}</p>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
+                    {[
+                      { label: "Duration", value: program.duration },
+                      { label: "Mode", value: program.mode },
+                      { label: "Level", value: program.level },
+                      { label: "Eligibility", value: program.eligibility },
+                    ].map((row) => (
+                      <div key={row.label} className="flex flex-col gap-1">
+                        <dt className="type-index">{row.label}</dt>
+                        <dd className="type-body-s text-primary">{row.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-6">
+                    <Button href={routes.program(program.slug)} size="md" block>
+                      View Program →
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </li>

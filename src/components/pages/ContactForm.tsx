@@ -81,12 +81,14 @@ export function ContactForm() {
       "w-full rounded-[var(--srs-radius-md)] border bg-surface-2 px-3 py-3",
       "type-body-s text-primary placeholder:text-muted",
       "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-      errors[name] ? "border-[var(--srs-error)]" : "border-line hover:border-line-strong",
+      errors[name]
+        ? "border-[var(--srs-error)]"
+        : "border-line hover:border-line-strong focus-visible:border-lime",
     );
 
   if (state === "done") {
     return (
-      <div className="flex flex-col gap-6">
+      <div className="rise-in flex flex-col gap-6">
         <AlertMessage tone="info" role="status">
           <p>
             This form is not connected to a mail service yet, so your message has{" "}
@@ -120,7 +122,7 @@ export function ContactForm() {
         className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--srs-focus)]"
       >
         {errorList.length > 0 ? (
-          <AlertMessage tone="error">
+          <AlertMessage tone="error" className="rise-in">
             <p>Check the following before sending:</p>
             <ul className="mt-2 flex list-disc flex-col gap-1 pl-5">
               {errorList.map(([name, message]) => (
@@ -254,7 +256,7 @@ function RequiredMark() {
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="type-body-s text-[var(--srs-error)]">
+    <p id={id} className="rise-in type-body-s text-[var(--srs-error)]">
       {message}
     </p>
   );

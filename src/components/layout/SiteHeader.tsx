@@ -53,12 +53,12 @@ export function SiteHeader() {
       }
       className={cn(
         "sticky top-0 z-[var(--srs-z-header)] w-full",
-        "border-b transition-[height,background-color,border-color,backdrop-filter]",
+        "border-b transition-[height,background-color,border-color,backdrop-filter,box-shadow]",
         "duration-[var(--srs-duration-base)] ease-standard",
         "h-[var(--srs-header-current)]",
         compact
-          ? "border-line-hairline bg-bg/85 backdrop-blur-md"
-          : "border-transparent bg-bg",
+          ? "border-line-hairline bg-bg/85 shadow-[0_1px_0_0_var(--srs-border-hairline),0_16px_32px_-24px_rgb(0_0_0_/_0.55)] backdrop-blur-md"
+          : "border-transparent bg-bg shadow-none",
       )}
     >
       <Container className="flex h-full items-center justify-between gap-6">

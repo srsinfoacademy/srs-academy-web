@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { Reveal } from "@/components/motion/Reveal";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { SearchField } from "@/components/ui/SearchField";
@@ -68,37 +69,44 @@ export function UpdatesList({ updates }: { updates: Update[] }) {
           </EmptyState>
         )
       ) : (
-        <ul className="border-t border-line">
-          {results.map((update) => (
-            <li key={update.slug} className="border-b border-line">
-              <Link
-                href={routes.update(update.slug)}
-                className={cn(
-                  "flex min-h-16 flex-col gap-2 py-5",
-                  "sm:flex-row sm:items-baseline sm:gap-6",
-                  "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-                  "hover:bg-[rgb(242_244_239_/_0.03)]",
-                )}
-              >
-                <span className="type-index shrink-0 sm:w-28">
-                  {formatUpdateDate(update.date)}
-                </span>
-
-                <span className="flex-1">
-                  <span className="type-h4 block text-balance">{update.title}</span>
-                  <span className="type-index mt-1.5 block">
-                    {update.category} · REF {update.referenceNumber}
-                    {update.attachments?.length
-                      ? ` · ${update.attachments.length} attachment${
-                          update.attachments.length === 1 ? "" : "s"
-                        }`
-                      : ""}
+        <Reveal as="ul" className="border-t border-line">
+            {results.map((update) => (
+              <li key={update.slug} className="border-b border-line">
+                <Link
+                  href={routes.update(update.slug)}
+                  className={cn(
+                    "group flex min-h-16 flex-col gap-2 py-5",
+                    "sm:flex-row sm:items-baseline sm:gap-6",
+                    "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+                    "hover:bg-[rgb(242_244_239_/_0.03)]",
+                  )}
+                >
+                  <span className="type-index shrink-0 sm:w-28">
+                    {formatUpdateDate(update.date)}
                   </span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+
+                  <span className="flex-1">
+                    <span className="type-h4 block text-balance">{update.title}</span>
+                    <span className="type-index mt-1.5 block">
+                      {update.category} · REF {update.referenceNumber}
+                      {update.attachments?.length
+                        ? ` · ${update.attachments.length} attachment${
+                            update.attachments.length === 1 ? "" : "s"
+                          }`
+                        : ""}
+                    </span>
+                  </span>
+
+                  <span
+                    aria-hidden="true"
+                    className="type-index shrink-0 text-lime transition-transform duration-[var(--srs-duration-fast)] ease-standard group-hover:translate-x-[3px]"
+                  >
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+        </Reveal>
       )}
     </div>
   );
