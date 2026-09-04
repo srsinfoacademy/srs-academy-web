@@ -1,0 +1,255 @@
+/*
+ * SRS Academy — Light Theme (preview).
+ *
+ * A fully independent Tailwind v4 entry point, scoped to the `/light`
+ * route group only. It never touches `src/app/globals.css` (the dark
+ * "Knowledge OS" stylesheet) and defines its own token namespace
+ * (`--color-sl-*`, `--font-sl-*`, …) so nothing here can collide with the
+ * production site's tokens even though both stylesheets are compiled by
+ * the same Tailwind toolchain.
+ *
+ * Palette + type scale + spacing/radius/shadow/motion values are taken from
+ * `SRS Light Theme Master Consolidation.dc.html` (§4 Final Design Tokens),
+ * reconciled with the accent set named in the build brief — the
+ * consolidation file's 4-swatch palette doesn't map onto the 5-way "Pick
+ * Your Vibe" control it also specifies, so the brief's 5-accent palette
+ * (which does) is used for colour, while every structural rule (spacing,
+ * radius, shadow, glass, motion durations, breakpoints, component states)
+ * is taken from the consolidation file as authoritative.
+ */
+
+@import "tailwindcss";
+
+@theme {
+  /* Paper / ink base */
+  --color-sl-paper: #f8f7f4;
+  --color-sl-paper-2: #f1efe9;
+  --color-sl-surface: #ffffff;
+  --color-sl-ink: #111111;
+
+  /* Accents — also the five "Pick Your Vibe" colours */
+  --color-sl-pink: #ffb7d5;
+  --color-sl-purple: #8b5cf6;
+  --color-sl-blue: #3b82f6;
+  --color-sl-lime: #b6f542;
+  --color-sl-coral: #ff5a5f;
+
+  --font-sl-display: var(--srs-typeface-display, "Space Grotesk"), ui-sans-serif, system-ui, sans-serif;
+  --font-sl-sans: var(--srs-typeface-sans, "Manrope"), ui-sans-serif, system-ui, sans-serif;
+  --font-sl-mono: var(--srs-typeface-mono, "IBM Plex Mono"), ui-monospace, monospace;
+
+  --radius-sl-sm: 10px;
+  --radius-sl-md: 14px;
+  --radius-sl-lg: 20px;
+  --radius-sl-full: 999px;
+
+  --breakpoint-xs: 22.5rem; /* 360 */
+  --breakpoint-sm: 24.375rem; /* 390 */
+  --breakpoint-md: 48rem; /* 768 */
+  --breakpoint-lg: 64rem; /* 1024 */
+  --breakpoint-xl: 80rem; /* 1280 */
+  --breakpoint-2xl: 90rem; /* 1440 */
+}
+
+.srs-light {
+  /* Fixed brand primary — constant regardless of vibe (buttons, CTAs). */
+  --sl-brand: var(--color-sl-lime);
+  --sl-brand-ink: var(--color-sl-ink);
+
+  /* Vibe-tintable accent — hero mood + selected-surface tinting only. */
+  --sl-accent: var(--color-sl-lime);
+  --sl-accent-soft: rgb(from var(--sl-accent) r g b / 0.16);
+  --sl-accent-strong: rgb(from var(--sl-accent) r g b / 0.32);
+  --sl-accent-text: #5b6b12;
+
+  --sl-shadow-card: 0 20px 36px -24px rgba(17, 17, 17, 0.3);
+  --sl-shadow-hero: 0 30px 60px -30px rgba(17, 17, 17, 0.25);
+
+  --sl-glass-bg: rgba(255, 255, 255, 0.55);
+  --sl-glass-border: rgba(255, 255, 255, 0.7);
+  --sl-glass-blur: blur(18px) saturate(170%);
+
+  --sl-dur-fast: 250ms;
+  --sl-dur-med: 350ms;
+  --sl-dur-reveal: 900ms;
+  --sl-dur-mask: 1150ms;
+  --sl-dur-line: 1700ms;
+  --sl-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--color-sl-paper);
+  color: var(--color-sl-ink);
+  font-family: var(--font-sl-sans);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Vibes: retint --sl-accent + hero mood only. Never touches contrast,
+   body text colour, or layout. Base paper/ink and the lime brand button
+   stay identical across every vibe. ---- */
+.srs-light[data-vibe="soft"] {
+  --sl-accent: var(--color-sl-pink);
+  --sl-accent-text: #a8386c;
+}
+.srs-light[data-vibe="dark"] {
+  --sl-accent: var(--color-sl-ink);
+  --sl-accent-soft: rgba(17, 17, 17, 0.08);
+  --sl-accent-strong: rgba(17, 17, 17, 0.16);
+  --sl-accent-text: #111111;
+}
+.srs-light[data-vibe="fresh"] {
+  --sl-accent: var(--color-sl-lime);
+  --sl-accent-text: #5b6b12;
+}
+.srs-light[data-vibe="creative"] {
+  --sl-accent: var(--color-sl-purple);
+  --sl-accent-text: #6d3ce0;
+}
+.srs-light[data-vibe="chill"] {
+  --sl-accent: var(--color-sl-blue);
+  --sl-accent-text: #1d5fd6;
+}
+
+.sl-glass {
+  background: var(--sl-glass-bg);
+  backdrop-filter: var(--sl-glass-blur);
+  -webkit-backdrop-filter: var(--sl-glass-blur);
+  border: 1px solid var(--sl-glass-border);
+}
+
+.sl-container {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 4rem);
+}
+
+.sl-kicker {
+  font-family: var(--font-sl-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sl-accent-text);
+}
+
+.sl-h1 {
+  font-family: var(--font-sl-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.sl-h2 {
+  font-family: var(--font-sl-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+.sl-h3 {
+  font-family: var(--font-sl-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.sl-focus {
+  outline: none;
+}
+.sl-focus:focus-visible {
+  outline: 2px solid var(--color-sl-ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Marquee (Life at SRS) */
+@keyframes sl-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.sl-marquee-track {
+  animation: sl-marquee 42s linear infinite;
+}
+
+/* Hero float blobs */
+@keyframes sl-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+.sl-float {
+  animation: sl-float 8s ease-in-out infinite;
+}
+
+/* Timeline line-draw */
+.sl-line-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: sl-draw var(--sl-dur-line) var(--sl-ease) forwards;
+  animation-play-state: paused;
+}
+.sl-line-draw.is-in {
+  animation-play-state: running;
+}
+@keyframes sl-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Scroll reveal */
+.sl-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--sl-dur-reveal) var(--sl-ease),
+    transform var(--sl-dur-reveal) var(--sl-ease);
+}
+.sl-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mask reveal (spotlight panels) */
+.sl-mask-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--sl-dur-mask) var(--sl-ease);
+}
+.sl-mask-reveal.is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+.sl-scrollbar-none {
+  scrollbar-width: none;
+}
+.sl-scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reduced motion: collapse everything to an instant, fully visible state. */
+@media (prefers-reduced-motion: reduce) {
+  .srs-light *,
+  .srs-light *::before,
+  .srs-light *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sl-reveal,
+  .sl-mask-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: inset(0 0 0 0) !important;
+  }
+  .sl-marquee-track,
+  .sl-float {
+    animation: none !important;
+  }
+}
