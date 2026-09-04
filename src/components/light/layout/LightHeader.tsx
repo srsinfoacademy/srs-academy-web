@@ -46,12 +46,7 @@ export function LightHeader() {
       <div className="sl-container flex h-18 items-center justify-between">
         <Link href={lightRoutes.home} className="sl-focus flex items-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-sl-lime" aria-hidden="true" />
-          <span className="font-sl-display text-xl font-bold tracking-tight">
-            SRS Academy
-            <span className="ml-1.5 align-middle font-sl-mono text-[10px] font-medium tracking-[0.1em] text-sl-ink/45">
-              LIGHT PREVIEW
-            </span>
-          </span>
+          <span className="font-sl-display text-xl font-bold tracking-tight">SRS Academy</span>
         </Link>
 
         <nav className="hidden min-[1180px]:flex items-center gap-8" aria-label="Primary">

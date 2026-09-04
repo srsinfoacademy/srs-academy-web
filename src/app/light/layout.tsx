@@ -10,12 +10,11 @@ import "./light.css";
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — Light Theme Preview`,
-    template: `%s — ${site.name} (Light Preview)`,
+    default: site.name,
+    template: `%s — ${site.name}`,
   },
-  description:
-    "A visual preview of the SRS Academy light theme — a separate, parallel design exploration alongside the live site.",
-  robots: { index: false, follow: false },
+  description: site.description,
+  robots: { index: true, follow: true },
 };
 
 /**
