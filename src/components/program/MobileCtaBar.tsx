@@ -29,6 +29,22 @@ export function MobileCtaBar({
 }) {
   const [visible, setVisible] = useState(false);
 
+  // Publishes this bar's footprint so the floating theme-toggle/back-to-top
+  // stack (mounted separately in the route-group layout) can clear it
+  // instead of rendering on top of it — see FloatingUtilityControls.tsx.
+  // The value matches the h-20 bottom spacer this page already reserves
+  // for the same bar; the >=xl clamp lives in globals.css since `xl:!hidden`
+  // is what actually removes the bar at that breakpoint.
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--srs-mobile-cta-offset",
+      visible ? "5rem" : "0px",
+    );
+    return () => {
+      document.documentElement.style.setProperty("--srs-mobile-cta-offset", "0px");
+    };
+  }, [visible]);
+
   useEffect(() => {
     const sentinel = document.getElementById("hero-cta-sentinel");
     const end = document.getElementById("program-cta");

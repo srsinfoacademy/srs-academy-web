@@ -14,6 +14,21 @@
 @import "../styles/print.css";
 
 /*
+ * MobileCtaBar (program detail) publishes its own footprint to this
+ * variable so the floating theme-toggle/back-to-top stack can sit above it
+ * instead of overlapping it — see MobileCtaBar.tsx and
+ * FloatingUtilityControls.tsx. The bar is CSS-hidden at xl+ (`xl:!hidden`)
+ * regardless of its JS-tracked visibility, so the offset is force-cleared
+ * here at the same breakpoint rather than relying on the component to
+ * notice a resize.
+ */
+@media (min-width: 80rem) {
+  :root {
+    --srs-mobile-cta-offset: 0px !important;
+  }
+}
+
+/*
  * The default Tailwind palette is cleared so that no component can reach for
  * an off-system colour. Every colour utility below resolves to a token.
  */
