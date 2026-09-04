@@ -147,7 +147,7 @@ export function categoryOf(program: Program): ProgramCategory {
 export const statusLabel: Record<Program["status"], string> = {
   open: "Applications open",
   upcoming: "Upcoming intake",
-  pending: "[ADMISSION STATUS]",
+  pending: "Admissions open based on current course availability.",
 };
 
 /** Metadata rows, in the order the preview and accordion present them. */
