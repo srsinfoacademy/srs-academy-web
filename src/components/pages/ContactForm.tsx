@@ -5,6 +5,7 @@ import { useId, useRef, useState } from "react";
 import { AlertMessage } from "@/components/ui/AlertMessage";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { submitContactEnquiry } from "@/lib/contact/submit";
 
 type Field = "name" | "email" | "phone" | "subject" | "message" | "consent";
 type Errors = Partial<Record<Field, string>>;
@@ -16,7 +17,12 @@ const initial = {
   subject: "",
   message: "",
   consent: false,
+  // Honeypot — real visitors never see or fill this field.
+  company: "",
 };
+
+/** Minimum gap between two submit attempts, guarding against a double-click race. */
+const RESUBMIT_GUARD_MS = 2000;
 
 function validate(values: typeof initial): Errors {
   const errors: Errors = {};
@@ -33,22 +39,24 @@ function validate(values: typeof initial): Errors {
 /**
  * Contact form.
  *
- * There is no backend in this phase, and the form does not pretend otherwise:
- * submitting validates, then states plainly that sending is not yet connected
- * and points at the published contact details. Showing a "message sent"
- * confirmation for a message that goes nowhere would be a lie to the reader.
- *
- * Validation is client-side and on submit rather than per-keystroke, so a
- * half-typed email is not marked wrong while it is being typed. Errors are
- * associated with their field through aria-describedby and announced through
- * a live region; they are never signalled by colour alone.
+ * Submits to /api/contact (see src/app/api/contact/route.ts), which
+ * validates server-side, applies spam checks, and sends the enquiry via
+ * Resend. Validation here is client-side and on submit rather than
+ * per-keystroke, so a half-typed email is not marked wrong while it is
+ * being typed. Errors are associated with their field through
+ * aria-describedby and announced through a live region; they are never
+ * signalled by colour alone.
  */
 export function ContactForm() {
   const [values, setValues] = useState(initial);
   const [errors, setErrors] = useState<Errors>({});
-  const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const baseId = useId();
   const summaryRef = useRef<HTMLDivElement>(null);
+  // Lazy init: captured once, at mount — the server rejects a submission
+  // that arrives implausibly soon after this timestamp as bot-like.
+  const [formRenderedAt] = useState(() => Date.now());
+  const lastSubmitAtRef = useRef(0);
 
   const fieldId = (name: Field) => `${baseId}-${name}`;
   const errorId = (name: Field) => `${baseId}-${name}-error`;
@@ -68,10 +76,22 @@ export function ContactForm() {
       return;
     }
 
+    const now = Date.now();
+    if (now - lastSubmitAtRef.current < RESUBMIT_GUARD_MS) return;
+    lastSubmitAtRef.current = now;
+
     setState("sending");
-    // No network call: there is no endpoint yet.
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setState("done");
+    const result = await submitContactEnquiry({
+      name: values.name,
+      email: values.email,
+      phone: values.phone || undefined,
+      subject: values.subject || undefined,
+      message: values.message,
+      honeypot: values.company,
+      formRenderedAt,
+      sourcePage: window.location.pathname,
+    });
+    setState(result.ok ? "done" : "error");
   }
 
   const errorList = Object.entries(errors) as [Field, string][];
@@ -89,12 +109,8 @@ export function ContactForm() {
   if (state === "done") {
     return (
       <div className="rise-in flex flex-col gap-6">
-        <AlertMessage tone="info" role="status">
-          <p>
-            This form is not connected to a mail service yet, so your message has{" "}
-            <strong>not</strong> been sent. Please use the contact details on this
-            page in the meantime.
-          </p>
+        <AlertMessage tone="success" role="status">
+          <p>Thank you. Your enquiry has been received.</p>
         </AlertMessage>
         <div>
           <Button
@@ -115,6 +131,27 @@ export function ContactForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} className="flex flex-col gap-6">
+      {/*
+        Honeypot: real visitors never see this field (off-screen, not
+        display:none — some bots skip fields hidden that way — and never
+        reachable by keyboard). A filled value marks the submission as spam
+        server-side.
+      */}
+      <div className="absolute -left-[9999px]" aria-hidden="true">
+        <label htmlFor={`${baseId}-company`}>Leave this field empty</label>
+        <input
+          id={`${baseId}-company`}
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.company}
+          onChange={(e) =>
+            setValues((current) => ({ ...current, company: e.target.value }))
+          }
+        />
+      </div>
+
       <div
         ref={summaryRef}
         tabIndex={-1}
@@ -133,6 +170,13 @@ export function ContactForm() {
                 </li>
               ))}
             </ul>
+          </AlertMessage>
+        ) : state === "error" ? (
+          <AlertMessage tone="error" className="rise-in">
+            <p>
+              We couldn&apos;t send your enquiry right now. Please try again or
+              contact us directly.
+            </p>
           </AlertMessage>
         ) : null}
       </div>
@@ -226,11 +270,6 @@ export function ContactForm() {
         </div>
         <FieldError id={errorId("consent")} message={errors.consent} />
       </div>
-
-      <AlertMessage tone="info">
-        This form is a development placeholder. No message is transmitted, because
-        no mail service is connected yet.
-      </AlertMessage>
 
       <div>
         {/* Loading is a text change, not a spinner alone. */}
