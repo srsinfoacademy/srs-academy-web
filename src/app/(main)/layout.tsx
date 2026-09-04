@@ -1,6 +1,7 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SkipToContent } from "@/components/layout/SkipToContent";
+import { FloatingUtilityControls } from "@/components/shared/FloatingUtilityControls";
 
 /**
  * Layout for the primary "Knowledge OS" (dark theme) route group. Scoping
@@ -17,6 +18,7 @@ export default function MainLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <SiteFooter />
+      <FloatingUtilityControls variant="dark" />
     </>
   );
 }

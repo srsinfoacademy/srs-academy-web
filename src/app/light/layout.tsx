@@ -4,6 +4,7 @@ import { LightFooter } from "@/components/light/layout/LightFooter";
 import { LightHeader } from "@/components/light/layout/LightHeader";
 import { LightSkipToContent } from "@/components/light/layout/LightSkipToContent";
 import { VibeProvider } from "@/components/light/VibeProvider";
+import { FloatingUtilityControls } from "@/components/shared/FloatingUtilityControls";
 import { site } from "@/content/site";
 import "./light.css";
 
@@ -33,6 +34,7 @@ export default function LightLayout({ children }: LayoutProps<"/light">) {
         {children}
       </main>
       <LightFooter />
+      <FloatingUtilityControls variant="light" />
     </VibeProvider>
   );
 }
