@@ -26,7 +26,12 @@
 
 import { sharedCategories } from "@/content/catalogue/categories";
 import { catalogueCourses } from "@/content/catalogue/courses";
-import type { NormalizedCourse, SharedCategory, SharedCategorySlug } from "@/content/catalogue/types";
+import type {
+  CourseMode as CatalogueCourseMode,
+  NormalizedCourse,
+  SharedCategory,
+  SharedCategorySlug,
+} from "@/content/catalogue/types";
 
 /**
  * Re-exported from the shared catalogue taxonomy (`@/content/catalogue`) —
@@ -395,7 +400,32 @@ function toLightCourse(course: NormalizedCourse): Course {
     tags: course.tags,
     curriculum: course.curriculum,
     courseType: course.courseType ?? undefined,
+    // Light's filter chips are single-select — the first verified mode
+    // stands in for the whole set; the dark catalogue (which shows every
+    // mode) is the complete picture for a course enriched with more than
+    // one. `level` only carries over when it matches light's fixed
+    // beginner/intermediate/advanced vocabulary exactly — anything else
+    // (a level string enrichment hasn't constrained to that set) is simply
+    // not shown on this theme rather than forced into the wrong bucket.
+    mode: toLightMode(course.mode),
+    level: toLightLevel(course.level),
   };
+}
+
+function toLightMode(modes: CatalogueCourseMode[] | null): CourseMode | undefined {
+  if (!modes?.length) return undefined;
+  const lower = modes[0].toLowerCase();
+  return (["online", "offline", "hybrid"] as const).includes(lower as CourseMode)
+    ? (lower as CourseMode)
+    : undefined;
+}
+
+function toLightLevel(level: string | null): CourseLevel | undefined {
+  if (!level) return undefined;
+  const lower = level.toLowerCase();
+  return (["beginner", "intermediate", "advanced"] as const).includes(lower as CourseLevel)
+    ? (lower as CourseLevel)
+    : undefined;
 }
 
 /**

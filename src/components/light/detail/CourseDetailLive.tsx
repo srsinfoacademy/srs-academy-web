@@ -155,9 +155,15 @@ export function CourseDetailLive({ program, course }: { program: Program; course
             <section id="certification">
               <h2 className="sl-h2 mb-4 text-2xl">Certification</h2>
               <div className="sl-glass rounded-[var(--radius-sl-md)] px-6 py-5">
-                <div className="mb-1 text-[15px] font-semibold">{detail.certification.name}</div>
-                <div className="mb-1 text-sm text-sl-ink/65">Issued by {detail.certification.issuedBy}</div>
-                <div className="text-sm text-sl-ink/50">{detail.certification.verification}</div>
+                {typeof detail.certification === "string" ? (
+                  <div className="text-sm leading-relaxed text-sl-ink/72">{detail.certification}</div>
+                ) : (
+                  <>
+                    <div className="mb-1 text-[15px] font-semibold">{detail.certification.name}</div>
+                    <div className="mb-1 text-sm text-sl-ink/65">Issued by {detail.certification.issuedBy}</div>
+                    <div className="text-sm text-sl-ink/50">{detail.certification.verification}</div>
+                  </>
+                )}
               </div>
             </section>
           ) : null}
@@ -206,7 +212,9 @@ export function CourseDetailLive({ program, course }: { program: Program; course
             <div id="fees" className="mb-4 font-sl-mono text-[10px] tracking-[0.12em] text-sl-ink/45">
               FEES
             </div>
-            {detail.fees ? (
+            {typeof detail.fees === "string" ? (
+              <div className="mb-5 text-2xl font-bold">{detail.fees}</div>
+            ) : detail.fees ? (
               <div className="mb-5 text-2xl font-bold">{detail.fees.program}</div>
             ) : (
               <p className="mb-5 text-sm leading-relaxed text-sl-ink/60">

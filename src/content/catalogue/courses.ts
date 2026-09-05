@@ -1,4 +1,5 @@
-import { splitCurriculum, slugify } from "@/content/catalogue/helpers";
+import { courseEnrichment } from "@/content/catalogue/enrichment";
+import { mergeEnrichment, splitCurriculum, slugify } from "@/content/catalogue/helpers";
 import type { NormalizedCourse } from "@/content/catalogue/types";
 
 /**
@@ -65,13 +66,21 @@ function record(input: {
     eligibility: null,
     certification: null,
     fees: null,
+    curriculumModules: null,
+    primaryCta: null,
     featured: false,
     status: "live",
     sourceRow: input.sourceRow,
   };
 }
 
-export const catalogueCourses: NormalizedCourse[] = [
+/**
+ * The base, spreadsheet-only records — before any enrichment is applied.
+ * `catalogueCourses` at the bottom of this file is the one both themes
+ * actually import; this stays internal so nothing can accidentally read
+ * pre-enrichment data.
+ */
+const rawCourses: NormalizedCourse[] = [
   record({
     sourceName: "Cake Bakery Course",
     sourceCourseCode: "VTDB001",
@@ -328,6 +337,68 @@ export const catalogueCourses: NormalizedCourse[] = [
     sourceRow: 25,
   }),
 ];
+
+/**
+ * Every real slug `rawCourses` actually produces — the type-level guardrail
+ * `enrichment.ts` uses so a typo'd or removed slug fails `pnpm typecheck`
+ * rather than silently enriching nothing. Kept as a literal tuple (rather
+ * than derived from `rawCourses` itself) because `slugify()` isn't a
+ * type-level operation; `assertSlugsMatch()` below is the runtime half of
+ * this guarantee — it fails the build if this list and `rawCourses` ever
+ * drift apart.
+ */
+export const CATALOGUE_SLUGS = [
+  "cake-bakery-course",
+  "basic-to-advance-nail-extension-course",
+  "basic-to-advance-mehendi-masters-course",
+  "summer-internship-programme",
+  "basic-internship-course",
+  "advanced-diploma-in-computer-application",
+  "advanced-diploma-in-digital-marketing",
+  "it-siksha-with-ai",
+  "ai-with-digital-marketing-basic-siksha",
+  "digital-marketing-siksha",
+  "it-siksha",
+  "digital-literacy-siksha",
+  "certificate-in-assamese-typing",
+  "diploma-in-english-and-hindi-typing",
+  "certificate-in-odia-typing",
+  "diploma-in-english-and-bengali-typing",
+  "certificate-in-hindi-typing",
+  "certificate-in-bengali-typing",
+  "certificate-in-english-typing",
+  "diploma-in-english-typing",
+  "diploma-in-hindi-typing",
+  "diploma-in-bengali-typing",
+] as const;
+
+export type CatalogueSlug = (typeof CATALOGUE_SLUGS)[number];
+
+/** Fails the build (not just typecheck) if `CATALOGUE_SLUGS` and the actual records ever diverge. */
+function assertSlugsMatch(courses: NormalizedCourse[]): void {
+  const actual = new Set(courses.map((c) => c.slug));
+  const declared = new Set<string>(CATALOGUE_SLUGS);
+
+  const missingFromDeclared = [...actual].filter((s) => !declared.has(s));
+  const missingFromActual = [...declared].filter((s) => !actual.has(s));
+
+  if (missingFromDeclared.length > 0 || missingFromActual.length > 0) {
+    throw new Error(
+      "CATALOGUE_SLUGS is out of sync with the actual course records.\n" +
+        (missingFromDeclared.length > 0
+          ? `  In rawCourses but missing from CATALOGUE_SLUGS: ${missingFromDeclared.join(", ")}\n`
+          : "") +
+        (missingFromActual.length > 0
+          ? `  In CATALOGUE_SLUGS but no matching course: ${missingFromActual.join(", ")}\n`
+          : ""),
+    );
+  }
+}
+
+assertSlugsMatch(rawCourses);
+
+/** Spreadsheet base data + verified enrichment, merged once at module load — the one list both themes read. */
+export const catalogueCourses: NormalizedCourse[] = mergeEnrichment(rawCourses, courseEnrichment);
 
 export function catalogueCourseBySlug(slug: string): NormalizedCourse | undefined {
   return catalogueCourses.find((c) => c.slug === slug);

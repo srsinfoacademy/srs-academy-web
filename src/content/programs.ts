@@ -196,6 +196,8 @@ function toProgram(course: NormalizedCourse, num: string): Program {
     tags: [...course.tags, ...course.curriculum],
     courseType: course.courseType ?? undefined,
     sourceName: course.sourceName,
+    mode: course.mode?.join(", "),
+    level: course.level ?? undefined,
   };
 }
 
