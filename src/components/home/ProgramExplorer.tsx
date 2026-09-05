@@ -125,7 +125,7 @@ export function ProgramExplorer() {
         </dl>
 
         <ul className="mt-6 flex flex-wrap items-center gap-2">
-          {active.pathway.map((step) => (
+          {(active.pathway ?? []).map((step) => (
             <li
               key={step}
               className="type-label rounded-[var(--srs-radius-full)] border border-line px-3 py-1.5"

@@ -50,15 +50,19 @@ export function FeaturedPrograms() {
               <div className="p-4">
                 <div className="mb-1.5 text-[15px] font-semibold">{course.title}</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span
-                    className="rounded-full px-2 py-1 font-sl-mono text-[9px]"
-                    style={{ background: "var(--sl-accent-soft)" }}
-                  >
-                    {modeLabels[course.mode].toUpperCase()}
-                  </span>
-                  <span className="rounded-full bg-sl-ink/6 px-2 py-1 font-sl-mono text-[9px]">
-                    {levelLabels[course.level].toUpperCase()}
-                  </span>
+                  {course.mode ? (
+                    <span
+                      className="rounded-full px-2 py-1 font-sl-mono text-[9px]"
+                      style={{ background: "var(--sl-accent-soft)" }}
+                    >
+                      {modeLabels[course.mode].toUpperCase()}
+                    </span>
+                  ) : null}
+                  {course.level ? (
+                    <span className="rounded-full bg-sl-ink/6 px-2 py-1 font-sl-mono text-[9px]">
+                      {levelLabels[course.level].toUpperCase()}
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </Link>

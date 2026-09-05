@@ -5,7 +5,7 @@ import { MobileCtaBar } from "@/components/program/MobileCtaBar";
 import { ProgramBody } from "@/components/program/ProgramBody";
 import { ProgramHero } from "@/components/program/ProgramHero";
 import { detailFor } from "@/content/program-detail";
-import { categoryOf, programs } from "@/content/programs";
+import { allCoursePrograms as programs, catalogueCategoryOf } from "@/content/programs";
 import { pageMetadata } from "@/lib/metadata";
 import { routes } from "@/lib/routes";
 
@@ -28,12 +28,17 @@ export async function generateMetadata({
   // The category is only worth adding when it says something the program
   // name does not — several programs are named after their category, and
   // repeating it produces "X — X — SRS Academy".
-  const category = categoryOf(program).name;
+  const category = catalogueCategoryOf(program).label;
   const title = category === program.name ? program.name : `${program.name} — ${category}`;
 
   return pageMetadata({
     title,
-    description: detail.overview,
+    // Factual metadata only — from confirmed overview text when it exists,
+    // otherwise the real duration/course-type facts, never invented copy.
+    description:
+      detail.overview ??
+      [program.courseType, program.duration].filter(Boolean).join(" · ") ??
+      category,
     path: routes.program(program.slug),
   });
 }

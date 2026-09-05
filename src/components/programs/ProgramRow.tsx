@@ -1,5 +1,5 @@
 import { cn } from "@/lib/cn";
-import { categoryOf, statusLabel } from "@/content/programs";
+import { catalogueCategoryOf, statusLabel } from "@/content/programs";
 import type { Program } from "@/types/program";
 
 type ProgramRowProps = {
@@ -17,7 +17,10 @@ type ProgramRowProps = {
  * alone. Hover is a separate, weaker treatment.
  */
 export function ProgramRow({ program, selected, id, onSelect }: ProgramRowProps) {
-  const category = categoryOf(program);
+  const category = catalogueCategoryOf(program);
+  const meta = [category.label, program.level, statusLabel[program.status]].filter(
+    (v): v is string => typeof v === "string" && !v.startsWith("["),
+  );
 
   return (
     <li
@@ -60,9 +63,7 @@ export function ProgramRow({ program, selected, id, onSelect }: ProgramRowProps)
           </span>
           {/* Status sits on the meta line rather than in its own column, so a
               long program name keeps the full width of the row. */}
-          <span className="type-index mt-1.5 block">
-            {category.label} · {program.level} · {statusLabel[program.status]}
-          </span>
+          <span className="type-index mt-1.5 block">{meta.join(" · ")}</span>
         </span>
       </div>
     </li>

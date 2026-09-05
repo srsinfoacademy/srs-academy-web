@@ -3,14 +3,22 @@
 import { useId } from "react";
 
 import { cn } from "@/lib/cn";
-import { categories, levelOptions, modeOptions } from "@/content/programs";
-import type { CategorySlug } from "@/types/program";
+import {
+  catalogueCategories,
+  catalogueCourseTypeOptions,
+  catalogueDurationOptions,
+  catalogueLevelOptions,
+  catalogueModeOptions,
+} from "@/content/programs";
+import type { SharedCategorySlug } from "@/content/catalogue/types";
 
 export type Filters = {
   query: string;
-  category: CategorySlug | "all";
+  category: SharedCategorySlug | "all";
   level: string;
   mode: string;
+  courseType: string;
+  duration: string;
 };
 
 export const emptyFilters: Filters = {
@@ -18,6 +26,8 @@ export const emptyFilters: Filters = {
   category: "all",
   level: "all",
   mode: "all",
+  courseType: "all",
+  duration: "all",
 };
 
 export function isFiltered(filters: Filters): boolean {
@@ -25,7 +35,9 @@ export function isFiltered(filters: Filters): boolean {
     filters.query.trim() !== "" ||
     filters.category !== "all" ||
     filters.level !== "all" ||
-    filters.mode !== "all"
+    filters.mode !== "all" ||
+    filters.courseType !== "all" ||
+    filters.duration !== "all"
   );
 }
 
@@ -51,6 +63,8 @@ export function ProgramFilters({
   const searchId = useId();
   const levelId = useId();
   const modeId = useId();
+  const courseTypeId = useId();
+  const durationId = useId();
 
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
 
@@ -102,16 +116,16 @@ export function ProgramFilters({
       <div className="flex flex-col gap-3">
         <p className="type-index">Category</p>
         <ul className="flex flex-wrap gap-2 xl:flex-col xl:gap-0">
-          {[{ slug: "all" as const, num: "—", name: "All programs" }, ...categories].map(
+          {[{ id: "all" as const, num: "—", label: "All programs" }, ...catalogueCategories.map((c, i) => ({ id: c.id, num: String(i + 1).padStart(2, "0"), label: c.label }))].map(
             (category) => {
-              const active = filters.category === category.slug;
+              const active = filters.category === category.id;
 
               return (
-                <li key={category.slug} className="xl:w-full">
+                <li key={category.id} className="xl:w-full">
                   <button
                     type="button"
                     aria-pressed={active}
-                    onClick={() => set({ category: category.slug })}
+                    onClick={() => set({ category: category.id })}
                     className={cn(
                       "flex min-h-11 w-full items-center gap-3 px-3",
                       "rounded-[var(--srs-radius-md)] border border-line xl:border-transparent",
@@ -130,7 +144,7 @@ export function ProgramFilters({
                       )}
                     />
                     <span className="type-index shrink-0">{category.num}</span>
-                    <span className="flex-1">{category.name}</span>
+                    <span className="flex-1">{category.label}</span>
                   </button>
                 </li>
               );
@@ -140,43 +154,90 @@ export function ProgramFilters({
       </div>
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-1">
-        <div className="flex flex-col gap-2">
-          <label htmlFor={levelId} className="type-index">
-            Level
-          </label>
-          <select
-            id={levelId}
-            value={filters.level}
-            onChange={(e) => set({ level: e.target.value })}
-            className={selectClass}
-          >
-            <option value="all">All levels</option>
-            {levelOptions.map((level) => (
-              <option key={level} value={level}>
-                {level}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Mode and Level only appear once real, verified data exists for at least one program — never a filter with zero useful options. */}
+        {catalogueLevelOptions.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <label htmlFor={levelId} className="type-index">
+              Level
+            </label>
+            <select
+              id={levelId}
+              value={filters.level}
+              onChange={(e) => set({ level: e.target.value })}
+              className={selectClass}
+            >
+              <option value="all">All levels</option>
+              {catalogueLevelOptions.map((level) => (
+                <option key={level} value={level}>
+                  {level}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor={modeId} className="type-index">
-            Mode
-          </label>
-          <select
-            id={modeId}
-            value={filters.mode}
-            onChange={(e) => set({ mode: e.target.value })}
-            className={selectClass}
-          >
-            <option value="all">All modes</option>
-            {modeOptions.map((mode) => (
-              <option key={mode} value={mode}>
-                {mode}
-              </option>
-            ))}
-          </select>
-        </div>
+        {catalogueModeOptions.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <label htmlFor={modeId} className="type-index">
+              Mode
+            </label>
+            <select
+              id={modeId}
+              value={filters.mode}
+              onChange={(e) => set({ mode: e.target.value })}
+              className={selectClass}
+            >
+              <option value="all">All modes</option>
+              {catalogueModeOptions.map((mode) => (
+                <option key={mode} value={mode}>
+                  {mode}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+
+        {catalogueCourseTypeOptions.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <label htmlFor={courseTypeId} className="type-index">
+              Course type
+            </label>
+            <select
+              id={courseTypeId}
+              value={filters.courseType}
+              onChange={(e) => set({ courseType: e.target.value })}
+              className={selectClass}
+            >
+              <option value="all">All course types</option>
+              {catalogueCourseTypeOptions.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+
+        {catalogueDurationOptions.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <label htmlFor={durationId} className="type-index">
+              Duration
+            </label>
+            <select
+              id={durationId}
+              value={filters.duration}
+              onChange={(e) => set({ duration: e.target.value })}
+              className={selectClass}
+            >
+              <option value="all">Any duration</option>
+              {catalogueDurationOptions.map((duration) => (
+                <option key={duration} value={duration}>
+                  {duration}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
       </div>
 
       <div className="flex items-center justify-between gap-4 border-t border-line-hairline pt-5">

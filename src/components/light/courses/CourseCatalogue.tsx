@@ -24,7 +24,13 @@ type Filters = {
   mode: CourseMode | "all";
   level: CourseLevel | "all";
   duration: CourseDurationBucket | "all";
+  courseType: string;
 };
+
+/** Real, verified course types only — computed from the actual catalogue, never invented. */
+const courseTypeOptions = [
+  ...new Set(courses.map((c) => c.courseType).filter((v): v is string => Boolean(v))),
+].sort();
 
 const chipBase =
   "sl-focus rounded-full px-4 py-2 text-sm font-medium transition-colors duration-[var(--sl-dur-fast)] whitespace-nowrap";
@@ -59,6 +65,7 @@ export function CourseCatalogue({ initialQuery = "", initialCategory = "all" }: 
     mode: "all",
     level: "all",
     duration: "all",
+    courseType: "all",
   });
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -69,8 +76,25 @@ export function CourseCatalogue({ initialQuery = "", initialCategory = "all" }: 
       if (filters.mode !== "all" && c.mode !== filters.mode) return false;
       if (filters.level !== "all" && c.level !== filters.level) return false;
       if (filters.duration !== "all" && c.duration !== filters.duration) return false;
-      if (q && !c.title.toLowerCase().includes(q) && !c.blurb.toLowerCase().includes(q)) return false;
-      return true;
+      if (filters.courseType !== "all" && c.courseType !== filters.courseType) return false;
+      if (!q) return true;
+
+      // Case-insensitive search across name, source name, course code,
+      // category, subcategory, tags and curriculum keywords.
+      const haystack = [
+        c.title,
+        c.sourceName,
+        c.courseCode,
+        courseCategories.find((cat) => cat.id === c.category)?.label,
+        c.subcategory,
+        ...(c.tags ?? []),
+        ...(c.curriculum ?? []),
+        c.blurb,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(q);
     });
   }, [search, filters]);
 
@@ -79,11 +103,12 @@ export function CourseCatalogue({ initialQuery = "", initialCategory = "all" }: 
     (filters.mode !== "all" ? 1 : 0) +
     (filters.level !== "all" ? 1 : 0) +
     (filters.duration !== "all" ? 1 : 0) +
+    (filters.courseType !== "all" ? 1 : 0) +
     (search.trim() ? 1 : 0);
 
   function reset() {
     setSearch("");
-    setFilters({ category: "all", mode: "all", level: "all", duration: "all" });
+    setFilters({ category: "all", mode: "all", level: "all", duration: "all", courseType: "all" });
   }
 
   const filterPanel = (
@@ -106,6 +131,15 @@ export function CourseCatalogue({ initialQuery = "", initialCategory = "all" }: 
         active={filters.duration}
         onSelect={(id) => setFilters((f) => ({ ...f, duration: id as Filters["duration"] }))}
       />
+      {/* Course type only appears when at least one real, verified value exists. */}
+      {courseTypeOptions.length > 0 ? (
+        <FilterGroup
+          label="Course type"
+          options={[{ id: "all", label: "Any type" }, ...courseTypeOptions.map((type) => ({ id: type, label: type }))]}
+          active={filters.courseType}
+          onSelect={(id) => setFilters((f) => ({ ...f, courseType: id }))}
+        />
+      ) : null}
     </div>
   );
 
@@ -296,12 +330,16 @@ function CourseCard({ course }: { course: Course }) {
         <div className="mb-2.5 text-[15px] font-semibold">{course.title}</div>
         <p className="mb-3 text-[13px] leading-relaxed text-sl-ink/62">{course.blurb}</p>
         <div className="flex flex-wrap gap-1.5">
-          <span className="rounded-full px-2 py-1 font-sl-mono text-[9px]" style={{ background: "var(--sl-accent-soft)" }}>
-            {modeLabels[course.mode].toUpperCase()}
-          </span>
-          <span className="rounded-full bg-sl-ink/6 px-2 py-1 font-sl-mono text-[9px]">
-            {levelLabels[course.level].toUpperCase()}
-          </span>
+          {course.mode ? (
+            <span className="rounded-full px-2 py-1 font-sl-mono text-[9px]" style={{ background: "var(--sl-accent-soft)" }}>
+              {modeLabels[course.mode].toUpperCase()}
+            </span>
+          ) : null}
+          {course.level ? (
+            <span className="rounded-full bg-sl-ink/6 px-2 py-1 font-sl-mono text-[9px]">
+              {levelLabels[course.level].toUpperCase()}
+            </span>
+          ) : null}
         </div>
       </div>
     </Link>

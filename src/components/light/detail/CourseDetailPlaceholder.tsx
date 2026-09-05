@@ -50,14 +50,18 @@ export function CourseDetailPlaceholder({ course }: { course: Course }) {
           </div>
 
           <dl className="mb-8 grid grid-cols-1 gap-4 min-[600px]:grid-cols-3">
-            <div className="rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white p-4">
-              <dt className="mb-1 font-sl-mono text-[10px] tracking-[0.1em] text-sl-ink/45">MODE</dt>
-              <dd className="text-sm font-semibold">{modeLabels[course.mode]}</dd>
-            </div>
-            <div className="rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white p-4">
-              <dt className="mb-1 font-sl-mono text-[10px] tracking-[0.1em] text-sl-ink/45">LEVEL</dt>
-              <dd className="text-sm font-semibold">{levelLabels[course.level]}</dd>
-            </div>
+            {course.mode ? (
+              <div className="rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white p-4">
+                <dt className="mb-1 font-sl-mono text-[10px] tracking-[0.1em] text-sl-ink/45">MODE</dt>
+                <dd className="text-sm font-semibold">{modeLabels[course.mode]}</dd>
+              </div>
+            ) : null}
+            {course.level ? (
+              <div className="rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white p-4">
+                <dt className="mb-1 font-sl-mono text-[10px] tracking-[0.1em] text-sl-ink/45">LEVEL</dt>
+                <dd className="text-sm font-semibold">{levelLabels[course.level]}</dd>
+              </div>
+            ) : null}
             <div className="rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white p-4">
               <dt className="mb-1 font-sl-mono text-[10px] tracking-[0.1em] text-sl-ink/45">DURATION</dt>
               <dd className="text-sm font-semibold">{durationLabels[course.duration]}</dd>

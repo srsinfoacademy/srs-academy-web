@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { cn } from "@/lib/cn";
-import { detailSections } from "@/content/program-detail";
-import { categoryOf, programs } from "@/content/programs";
+import { sectionsFor } from "@/content/program-detail";
+import { allCoursePrograms, catalogueCategoryOf } from "@/content/programs";
 import { routes } from "@/lib/routes";
 import type { Program, ProgramDetail } from "@/types/program";
 
@@ -21,11 +21,17 @@ export function ProgramBody({
   detail: ProgramDetail;
 }) {
   const related = detail.relatedPrograms
-    .map((slug) => programs.find((p) => p.slug === slug))
+    .map((slug) => allCoursePrograms.find((p) => p.slug === slug))
     .filter((p): p is Program => p !== undefined);
 
   const hasDates = (detail.importantDates?.length ?? 0) > 0;
   const hasDownloads = (detail.downloads?.length ?? 0) > 0;
+  const hasOverview = Boolean(detail.about || detail.audience?.length);
+  const hasLearning = Boolean(detail.learningOutcomes?.length || detail.projectExperience);
+  const hasEligibility = Boolean(detail.eligibility?.length);
+  const hasCertification = Boolean(detail.certification);
+  const hasAdmissions = Boolean(detail.admissionsSteps?.length);
+  const hasFaq = Boolean(detail.faq?.length);
 
   /*
    * Section indices count the sections actually rendered. Optional sections
@@ -33,16 +39,16 @@ export function ProgramBody({
    * leave a gap in the sequence that reads as a mistake.
    */
   const order = [
-    "overview",
-    "learning",
+    ...(hasOverview ? ["overview"] : []),
+    ...(hasLearning ? ["learning"] : []),
     "curriculum",
-    "eligibility",
-    "certification",
+    ...(hasEligibility ? ["eligibility"] : []),
+    ...(hasCertification ? ["certification"] : []),
     "fees",
-    "admissions",
+    ...(hasAdmissions ? ["admissions"] : []),
     ...(hasDates ? ["dates"] : []),
     ...(hasDownloads ? ["downloads"] : []),
-    "faq",
+    ...(hasFaq ? ["faq"] : []),
     ...(related.length > 0 ? ["related"] : []),
     "cta",
   ];
@@ -52,35 +58,47 @@ export function ProgramBody({
     <Container className="pb-[var(--srs-section-loose)]">
       <div className="grid gap-10 xl:grid-cols-12 xl:gap-12">
         <div className="xl:col-span-3">
-          <SectionNav sections={detailSections} />
+          <SectionNav sections={sectionsFor(detail)} />
         </div>
 
         <div className="flex flex-col gap-12 xl:col-span-9">
-          <DetailSection id="overview" index={idx("overview")} eyebrow="Overview" title="About this program">
-            <p className="type-body measure">{detail.about}</p>
+          {hasOverview ? (
+            <DetailSection id="overview" index={idx("overview")} eyebrow="Overview" title="About this program">
+              {detail.about ? <p className="type-body measure">{detail.about}</p> : null}
 
-            <h3 className="type-h4 mt-10">Who this program is for</h3>
-            <div className="mt-5">
-              <NodeList items={detail.audience} />
-            </div>
-          </DetailSection>
+              {detail.audience?.length ? (
+                <>
+                  <h3 className="type-h4 mt-10">Who this program is for</h3>
+                  <div className="mt-5">
+                    <NodeList items={detail.audience} />
+                  </div>
+                </>
+              ) : null}
+            </DetailSection>
+          ) : null}
 
-          <DetailSection id="learning" index={idx("learning")} eyebrow="Learning" title="What you will learn">
-            <NodeList items={detail.learningOutcomes} />
+          {hasLearning ? (
+            <DetailSection id="learning" index={idx("learning")} eyebrow="Learning" title="What you will learn">
+              {detail.learningOutcomes?.length ? <NodeList items={detail.learningOutcomes} /> : null}
 
-            {detail.projectExperience ? (
-              <>
-                <h3 className="type-h4 mt-10">Project experience</h3>
-                <p className="type-body-s measure mt-4">{detail.projectExperience}</p>
-              </>
-            ) : null}
-          </DetailSection>
+              {detail.projectExperience ? (
+                <>
+                  <h3 className="type-h4 mt-10">Project experience</h3>
+                  <p className="type-body-s measure mt-4">{detail.projectExperience}</p>
+                </>
+              ) : null}
+            </DetailSection>
+          ) : null}
 
           <DetailSection
             id="curriculum"
             index={idx("curriculum")}
             eyebrow="Curriculum"
-            title={`${detail.modules.length} modules`}
+            title={
+              detail.modules.length === 1
+                ? `${detail.modules[0].topics?.length ?? 0} topics`
+                : `${detail.modules.length} modules`
+            }
           >
             {/*
               The curriculum lists what a program covers. It deliberately shows
@@ -113,25 +131,29 @@ export function ProgramBody({
             />
           </DetailSection>
 
-          <DetailSection id="eligibility" index={idx("eligibility")} eyebrow="Eligibility" title="Who can apply">
-            <NodeList items={detail.eligibility} />
-          </DetailSection>
+          {hasEligibility ? (
+            <DetailSection id="eligibility" index={idx("eligibility")} eyebrow="Eligibility" title="Who can apply">
+              <NodeList items={detail.eligibility ?? []} />
+            </DetailSection>
+          ) : null}
 
-          <DetailSection
-            id="certification"
-            index={idx("certification")}
-            eyebrow="Certification"
-            title="On completion"
-          >
-            <DetailRows
-              rows={[
-                { label: "Certificate", value: detail.certification.name },
-                { label: "Issued by", value: detail.certification.issuedBy },
-                { label: "Verification", value: detail.certification.verification },
-              ]}
-              columns={3}
-            />
-          </DetailSection>
+          {hasCertification && detail.certification ? (
+            <DetailSection
+              id="certification"
+              index={idx("certification")}
+              eyebrow="Certification"
+              title="On completion"
+            >
+              <DetailRows
+                rows={[
+                  { label: "Certificate", value: detail.certification.name },
+                  { label: "Issued by", value: detail.certification.issuedBy },
+                  { label: "Verification", value: detail.certification.verification },
+                ]}
+                columns={3}
+              />
+            </DetailSection>
+          ) : null}
 
           <DetailSection id="fees" index={idx("fees")} eyebrow="Fees" title="Program fees">
             {detail.fees ? (
@@ -163,29 +185,31 @@ export function ProgramBody({
             )}
           </DetailSection>
 
-          <DetailSection id="admissions" index={idx("admissions")} eyebrow="Admissions" title="How to apply">
-            {/* Same node language as the homepage journey — no arrows. */}
-            <ol className="flex flex-col gap-0">
-              {detail.admissionsSteps.map((step, i) => (
-                <li key={step.num} className="flex gap-5">
-                  <div className="flex flex-col items-center">
-                    <span
-                      aria-hidden="true"
-                      className="mt-1.5 size-2.5 shrink-0 rounded-full bg-lime"
-                    />
-                    {i < detail.admissionsSteps.length - 1 ? (
-                      <span aria-hidden="true" className="w-px flex-1 bg-line" />
-                    ) : null}
-                  </div>
-                  <div className="pb-8">
-                    <p className="type-index text-lime">{step.num}</p>
-                    <h3 className="type-h4 mt-2">{step.title}</h3>
-                    <p className="type-body-s measure mt-2">{step.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </DetailSection>
+          {hasAdmissions && detail.admissionsSteps ? (
+            <DetailSection id="admissions" index={idx("admissions")} eyebrow="Admissions" title="How to apply">
+              {/* Same node language as the homepage journey — no arrows. */}
+              <ol className="flex flex-col gap-0">
+                {detail.admissionsSteps.map((step, i) => (
+                  <li key={step.num} className="flex gap-5">
+                    <div className="flex flex-col items-center">
+                      <span
+                        aria-hidden="true"
+                        className="mt-1.5 size-2.5 shrink-0 rounded-full bg-lime"
+                      />
+                      {i < (detail.admissionsSteps?.length ?? 0) - 1 ? (
+                        <span aria-hidden="true" className="w-px flex-1 bg-line" />
+                      ) : null}
+                    </div>
+                    <div className="pb-8">
+                      <p className="type-index text-lime">{step.num}</p>
+                      <h3 className="type-h4 mt-2">{step.title}</h3>
+                      <p className="type-body-s measure mt-2">{step.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </DetailSection>
+          ) : null}
 
           {hasDates ? (
             <DetailSection id="dates" index={idx("dates")} eyebrow="Dates" title="Important dates">
@@ -209,15 +233,17 @@ export function ProgramBody({
             </DetailSection>
           ) : null}
 
-          <DetailSection id="faq" index={idx("faq")} eyebrow="FAQ" title="Common questions">
-            <Disclosure
-              items={detail.faq.map((item, i) => ({
-                key: String(i),
-                title: item.q,
-                content: <p className="type-body-s measure">{item.a}</p>,
-              }))}
-            />
-          </DetailSection>
+          {hasFaq && detail.faq ? (
+            <DetailSection id="faq" index={idx("faq")} eyebrow="FAQ" title="Common questions">
+              <Disclosure
+                items={detail.faq.map((item, i) => ({
+                  key: String(i),
+                  title: item.q,
+                  content: <p className="type-body-s measure">{item.a}</p>,
+                }))}
+              />
+            </DetailSection>
+          ) : null}
 
           {related.length > 0 ? (
             <Reveal
@@ -244,7 +270,7 @@ export function ProgramBody({
                       )}
                     >
                       <span className="type-index text-lime">
-                        {item.num} / {categoryOf(item).label.toUpperCase()}
+                        {item.num} / {catalogueCategoryOf(item).label.toUpperCase()}
                       </span>
                       <span className="type-h4 text-balance">{item.name}</span>
                       <span className="type-index mt-auto pt-2">View program →</span>

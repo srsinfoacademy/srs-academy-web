@@ -1,5 +1,8 @@
+import type { SharedCategorySlug } from "@/content/catalogue/types";
+
 export type ProgramLevel = "[LEVEL]" | "Foundation" | "Intermediate" | "Advanced";
 
+/** The homepage explorer's original 5 category tracks — unchanged, still used only there. */
 export type CategorySlug =
   | "web-software-development"
   | "artificial-intelligence"
@@ -24,18 +27,31 @@ export type Program = {
   num: string;
   slug: string;
   name: string;
-  category: CategorySlug;
-  shortDescription: string;
-  level: string;
-  mode: string;
+  /** Either the homepage's 5 legacy tracks or the shared academy taxonomy — see `catalogueCategoryOf`. */
+  category: CategorySlug | SharedCategorySlug;
+  /** Not present for a spreadsheet-sourced course — omitted from display, never invented. */
+  shortDescription?: string;
+  /** Not present for a spreadsheet-sourced course. */
+  level?: string;
+  /** Not present for a spreadsheet-sourced course. */
+  mode?: string;
   duration: string;
-  eligibility: string;
+  /** Not present for a spreadsheet-sourced course. */
+  eligibility?: string;
   /** Admissions status. Rendered with text, never colour alone. */
   status: "open" | "upcoming" | "pending";
   visualType: VisualType;
   artLabel: string;
-  /** Stages this program moves through, drawn from the node system. */
-  pathway: string[];
+  /** Stages this program moves through — a hand-authored narrative, so optional; not invented per course. */
+  pathway?: string[];
+  /** Spreadsheet course code, when one exists and isn't in conflict (see `codeConflict`). */
+  courseCode?: string;
+  codeConflict?: boolean;
+  subcategory?: string;
+  tags?: string[];
+  courseType?: string;
+  /** Verbatim spreadsheet name, before normalization — searchable, not displayed. */
+  sourceName?: string;
 };
 
 export type CurriculumModule = {
@@ -57,17 +73,22 @@ export type Fees = {
 } | null;
 
 export type ProgramDetail = {
-  /** Two sentences under the hero title. */
-  overview: string;
-  /** Longer "About this program" body. */
-  about: string;
-  audience: string[];
-  learningOutcomes: string[];
+  /** Two sentences under the hero title. Not present for a spreadsheet-only course. */
+  overview?: string;
+  /** Longer "About this program" body. Not present for a spreadsheet-only course. */
+  about?: string;
+  /** Not present for a spreadsheet-only course — section omitted rather than invented. */
+  audience?: string[];
+  /** Not present for a spreadsheet-only course. */
+  learningOutcomes?: string[];
+  /** Always populated — from hand-authored copy, or from the spreadsheet's curriculum for a basic record. */
   modules: CurriculumModule[];
   /** Applied/project work. Omitted where a program has none. */
   projectExperience?: string;
-  eligibility: string[];
-  certification: {
+  /** Not present for a spreadsheet-only course. */
+  eligibility?: string[];
+  /** Not present for a spreadsheet-only course. */
+  certification?: {
     name: string;
     issuedBy: string;
     verification: string;
@@ -77,12 +98,14 @@ export type ProgramDetail = {
    * fallback and points at admissions rather than inventing a price.
    */
   fees: Fees;
-  admissionsSteps: AdmissionStep[];
+  /** Not present for a spreadsheet-only course — section omitted rather than invented. */
+  admissionsSteps?: AdmissionStep[];
   /** Optional — the section is omitted entirely when empty. */
   importantDates?: { label: string; value: string }[];
   /** Optional — omitted when empty. */
   downloads?: { name: string; note: string }[];
-  faq: FaqItem[];
+  /** Not present for a spreadsheet-only course. */
+  faq?: FaqItem[];
   /** Slugs of related programs. Invalid slugs are dropped at render. */
   relatedPrograms: string[];
   startDate?: string;
