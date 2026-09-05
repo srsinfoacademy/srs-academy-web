@@ -68,6 +68,7 @@ function record(input: {
     fees: null,
     curriculumModules: null,
     primaryCta: null,
+    notes: null,
     featured: false,
     status: "live",
     sourceRow: input.sourceRow,
