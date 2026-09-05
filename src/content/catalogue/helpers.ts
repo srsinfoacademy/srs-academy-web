@@ -100,6 +100,7 @@ export function mergeEnrichment(
       fees: patch.fees !== undefined ? patch.fees : course.fees,
       curriculumModules: patch.curriculum !== undefined ? patch.curriculum : course.curriculumModules,
       primaryCta: patch.primaryCta !== undefined ? patch.primaryCta : course.primaryCta,
+      notes: patch.notes !== undefined ? patch.notes : course.notes,
     };
   });
 }

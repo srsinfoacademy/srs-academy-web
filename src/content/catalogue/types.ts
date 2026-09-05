@@ -121,6 +121,8 @@ export type NormalizedCourse = {
   fees: string | null;
   /** Overrides the default "Enquire About This Program" CTA when a course needs different wording. */
   primaryCta: string | null;
+  /** Internal editorial notes — never rendered on a public page. */
+  notes: string | null;
 
   featured: boolean;
   status: CourseStatus;
@@ -157,4 +159,6 @@ export type CourseEnrichment = {
   curriculum?: CourseCurriculumModule[] | null;
   /** Overrides the default "Enquire About This Program" CTA. */
   primaryCta?: string | null;
+  /** Internal editorial notes — never rendered on a public page. */
+  notes?: string | null;
 };
