@@ -1,7 +1,7 @@
 import { ProgramArt } from "@/components/home/ProgramArt";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { categoryOf, statusLabel } from "@/content/programs";
+import { catalogueCategoryOf, statusLabel } from "@/content/programs";
 import { routes } from "@/lib/routes";
 import type { Program } from "@/types/program";
 
@@ -19,14 +19,14 @@ export function ProgramPreview({
   program: Program;
   className?: string;
 }) {
-  const category = categoryOf(program);
+  const category = catalogueCategoryOf(program);
 
   const rows = [
     { label: "Duration", value: program.duration },
     { label: "Mode", value: program.mode },
     { label: "Level", value: program.level },
     { label: "Eligibility", value: program.eligibility },
-  ];
+  ].filter((row): row is { label: string; value: string } => typeof row.value === "string" && !row.value.startsWith("["));
 
   return (
     <div
@@ -54,27 +54,33 @@ export function ProgramPreview({
       <p className="type-index mt-3">{program.artLabel}</p>
 
       <h3 className="type-h3 mt-6">{program.name}</h3>
-      <p className="type-body-s mt-3">{program.shortDescription}</p>
+      {program.shortDescription ? (
+        <p className="type-body-s mt-3">{program.shortDescription}</p>
+      ) : null}
 
-      <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line-hairline pt-5">
-        {rows.map((row) => (
-          <div key={row.label} className="flex flex-col gap-1.5">
-            <dt className="type-index">{row.label}</dt>
-            <dd className="type-body-s text-primary">{row.value}</dd>
-          </div>
-        ))}
-      </dl>
+      {rows.length > 0 ? (
+        <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line-hairline pt-5">
+          {rows.map((row) => (
+            <div key={row.label} className="flex flex-col gap-1.5">
+              <dt className="type-index">{row.label}</dt>
+              <dd className="type-body-s text-primary">{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
 
-      <ul className="mt-6 flex flex-wrap items-center gap-2">
-        {program.pathway.map((step) => (
-          <li
-            key={step}
-            className="type-label rounded-[var(--srs-radius-full)] border border-line px-3 py-1.5"
-          >
-            {step}
-          </li>
-        ))}
-      </ul>
+      {program.pathway?.length ? (
+        <ul className="mt-6 flex flex-wrap items-center gap-2">
+          {program.pathway.map((step) => (
+            <li
+              key={step}
+              className="type-label rounded-[var(--srs-radius-full)] border border-line px-3 py-1.5"
+            >
+              {step}
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       <div className="mt-8">
         <Button href={routes.program(program.slug)} size="md">

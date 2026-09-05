@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { GridBackground } from "@/components/knowledge-os/GridBackground";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { cn } from "@/lib/cn";
-import { categoryOf, statusLabel } from "@/content/programs";
+import { catalogueCategoryOf, statusLabel } from "@/content/programs";
 import { routes } from "@/lib/routes";
 import type { Program, ProgramDetail } from "@/types/program";
 
@@ -23,15 +23,16 @@ export function ProgramHero({
   program: Program;
   detail: ProgramDetail;
 }) {
-  const category = categoryOf(program);
+  const category = catalogueCategoryOf(program);
 
   const meta = [
     { label: "Level", value: program.level },
     { label: "Duration", value: program.duration },
     { label: "Mode", value: program.mode },
-    { label: "Category", value: category.name },
+    { label: "Category", value: category.label },
+    { label: "Course type", value: program.courseType },
     ...(detail.startDate ? [{ label: "Start date", value: detail.startDate }] : []),
-  ];
+  ].filter((row): row is { label: string; value: string } => typeof row.value === "string" && !row.value.startsWith("["));
 
   return (
     <section
@@ -57,7 +58,7 @@ export function ProgramHero({
               className="type-index hero-enter mt-6 text-secondary"
               style={{ animationDelay: "60ms" }}
             >
-              {category.name}
+              {category.label}
             </p>
 
             <h1
@@ -68,12 +69,14 @@ export function ProgramHero({
               {program.name}
             </h1>
 
-            <p
-              className="type-body-l hero-enter mt-6 max-w-[58ch]"
-              style={{ animationDelay: "180ms" }}
-            >
-              {detail.overview}
-            </p>
+            {detail.overview ? (
+              <p
+                className="type-body-l hero-enter mt-6 max-w-[58ch]"
+                style={{ animationDelay: "180ms" }}
+              >
+                {detail.overview}
+              </p>
+            ) : null}
 
             {/* Status is text, never colour alone. */}
             <p

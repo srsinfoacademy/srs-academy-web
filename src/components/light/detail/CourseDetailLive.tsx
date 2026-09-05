@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 import { LightButton } from "@/components/light/ui/LightButton";
-import { detailFor, detailSections } from "@/content/program-detail";
+import { detailFor, sectionsFor } from "@/content/program-detail";
 import type { Program } from "@/types/program";
-import { courseCategories, durationLabels, levelLabels, modeLabels, type Course } from "@/content/light/courses";
+import { courseCategories, levelLabels, modeLabels, type Course } from "@/content/light/courses";
 import { lightRoutes } from "@/lib/light/routes";
 
 /**
@@ -16,6 +16,8 @@ export function CourseDetailLive({ program, course }: { program: Program; course
   const detail = detailFor(program.slug);
   if (!detail) return null;
   const category = courseCategories.find((c) => c.id === course.category) ?? courseCategories[0];
+  const sections = sectionsFor(detail);
+  const has = (id: string) => sections.some((s) => s.id === id);
 
   return (
     <div>
@@ -32,12 +34,16 @@ export function CourseDetailLive({ program, course }: { program: Program; course
               <span className="rounded-full bg-white/15 px-3 py-1 font-sl-mono text-[10px] tracking-[0.08em] backdrop-blur">
                 {category.emoji} {category.label.toUpperCase()}
               </span>
-              <span className="rounded-full bg-white/15 px-3 py-1 font-sl-mono text-[10px] tracking-[0.08em] backdrop-blur">
-                {modeLabels[course.mode].toUpperCase()}
-              </span>
-              <span className="rounded-full bg-white/15 px-3 py-1 font-sl-mono text-[10px] tracking-[0.08em] backdrop-blur">
-                {levelLabels[course.level].toUpperCase()}
-              </span>
+              {course.mode ? (
+                <span className="rounded-full bg-white/15 px-3 py-1 font-sl-mono text-[10px] tracking-[0.08em] backdrop-blur">
+                  {modeLabels[course.mode].toUpperCase()}
+                </span>
+              ) : null}
+              {course.level ? (
+                <span className="rounded-full bg-white/15 px-3 py-1 font-sl-mono text-[10px] tracking-[0.08em] backdrop-blur">
+                  {levelLabels[course.level].toUpperCase()}
+                </span>
+              ) : null}
             </div>
             <h1 className="sl-h1 max-w-160 text-[2rem] min-[700px]:text-[2.6rem]">{program.name}</h1>
           </div>
@@ -48,7 +54,7 @@ export function CourseDetailLive({ program, course }: { program: Program; course
         aria-label="Section"
         className="sl-scrollbar-none sticky top-18 z-30 flex gap-6 overflow-x-auto border-b border-sl-ink/8 bg-sl-paper/95 px-5 py-3.5 backdrop-blur min-[700px]:px-16"
       >
-        {detailSections.map((s) => (
+        {sections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="sl-focus whitespace-nowrap text-sm font-medium text-sl-ink/60 hover:text-sl-ink">
             {s.label}
           </a>
@@ -57,39 +63,51 @@ export function CourseDetailLive({ program, course }: { program: Program; course
 
       <div className="sl-container grid grid-cols-1 gap-12 py-12 min-[1000px]:grid-cols-[1fr_320px] min-[1000px]:py-16">
         <div className="flex flex-col gap-14">
-          <section id="overview">
-            <h2 className="sl-h2 mb-3 text-2xl">Overview</h2>
-            <p className="mb-4 text-[15px] leading-relaxed text-sl-ink/72">{detail.overview}</p>
-            <p className="text-[15px] leading-relaxed text-sl-ink/72">{detail.about}</p>
-          </section>
+          {has("overview") ? (
+            <section id="overview">
+              <h2 className="sl-h2 mb-3 text-2xl">Overview</h2>
+              {detail.overview ? (
+                <p className="mb-4 text-[15px] leading-relaxed text-sl-ink/72">{detail.overview}</p>
+              ) : null}
+              {detail.about ? (
+                <p className="text-[15px] leading-relaxed text-sl-ink/72">{detail.about}</p>
+              ) : null}
+            </section>
+          ) : null}
 
-          <section id="learning">
-            <h2 className="sl-h2 mb-4 text-2xl">Who it&apos;s for &amp; what you&apos;ll learn</h2>
-            <div className="mb-6">
-              <h3 className="sl-h3 mb-2.5 text-base">Who this program is for</h3>
-              <ul className="flex flex-col gap-2">
-                {detail.audience.map((a) => (
-                  <li key={a} className="flex gap-2.5 text-sm leading-relaxed text-sl-ink/70">
-                    <span aria-hidden="true">•</span>
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="sl-h3 mb-2.5 text-base">Learning outcomes</h3>
-              <ul className="grid grid-cols-1 gap-2.5 min-[600px]:grid-cols-2">
-                {detail.learningOutcomes.map((o) => (
-                  <li key={o} className="flex gap-2.5 text-sm leading-relaxed text-sl-ink/70">
-                    <span className="mt-0.5" style={{ color: "var(--sl-accent-text)" }} aria-hidden="true">
-                      ✓
-                    </span>
-                    {o}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          {has("learning") ? (
+            <section id="learning">
+              <h2 className="sl-h2 mb-4 text-2xl">Who it&apos;s for &amp; what you&apos;ll learn</h2>
+              {detail.audience?.length ? (
+                <div className="mb-6">
+                  <h3 className="sl-h3 mb-2.5 text-base">Who this program is for</h3>
+                  <ul className="flex flex-col gap-2">
+                    {detail.audience.map((a) => (
+                      <li key={a} className="flex gap-2.5 text-sm leading-relaxed text-sl-ink/70">
+                        <span aria-hidden="true">•</span>
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {detail.learningOutcomes?.length ? (
+                <div>
+                  <h3 className="sl-h3 mb-2.5 text-base">Learning outcomes</h3>
+                  <ul className="grid grid-cols-1 gap-2.5 min-[600px]:grid-cols-2">
+                    {detail.learningOutcomes.map((o) => (
+                      <li key={o} className="flex gap-2.5 text-sm leading-relaxed text-sl-ink/70">
+                        <span className="mt-0.5" style={{ color: "var(--sl-accent-text)" }} aria-hidden="true">
+                          ✓
+                        </span>
+                        {o}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </section>
+          ) : null}
 
           <section id="curriculum">
             <h2 className="sl-h2 mb-4 text-2xl">Curriculum</h2>
@@ -120,59 +138,67 @@ export function CourseDetailLive({ program, course }: { program: Program; course
             </div>
           </section>
 
-          <section id="eligibility">
-            <h2 className="sl-h2 mb-4 text-2xl">Eligibility</h2>
-            <ul className="flex flex-col gap-3">
-              {detail.eligibility.map((e) => (
-                <li key={e} className="text-sm leading-relaxed text-sl-ink/70">
-                  {e}
-                </li>
-              ))}
-            </ul>
-          </section>
+          {has("eligibility") && detail.eligibility ? (
+            <section id="eligibility">
+              <h2 className="sl-h2 mb-4 text-2xl">Eligibility</h2>
+              <ul className="flex flex-col gap-3">
+                {detail.eligibility.map((e) => (
+                  <li key={e} className="text-sm leading-relaxed text-sl-ink/70">
+                    {e}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
-          <section id="certification">
-            <h2 className="sl-h2 mb-4 text-2xl">Certification</h2>
-            <div className="sl-glass rounded-[var(--radius-sl-md)] px-6 py-5">
-              <div className="mb-1 text-[15px] font-semibold">{detail.certification.name}</div>
-              <div className="mb-1 text-sm text-sl-ink/65">Issued by {detail.certification.issuedBy}</div>
-              <div className="text-sm text-sl-ink/50">{detail.certification.verification}</div>
-            </div>
-          </section>
+          {has("certification") && detail.certification ? (
+            <section id="certification">
+              <h2 className="sl-h2 mb-4 text-2xl">Certification</h2>
+              <div className="sl-glass rounded-[var(--radius-sl-md)] px-6 py-5">
+                <div className="mb-1 text-[15px] font-semibold">{detail.certification.name}</div>
+                <div className="mb-1 text-sm text-sl-ink/65">Issued by {detail.certification.issuedBy}</div>
+                <div className="text-sm text-sl-ink/50">{detail.certification.verification}</div>
+              </div>
+            </section>
+          ) : null}
 
-          <section id="admissions">
-            <h2 className="sl-h2 mb-5 text-2xl">Admissions</h2>
-            <ol className="flex flex-col gap-4">
-              {detail.admissionsSteps.map((s) => (
-                <li key={s.num} className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sl-ink/6 font-sl-mono text-xs">
-                    {s.num}
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">{s.title}</div>
-                    <div className="text-sm text-sl-ink/60">{s.body}</div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section id="faq">
-            <h2 className="sl-h2 mb-4 text-2xl">Frequently asked questions</h2>
-            <div className="flex flex-col gap-3">
-              {detail.faq.map((f) => (
-                <details key={f.q} className="group rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white px-5 py-4">
-                  <summary className="sl-focus flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
-                    {f.q}
-                    <span className="shrink-0 text-lg text-sl-ink/50 transition-transform group-open:rotate-45" aria-hidden="true">
-                      +
+          {has("admissions") && detail.admissionsSteps ? (
+            <section id="admissions">
+              <h2 className="sl-h2 mb-5 text-2xl">Admissions</h2>
+              <ol className="flex flex-col gap-4">
+                {detail.admissionsSteps.map((s) => (
+                  <li key={s.num} className="flex gap-4">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sl-ink/6 font-sl-mono text-xs">
+                      {s.num}
                     </span>
-                  </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-sl-ink/68">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </section>
+                    <div>
+                      <div className="text-sm font-semibold">{s.title}</div>
+                      <div className="text-sm text-sl-ink/60">{s.body}</div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
+
+          {has("faq") && detail.faq ? (
+            <section id="faq">
+              <h2 className="sl-h2 mb-4 text-2xl">Frequently asked questions</h2>
+              <div className="flex flex-col gap-3">
+                {detail.faq.map((f) => (
+                  <details key={f.q} className="group rounded-[var(--radius-sl-md)] border border-sl-ink/10 bg-white px-5 py-4">
+                    <summary className="sl-focus flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
+                      {f.q}
+                      <span className="shrink-0 text-lg text-sl-ink/50 transition-transform group-open:rotate-45" aria-hidden="true">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-3 text-sm leading-relaxed text-sl-ink/68">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </div>
 
         <aside className="h-fit min-[1000px]:sticky min-[1000px]:top-24">
@@ -193,14 +219,18 @@ export function CourseDetailLive({ program, course }: { program: Program; course
                 <dt className="text-sl-ink/55">Duration</dt>
                 <dd className="font-medium">{program.duration}</dd>
               </div>
-              <div className="flex justify-between">
-                <dt className="text-sl-ink/55">Mode</dt>
-                <dd className="font-medium">{durationLabels[course.duration]} · {modeLabels[course.mode]}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-sl-ink/55">Level</dt>
-                <dd className="font-medium">{program.level}</dd>
-              </div>
+              {course.mode ? (
+                <div className="flex justify-between">
+                  <dt className="text-sl-ink/55">Mode</dt>
+                  <dd className="font-medium">{modeLabels[course.mode]}</dd>
+                </div>
+              ) : null}
+              {program.level && !program.level.startsWith("[") ? (
+                <div className="flex justify-between">
+                  <dt className="text-sl-ink/55">Level</dt>
+                  <dd className="font-medium">{program.level}</dd>
+                </div>
+              ) : null}
             </dl>
             <LightButton href={lightRoutes.contact} variant="dark" block>
               {detail.primaryCta.startsWith("[") ? "Talk to an Advisor" : detail.primaryCta}

@@ -16,38 +16,26 @@
  * and asserts no fee, accreditation, duration-in-weeks, or outcome — only a
  * category, mode, level and duration *bucket*, which are structural filter
  * facets rather than business facts.
+ *
+ * 22 real courses, imported from `Course_Details_Master_Sheet.xlsx` via the
+ * shared catalogue (`@/content/catalogue`), were added below in the same
+ * pass that added Food & Baking as a 10th category. Three of the original
+ * placeholders above (nails, mehendi, digitalmkt) are upgraded in place to
+ * their real record rather than duplicated — see `upgradedSlugMap` below.
  */
 
-export type CourseCategoryId =
-  | "tech"
-  | "webdev"
-  | "business"
-  | "beauty"
-  | "creative"
-  | "fashion"
-  | "trades"
-  | "career"
-  | "corporate";
+import { sharedCategories } from "@/content/catalogue/categories";
+import { catalogueCourses } from "@/content/catalogue/courses";
+import type { NormalizedCourse, SharedCategory, SharedCategorySlug } from "@/content/catalogue/types";
 
-export type CourseCategory = {
-  id: CourseCategoryId;
-  label: string;
-  emoji: string;
-  /** Tailwind arbitrary-value friendly tint, used on Learning Worlds cards. */
-  tint: string;
-};
-
-export const courseCategories: CourseCategory[] = [
-  { id: "tech", label: "AI & Technology", emoji: "🤖", tint: "rgba(59,130,246,.12)" },
-  { id: "webdev", label: "Web & Software Development", emoji: "💻", tint: "rgba(182,245,66,.16)" },
-  { id: "business", label: "Digital & Business Skills", emoji: "💼", tint: "rgba(139,92,246,.12)" },
-  { id: "beauty", label: "Beauty & Makeup", emoji: "💄", tint: "rgba(255,183,213,.28)" },
-  { id: "creative", label: "Mehendi & Creative Arts", emoji: "🌿", tint: "rgba(255,90,95,.14)" },
-  { id: "fashion", label: "Fashion & Lifestyle", emoji: "👗", tint: "rgba(255,90,95,.13)" },
-  { id: "trades", label: "Technical & Skilled Trades", emoji: "🛠️", tint: "rgba(59,130,246,.12)" },
-  { id: "career", label: "Communication & Career Skills", emoji: "🗣️", tint: "rgba(182,245,66,.14)" },
-  { id: "corporate", label: "Professional & Corporate Learning", emoji: "🏢", tint: "rgba(139,92,246,.14)" },
-];
+/**
+ * Re-exported from the shared catalogue taxonomy (`@/content/catalogue`) —
+ * one taxonomy, read by both themes, per the shared-taxonomy requirement.
+ * Includes Food & Baking, the 10th category added for Cake Bakery Course.
+ */
+export type CourseCategoryId = SharedCategorySlug;
+export type CourseCategory = SharedCategory;
+export const courseCategories: CourseCategory[] = sharedCategories;
 
 export type CourseMode = "online" | "offline" | "hybrid";
 export type CourseLevel = "beginner" | "intermediate" | "advanced";
@@ -55,16 +43,24 @@ export type CourseDurationBucket = "short" | "medium" | "long";
 
 export type Course = {
   id: string;
-  /** Matches `programs.ts` slug for the one live program. */
+  /** Matches the dark theme's `Program.slug` for any course both themes share. */
   slug: string;
   title: string;
   category: CourseCategoryId;
-  mode: CourseMode;
-  level: CourseLevel;
+  /** Not present for a spreadsheet-sourced course — the mode/level chips are omitted, never guessed. */
+  mode?: CourseMode;
+  level?: CourseLevel;
   duration: CourseDurationBucket;
   photo: string;
   blurb: string;
   status: "live" | "placeholder";
+  /** Extra searchable fields for a real catalogue course — undefined for the original placeholder set. */
+  sourceName?: string;
+  courseCode?: string;
+  subcategory?: string;
+  tags?: string[];
+  curriculum?: string[];
+  courseType?: string;
 };
 
 export const modeLabels: Record<CourseMode, string> = {
@@ -83,7 +79,8 @@ export const durationLabels: Record<CourseDurationBucket, string> = {
   long: "Long",
 };
 
-export const courses: Course[] = [
+/** The original hand-authored placeholder set. See `courses` below for the final, published list. */
+const placeholderCourses: Course[] = [
   {
     id: "fullstack",
     slug: "full-stack-web-development",
@@ -346,6 +343,89 @@ export const courses: Course[] = [
     status: "placeholder",
   },
 ];
+
+/**
+ * Category-representative stock photo, reused across every course in that
+ * category — the same convention this file already used for its original
+ * placeholder set (e.g. every beauty course shares one photo). No
+ * course-specific photography exists yet, so nothing here asserts a course
+ * has been photographed.
+ */
+const categoryPhoto: Record<CourseCategoryId, string> = {
+  tech: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=700&q=80",
+  webdev: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=700&q=80",
+  business: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80",
+  beauty: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=700&q=80",
+  creative: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80",
+  fashion: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=700&q=80",
+  trades: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=80",
+  career: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=700&q=80",
+  corporate: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=700&q=80",
+  // No dedicated food/baking photo exists in the current asset set — reuses
+  // the business category's, same as any other category short one course.
+  food: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80",
+};
+
+/** Short/medium/long is a structural filter facet, not a factual claim — never derived from Hours. */
+function bucketFor(months: number | null): CourseDurationBucket {
+  if (months === null) return "short";
+  if (months <= 3) return "short";
+  if (months <= 6) return "medium";
+  return "long";
+}
+
+/**
+ * Adapts a shared `NormalizedCourse` (see `@/content/catalogue`) into this
+ * theme's `Course` shape. The real course record itself lives once, in the
+ * catalogue — this only reshapes it for the light visual system.
+ */
+function toLightCourse(course: NormalizedCourse): Course {
+  return {
+    id: course.id,
+    slug: course.slug,
+    title: course.name,
+    category: (course.category ?? "business") as CourseCategoryId,
+    duration: bucketFor(course.duration.months),
+    photo: categoryPhoto[(course.category ?? "business") as CourseCategoryId],
+    blurb: [course.courseType, course.duration.raw].filter(Boolean).join(" · "),
+    status: "live",
+    sourceName: course.sourceName,
+    courseCode: course.codeConflict ? undefined : (course.courseCode ?? undefined),
+    subcategory: course.subcategory ?? undefined,
+    tags: course.tags,
+    curriculum: course.curriculum,
+    courseType: course.courseType ?? undefined,
+  };
+}
+
+/**
+ * Replaces the placeholder entries this real data now confirms — same `id`
+ * where the placeholder's id already matched cleanly (nails, mehendi), new
+ * stable ids for the rest, so no duplicate card is ever created for the
+ * same course.
+ */
+const upgradedIds = new Set(["nails", "mehendi", "digitalmkt"]);
+const upgradedSlugMap: Record<string, string> = {
+  nails: "basic-to-advance-nail-extension-course",
+  mehendi: "basic-to-advance-mehendi-masters-course",
+  digitalmkt: "advanced-diploma-in-digital-marketing",
+};
+
+const remainingPlaceholders = placeholderCourses.filter((c) => !upgradedIds.has(c.id));
+// Keeps each placeholder's original short `id` (e.g. "mehendi") even though
+// the real course's own id is its slug — `FeaturedPrograms.tsx` and other
+// short-id references (see `featuredIds`) keep working unchanged.
+const upgradedCourses = Object.entries(upgradedSlugMap).map(([oldId, slug]) => {
+  const source = catalogueCourses.find((c) => c.slug === slug);
+  if (!source) throw new Error(`Catalogue course not found for slug: ${slug}`);
+  return { ...toLightCourse(source), id: oldId };
+});
+const newCourses = catalogueCourses
+  .filter((c) => !Object.values(upgradedSlugMap).includes(c.slug))
+  .map(toLightCourse);
+
+/** Final published catalogue: untouched placeholders + upgraded real records + newly imported real records. */
+export const courses: Course[] = [...remainingPlaceholders, ...upgradedCourses, ...newCourses];
 
 export function courseBySlug(slug: string): Course | undefined {
   return courses.find((c) => c.slug === slug);

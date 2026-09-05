@@ -1,3 +1,5 @@
+import { catalogueCourses } from "@/content/catalogue/courses";
+import type { NormalizedCourse } from "@/content/catalogue/types";
 import { programs } from "@/content/programs";
 import type { CurriculumModule, ProgramDetail } from "@/types/program";
 
@@ -236,10 +238,51 @@ const fullStackWebDevelopment: ProgramDetail = makeDetail({
       a: "The fee for this program has not been announced yet. Contact SRS Academy for current fee and enrollment information.",
     },
   ],
+  // Was never overridden from makeDetail()'s bracketed default — fixed here
+  // since this page is now the target of "related programs" links from
+  // every newly imported course.
+  primaryCta: "Enquire About This Program",
 });
+
+/**
+ * "Basic" detail for a spreadsheet-sourced course — real curriculum from the
+ * sheet, everything else omitted rather than filled with placeholder text
+ * (unlike `makeDetail()`'s bracketed defaults above, which exist only for
+ * the 4 pre-existing homepage placeholder tracks). `ProgramBody` and
+ * `CourseDetailLive` render each section conditionally, so an absent field
+ * here means the section simply doesn't appear.
+ */
+function buildBasicDetail(course: NormalizedCourse): ProgramDetail {
+  const modules: CurriculumModule[] =
+    course.curriculum.length > 0
+      ? [
+          {
+            num: "01",
+            title: "Curriculum",
+            body: `Topics covered in ${course.name}, as published by SRS Academy.`,
+            topics: course.curriculum,
+          },
+        ]
+      : [];
+
+  return {
+    modules,
+    fees: null,
+    relatedPrograms: catalogueCourses
+      .filter((c) => c.slug !== course.slug && c.category === course.category)
+      .slice(0, 3)
+      .map((c) => c.slug),
+    primaryCta: "Enquire About This Program",
+  };
+}
+
+const basicDetails: Record<string, ProgramDetail> = Object.fromEntries(
+  catalogueCourses.map((course) => [course.slug, buildBasicDetail(course)]),
+);
 
 export const programDetails: Record<string, ProgramDetail> = {
   ...genericDetails,
+  ...basicDetails,
   "full-stack-web-development": fullStackWebDevelopment,
 };
 
@@ -247,7 +290,12 @@ export function detailFor(slug: string): ProgramDetail | undefined {
   return programDetails[slug];
 }
 
-/** In-page navigation. Only sections that always exist appear here. */
+/**
+ * Full in-page navigation — every section a hand-authored program (like Full
+ * Stack Web Development) can have. A basic, spreadsheet-only record won't
+ * have most of these; see `sectionsFor()` below for the filtered list an
+ * actual page should render.
+ */
 export const detailSections = [
   { id: "overview", label: "Overview" },
   { id: "learning", label: "Learning" },
@@ -258,3 +306,24 @@ export const detailSections = [
   { id: "admissions", label: "Admissions" },
   { id: "faq", label: "FAQ" },
 ] as const;
+
+/**
+ * The subset of `detailSections` this particular `detail` actually has
+ * content for — "Fees" always appears (it has its own honest fallback), the
+ * rest appear only when their data is present. Used for both the in-page
+ * nav and the section index numbers, so a program with fewer sections never
+ * shows a gap in the numbering.
+ */
+export function sectionsFor(detail: ProgramDetail): typeof detailSections[number][] {
+  const has: Record<(typeof detailSections)[number]["id"], boolean> = {
+    overview: Boolean(detail.overview || detail.about || detail.audience?.length),
+    learning: Boolean(detail.learningOutcomes?.length || detail.projectExperience),
+    curriculum: detail.modules.length > 0,
+    eligibility: Boolean(detail.eligibility?.length),
+    certification: Boolean(detail.certification),
+    fees: true,
+    admissions: Boolean(detail.admissionsSteps?.length),
+    faq: Boolean(detail.faq?.length),
+  };
+  return detailSections.filter((s) => has[s.id]);
+}
