@@ -253,8 +253,17 @@ const fullStackWebDevelopment: ProgramDetail = makeDetail({
  * here means the section simply doesn't appear.
  */
 function buildBasicDetail(course: NormalizedCourse): ProgramDetail {
-  const modules: CurriculumModule[] =
-    course.curriculum.length > 0
+  // A richer, manually organized structure when enrichment supplies one;
+  // otherwise the same single flat module as before, built straight from
+  // the spreadsheet's curriculum list.
+  const modules: CurriculumModule[] = course.curriculumModules
+    ? course.curriculumModules.map((mod, i) => ({
+        num: String(i + 1).padStart(2, "0"),
+        title: mod.title,
+        body: `Topics covered in ${mod.title}, as published by SRS Academy.`,
+        topics: mod.topics,
+      }))
+    : course.curriculum.length > 0
       ? [
           {
             num: "01",
@@ -266,13 +275,17 @@ function buildBasicDetail(course: NormalizedCourse): ProgramDetail {
       : [];
 
   return {
+    overview: course.overview ?? undefined,
+    learningOutcomes: course.outcomes ?? undefined,
     modules,
-    fees: null,
+    eligibility: course.eligibility ?? undefined,
+    certification: course.certification ?? undefined,
+    fees: course.fees,
     relatedPrograms: catalogueCourses
       .filter((c) => c.slug !== course.slug && c.category === course.category)
       .slice(0, 3)
       .map((c) => c.slug),
-    primaryCta: "Enquire About This Program",
+    primaryCta: course.primaryCta ?? "Enquire About This Program",
   };
 }
 

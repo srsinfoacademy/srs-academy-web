@@ -144,19 +144,25 @@ export function ProgramBody({
               eyebrow="Certification"
               title="On completion"
             >
-              <DetailRows
-                rows={[
-                  { label: "Certificate", value: detail.certification.name },
-                  { label: "Issued by", value: detail.certification.issuedBy },
-                  { label: "Verification", value: detail.certification.verification },
-                ]}
-                columns={3}
-              />
+              {typeof detail.certification === "string" ? (
+                <p className="type-body measure">{detail.certification}</p>
+              ) : (
+                <DetailRows
+                  rows={[
+                    { label: "Certificate", value: detail.certification.name },
+                    { label: "Issued by", value: detail.certification.issuedBy },
+                    { label: "Verification", value: detail.certification.verification },
+                  ]}
+                  columns={3}
+                />
+              )}
             </DetailSection>
           ) : null}
 
           <DetailSection id="fees" index={idx("fees")} eyebrow="Fees" title="Program fees">
-            {detail.fees ? (
+            {typeof detail.fees === "string" ? (
+              <DetailRows rows={[{ label: "Program fee", value: detail.fees }]} />
+            ) : detail.fees ? (
               <DetailRows
                 rows={[
                   { label: "Program fee", value: detail.fees.program },

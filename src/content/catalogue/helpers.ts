@@ -1,5 +1,5 @@
 import { sharedCategories, sharedCategoryOf } from "@/content/catalogue/categories";
-import type { NormalizedCourse } from "@/content/catalogue/types";
+import type { CourseEnrichment, NormalizedCourse } from "@/content/catalogue/types";
 
 /** Best-effort split of the spreadsheet's "Course Curriculum / Topics" prose into topics. */
 export function splitCurriculum(raw: string): string[] {
@@ -65,6 +65,48 @@ export function durationRawOptions(list: NormalizedCourse[]): string[] {
   const order = ["1 Month", "2 Months", "3 Months", "6 Months", "1 Year", "120 Hours"];
   const present = new Set(list.map((c) => c.duration.raw));
   return order.filter((d) => present.has(d));
+}
+
+/**
+ * Merges each course with its (optional) enrichment entry, if the two
+ * `Record`s share a slug — this is the one place `NormalizedCourse`'s own
+ * shape and `CourseEnrichment`'s simpler one meet. A field left out of the
+ * enrichment entry passes the base record's value through untouched (so an
+ * always-null spreadsheet field stays null, exactly as before); a field the
+ * enrichment entry does set overwrites it. Source-traceability fields
+ * (`sourceName`, `sourceCourseCode`, `codeConflict`, `sourceRow`,
+ * `courseCode`, `curriculum`, `curriculumRaw`) are never touched here —
+ * enrichment has no way to override them.
+ */
+export function mergeEnrichment(
+  courses: NormalizedCourse[],
+  enrichment: Partial<Record<string, CourseEnrichment>>,
+): NormalizedCourse[] {
+  return courses.map((course) => {
+    const patch = enrichment[course.slug];
+    if (!patch) return course;
+
+    return {
+      ...course,
+      mode: patch.mode !== undefined ? patch.mode : course.mode,
+      level: patch.level !== undefined ? patch.level : course.level,
+      overview: patch.overview !== undefined ? patch.overview : course.overview,
+      outcomes: patch.outcomes !== undefined ? patch.outcomes : course.outcomes,
+      eligibility:
+        patch.eligibility !== undefined
+          ? normalizeEligibility(patch.eligibility)
+          : course.eligibility,
+      certification: patch.certification !== undefined ? patch.certification : course.certification,
+      fees: patch.fees !== undefined ? patch.fees : course.fees,
+      curriculumModules: patch.curriculum !== undefined ? patch.curriculum : course.curriculumModules,
+      primaryCta: patch.primaryCta !== undefined ? patch.primaryCta : course.primaryCta,
+    };
+  });
+}
+
+function normalizeEligibility(value: string[] | string | null): string[] | null {
+  if (value === null) return null;
+  return Array.isArray(value) ? value : [value];
 }
 
 export { sharedCategories };

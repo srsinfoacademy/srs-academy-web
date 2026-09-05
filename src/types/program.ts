@@ -65,12 +65,16 @@ export type FaqItem = { q: string; a: string };
 
 export type AdmissionStep = { num: string; title: string; body: string };
 
-export type Fees = {
-  program: string;
-  registration: string;
-  paymentTerms: string;
-  tax: string;
-} | null;
+export type Fees =
+  | {
+      program: string;
+      registration: string;
+      paymentTerms: string;
+      tax: string;
+    }
+  /** A single confirmed line — an exact amount, or the literal "Contact for current fees". */
+  | string
+  | null;
 
 export type ProgramDetail = {
   /** Two sentences under the hero title. Not present for a spreadsheet-only course. */
@@ -87,12 +91,19 @@ export type ProgramDetail = {
   projectExperience?: string;
   /** Not present for a spreadsheet-only course. */
   eligibility?: string[];
-  /** Not present for a spreadsheet-only course. */
-  certification?: {
-    name: string;
-    issuedBy: string;
-    verification: string;
-  };
+  /**
+   * Not present for a spreadsheet-only course. A plain string for
+   * enrichment-supplied, neutral wording; the full object for hand-authored
+   * content (see Full Stack Web Development) that has a separate issuer and
+   * verification method to show.
+   */
+  certification?:
+    | {
+        name: string;
+        issuedBy: string;
+        verification: string;
+      }
+    | string;
   /**
    * Null where fees are not published. The page then shows an honest
    * fallback and points at admissions rather than inventing a price.
