@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EditorialHero } from "@/components/light/ui/EditorialHero";
 import { resourceCategories, resources } from "@/content/resources";
 
-export const metadata: Metadata = { title: "Resources" };
+export const metadata: Metadata = { title: "Resources", alternates: { canonical: "/resources" } };
 
 export default function LightResourcesPage() {
   return (

@@ -6,7 +6,7 @@ import { Reveal } from "@/components/light/ui/Reveal";
 import { LightButton } from "@/components/light/ui/LightButton";
 import { admissionsJourney, admissionsPage } from "@/content/pages";
 
-export const metadata: Metadata = { title: "Admissions" };
+export const metadata: Metadata = { title: "Admissions", alternates: { canonical: "/admissions" } };
 
 export default function LightAdmissionsPage() {
   return (

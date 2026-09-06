@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Courses",
   description:
     "Browse SRS Academy's course catalogue across technology, business, beauty, creative arts, fashion, trades and career skills.",
+  alternates: { canonical: "/programs" },
 };
 
 export default async function LightCoursesPage({

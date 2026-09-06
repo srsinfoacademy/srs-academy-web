@@ -14,7 +14,14 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.description,
-  robots: { index: true, follow: true },
+  /**
+   * The dark "Knowledge OS" routes are the canonical, indexed website —
+   * `/light` is an alternate visual theme of the same content, not a
+   * second site competing for the same search results. `follow: true`
+   * (not `false`) is deliberate: crawlers still need to reach each page to
+   * see its `alternates.canonical` pointing back at the matching dark URL.
+   */
+  robots: { index: false, follow: true },
 };
 
 /**
