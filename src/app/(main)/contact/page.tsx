@@ -20,7 +20,6 @@ export default function ContactPage() {
     { label: "Address", value: site.contact.address },
     { label: "Email", value: site.contact.email },
     { label: "Phone", value: site.contact.phone },
-    { label: "Working hours", value: "[WORKING HOURS]" },
   ];
 
   return (

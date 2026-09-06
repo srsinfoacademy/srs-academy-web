@@ -90,12 +90,15 @@ export const admissionsPage: EditorialPage = {
   title: "Admissions",
   intro:
     "Choose a program, review the available learning details, and contact SRS Academy for current admission guidance.",
-  ctaLabel: "[START APPLICATION]",
+  // The exact application destination (form/portal) isn't confirmed yet;
+  // "Application form" is the honest neutral label shown wherever that
+  // pending destination is surfaced (see Button/LightButton `pending`).
+  ctaLabel: "Application form",
   sections: [
     {
       num: "01",
       heading: "Eligibility",
-      body: "[GENERAL ELIGIBILITY OVERVIEW — program-specific detail lives on each Program Detail page.]",
+      body: "Eligibility depends on the individual program. Some programs may be suitable for beginners, while others may require prior knowledge or specific qualifications — program-specific requirements are shown on each program's detail page.",
     },
     {
       num: "02",
@@ -105,7 +108,7 @@ export const admissionsPage: EditorialPage = {
     {
       num: "03",
       heading: "Application Process",
-      body: "[APPLICATION PROCESS OVERVIEW — full step visual below.]",
+      body: "The application process follows the steps in the admissions journey below — from exploring a program to starting your course once admission is confirmed.",
     },
     {
       num: "04",
@@ -137,7 +140,7 @@ export const admissionsJourney = [
 export const contactPage: EditorialPage = {
   kicker: "Contact",
   title: "Contact SRS Academy",
-  intro: "[CONTACT INTRO — placeholder, one sentence.]",
+  intro: "Reach out using the details below, or send a message directly through this page.",
   sections: [
     {
       num: "01",
@@ -165,13 +168,13 @@ export const contactPage: EditorialPage = {
 export const updatesPage = {
   kicker: "Updates & Announcements",
   title: "Updates",
-  intro: "[UPDATES INTRO — placeholder, one sentence.]",
+  intro: "Announcements and updates from SRS Academy will appear here as they're published.",
 } as const;
 
 export const resourcesPage = {
   kicker: "Resources",
   title: "Resources",
-  intro: "[RESOURCES INTRO — placeholder, one sentence.]",
+  intro: "Practical guides to help you choose, prepare for, and get the most from a course.",
 } as const;
 
 export const faqPage = {
