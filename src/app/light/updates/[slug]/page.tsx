@@ -14,7 +14,11 @@ export async function generateMetadata({
 }: PageProps<"/light/updates/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const update = updateBySlug(slug);
-  return { title: update ? update.title : "Update" };
+  if (!update) return { title: "Update" };
+
+  // Updates are one fully shared list (same slugs, same content) on both
+  // themes — always safe to canonicalize to the dark URL.
+  return { title: update.title, alternates: { canonical: `/updates/${slug}` } };
 }
 
 export default async function LightUpdateDetailPage({

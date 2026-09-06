@@ -7,6 +7,9 @@ import { Reveal } from "@/components/light/ui/Reveal";
 export const metadata: Metadata = {
   title: "Gallery — Life at SRS",
   description: "Classrooms, workshops, and hands-on practice at SRS Academy.",
+  // No dark equivalent exists — self-canonicalize rather than inherit the
+  // root layout's "/" canonical.
+  alternates: { canonical: "/light/gallery" },
 };
 
 /**
