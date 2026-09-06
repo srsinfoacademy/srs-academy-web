@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { CourseDetailLive } from "@/components/light/detail/CourseDetailLive";
 import { CourseDetailPlaceholder } from "@/components/light/detail/CourseDetailPlaceholder";
-import { programs } from "@/content/programs";
+import { allCoursePrograms as programs } from "@/content/programs";
 import { courseBySlug, courses } from "@/content/light/courses";
 
 export function generateStaticParams() {

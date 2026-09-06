@@ -13,7 +13,7 @@ import { ProgramPreview } from "@/components/programs/ProgramPreview";
 import { ProgramRow } from "@/components/programs/ProgramRow";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
-import { categoryOf, programs as allPrograms } from "@/content/programs";
+import { allCoursePrograms as allPrograms, catalogueCategoryOf } from "@/content/programs";
 
 /**
  * Programs catalogue.
@@ -36,19 +36,26 @@ export function ProgramCatalogue() {
     const query = filters.query.trim().toLowerCase();
 
     return allPrograms.filter((program) => {
-      if (filters.category !== "all" && program.category !== filters.category) {
+      const category = catalogueCategoryOf(program);
+      if (filters.category !== "all" && category.id !== filters.category) {
         return false;
       }
       if (filters.level !== "all" && program.level !== filters.level) return false;
       if (filters.mode !== "all" && program.mode !== filters.mode) return false;
+      if (filters.courseType !== "all" && program.courseType !== filters.courseType) return false;
+      if (filters.duration !== "all" && program.duration !== filters.duration) return false;
       if (!query) return true;
 
       const haystack = [
         program.name,
+        program.sourceName,
         program.shortDescription,
-        categoryOf(program).name,
-        categoryOf(program).label,
+        category.label,
+        program.subcategory,
+        program.courseCode,
+        ...(program.tags ?? []),
       ]
+        .filter(Boolean)
         .join(" ")
         .toLowerCase();
 

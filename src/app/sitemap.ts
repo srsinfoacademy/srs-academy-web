@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { programs } from "@/content/programs";
+import { allCoursePrograms as programs } from "@/content/programs";
 import { site } from "@/content/site";
 import { routes, staticRoutes } from "@/lib/routes";
 

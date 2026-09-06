@@ -5,7 +5,7 @@ import { useId } from "react";
 import { ProgramArt } from "@/components/home/ProgramArt";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { categoryOf, statusLabel } from "@/content/programs";
+import { catalogueCategoryOf, statusLabel } from "@/content/programs";
 import { routes } from "@/lib/routes";
 import type { Program } from "@/types/program";
 
@@ -33,7 +33,16 @@ export function ProgramAccordionList({
       {programs.map((program) => {
         const isOpen = openSlug === program.slug;
         const panelId = `${baseId}-${program.slug}`;
-        const category = categoryOf(program);
+        const category = catalogueCategoryOf(program);
+        const headerMeta = [category.label, statusLabel[program.status]].filter(
+          (v): v is string => typeof v === "string" && !v.startsWith("["),
+        );
+        const rows = [
+          { label: "Duration", value: program.duration },
+          { label: "Mode", value: program.mode },
+          { label: "Level", value: program.level },
+          { label: "Eligibility", value: program.eligibility },
+        ].filter((row): row is { label: string; value: string } => typeof row.value === "string" && !row.value.startsWith("["));
 
         return (
           <li key={program.slug} className="border-b border-line">
@@ -54,9 +63,7 @@ export function ProgramAccordionList({
                 </span>
                 <span className="flex-1">
                   <span className="type-h4 block text-current">{program.name}</span>
-                  <span className="type-index mt-1.5 block">
-                    {category.label} · {statusLabel[program.status]}
-                  </span>
+                  <span className="type-index mt-1.5 block">{headerMeta.join(" · ")}</span>
                 </span>
                 <span
                   aria-hidden="true"
@@ -84,21 +91,20 @@ export function ProgramAccordionList({
                   </div>
                   <p className="type-index mt-3">{program.artLabel}</p>
 
-                  <p className="type-body-s mt-4">{program.shortDescription}</p>
+                  {program.shortDescription ? (
+                    <p className="type-body-s mt-4">{program.shortDescription}</p>
+                  ) : null}
 
-                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
-                    {[
-                      { label: "Duration", value: program.duration },
-                      { label: "Mode", value: program.mode },
-                      { label: "Level", value: program.level },
-                      { label: "Eligibility", value: program.eligibility },
-                    ].map((row) => (
-                      <div key={row.label} className="flex flex-col gap-1">
-                        <dt className="type-index">{row.label}</dt>
-                        <dd className="type-body-s text-primary">{row.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
+                  {rows.length > 0 ? (
+                    <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
+                      {rows.map((row) => (
+                        <div key={row.label} className="flex flex-col gap-1">
+                          <dt className="type-index">{row.label}</dt>
+                          <dd className="type-body-s text-primary">{row.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : null}
 
                   <div className="mt-6">
                     <Button href={routes.program(program.slug)} size="md" block>
