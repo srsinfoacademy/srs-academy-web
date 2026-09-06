@@ -6,7 +6,7 @@ import { Reveal } from "@/components/light/ui/Reveal";
 import { contactPage } from "@/content/pages";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = { title: "Contact", alternates: { canonical: "/contact" } };
 
 export default function LightContactPage() {
   return (

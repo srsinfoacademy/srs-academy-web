@@ -10,12 +10,18 @@ import "./light.css";
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — Light Theme Preview`,
-    template: `%s — ${site.name} (Light Preview)`,
+    default: site.name,
+    template: `%s — ${site.name}`,
   },
-  description:
-    "A visual preview of the SRS Academy light theme — a separate, parallel design exploration alongside the live site.",
-  robots: { index: false, follow: false },
+  description: site.description,
+  /**
+   * The dark "Knowledge OS" routes are the canonical, indexed website —
+   * `/light` is an alternate visual theme of the same content, not a
+   * second site competing for the same search results. `follow: true`
+   * (not `false`) is deliberate: crawlers still need to reach each page to
+   * see its `alternates.canonical` pointing back at the matching dark URL.
+   */
+  robots: { index: false, follow: true },
 };
 
 /**

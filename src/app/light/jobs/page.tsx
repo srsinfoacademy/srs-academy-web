@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EditorialHero } from "@/components/light/ui/EditorialHero";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = { title: "Jobs & Careers" };
+export const metadata: Metadata = { title: "Jobs & Careers", alternates: { canonical: "/light/jobs" } };
 
 export default function LightJobsPage() {
   return (

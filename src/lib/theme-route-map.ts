@@ -1,5 +1,5 @@
 /**
- * Maps a URL between the dark "Knowledge OS" site and the `/light` preview.
+ * Maps a URL between the dark "Knowledge OS" site and the `/light` theme.
  *
  * The two trees don't share a 1:1 URL shape (`/programs` vs `/light/courses`,
  * for instance), and only a subset of their dynamic detail pages point at
@@ -7,6 +7,7 @@
  * of narrow rules, not a blind prefix rewrite. Anything not covered here
  * falls back to the destination theme's homepage, per spec.
  */
+import { CATALOGUE_SLUGS } from "@/content/catalogue/courses";
 
 /** Exact, non-dynamic path pairs. Keys and values never include query/hash. */
 const DARK_TO_LIGHT_STATIC: Record<string, string> = {
@@ -30,11 +31,14 @@ const LIGHT_TO_DARK_STATIC: Record<string, string> = Object.fromEntries(
 
 /**
  * `/programs/[slug]` and `/light/courses/[slug]` are independent catalogues
- * (the light site has ~20 sample courses; only the one real confirmed
- * program overlaps). A slug only maps across themes if it names a program
- * that genuinely exists on both sides.
+ * (the light site still carries its own older placeholder "Coming soon"
+ * sample courses with fictional slugs). A slug only maps across themes if
+ * it names a program that genuinely exists on both sides: Full Stack Web
+ * Development, plus every real course imported from the shared spreadsheet
+ * catalogue (`@/content/catalogue/courses`) — both themes read that same
+ * data, so those slugs always match exactly.
  */
-const SHARED_PROGRAM_SLUGS = new Set<string>(["full-stack-web-development"]);
+const SHARED_PROGRAM_SLUGS = new Set<string>(["full-stack-web-development", ...CATALOGUE_SLUGS]);
 
 const DARK_HOME = "/";
 const LIGHT_HOME = "/light";

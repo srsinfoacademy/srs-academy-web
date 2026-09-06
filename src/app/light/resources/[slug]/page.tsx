@@ -14,7 +14,11 @@ export async function generateMetadata({
 }: PageProps<"/light/resources/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const resource = resourceBySlug(slug);
-  return { title: resource ? resource.title : "Resource" };
+  if (!resource) return { title: "Resource" };
+
+  // Resources are one fully shared list (same slugs, same content) on both
+  // themes — always safe to canonicalize to the dark URL.
+  return { title: resource.title, alternates: { canonical: `/resources/${slug}` } };
 }
 
 export default async function LightResourceDetailPage({

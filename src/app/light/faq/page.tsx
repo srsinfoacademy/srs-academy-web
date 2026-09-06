@@ -4,7 +4,7 @@ import { EditorialHero } from "@/components/light/ui/EditorialHero";
 import { FaqAccordion } from "@/components/light/FaqAccordion";
 import { faqPage } from "@/content/pages";
 
-export const metadata: Metadata = { title: "FAQ" };
+export const metadata: Metadata = { title: "FAQ", alternates: { canonical: "/faq" } };
 
 export default function LightFaqPage() {
   return (

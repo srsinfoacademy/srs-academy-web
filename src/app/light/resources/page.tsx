@@ -4,7 +4,7 @@ import { EditorialHero } from "@/components/light/ui/EditorialHero";
 import { ResourceList } from "@/components/light/ResourceList";
 import { resources } from "@/content/resources";
 
-export const metadata: Metadata = { title: "Resources" };
+export const metadata: Metadata = { title: "Resources", alternates: { canonical: "/resources" } };
 
 export default function LightResourcesPage() {
   return (
