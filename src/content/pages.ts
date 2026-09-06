@@ -161,5 +161,6 @@ export const resourcesPage = {
 export const faqPage = {
   kicker: "Frequently Asked Questions",
   title: "FAQ",
-  intro: "[FAQ INTRO — placeholder, one sentence.]",
+  intro:
+    "Find quick answers about SRS Academy, our programs, learning modes, certification, admissions, and how to get started.",
 } as const;
