@@ -56,12 +56,13 @@ export const categories: ProgramCategory[] = [
   },
 ];
 
-const pending = {
-  level: "[LEVEL]",
-  mode: "[MODE]",
-  duration: "[DURATION]",
-  eligibility: "[ELIGIBILITY]",
-} as const;
+/**
+ * Duration is the one required `Program` field with no unverified value to
+ * hide behind — "To be confirmed" is an honest state, not a guessed figure.
+ * `level`/`mode`/`eligibility` are optional and are simply omitted below
+ * until SRS Academy confirms them, so nothing renders in their place.
+ */
+const pendingDuration = "To be confirmed";
 
 export const programs: Program[] = [
   {
@@ -87,9 +88,8 @@ export const programs: Program[] = [
     slug: "artificial-intelligence",
     name: "Artificial Intelligence",
     category: "artificial-intelligence",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — applied machine learning and AI tooling in real products.]",
-    ...pending,
+    shortDescription: "Explore practical learning in AI tools, digital workflows, and emerging technology.",
+    duration: pendingDuration,
     status: "pending",
     visualType: "nodes",
     artLabel: "NODES & RELATIONSHIPS",
@@ -100,8 +100,8 @@ export const programs: Program[] = [
     slug: "technology-programs",
     name: "Technology Programs",
     category: "technology-programs",
-    shortDescription: "[PROGRAM DESCRIPTION — systems, data and cloud fundamentals.]",
-    ...pending,
+    shortDescription: "Build practical knowledge across modern technology and digital systems.",
+    duration: pendingDuration,
     status: "pending",
     visualType: "signals",
     artLabel: "SYSTEMS & SIGNALS",
@@ -112,9 +112,8 @@ export const programs: Program[] = [
     slug: "business-and-entrepreneurship",
     name: "Business & Entrepreneurship",
     category: "business-entrepreneurship",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — turning technical capability into an operating business.]",
-    ...pending,
+    shortDescription: "Learn practical business, digital, and entrepreneurship-focused skills.",
+    duration: pendingDuration,
     status: "pending",
     visualType: "direction",
     artLabel: "DIRECTIONAL STRUCTURE",
@@ -125,9 +124,8 @@ export const programs: Program[] = [
     slug: "digital-skills",
     name: "Digital Skills",
     category: "digital-skills",
-    shortDescription:
-      "[PROGRAM DESCRIPTION — short foundational tracks with a route into longer programs.]",
-    ...pending,
+    shortDescription: "Develop useful digital skills for study, work, business, and everyday technology use.",
+    duration: pendingDuration,
     status: "pending",
     visualType: "modular",
     artLabel: "MODULAR SIGNALS",
@@ -235,11 +233,16 @@ export const statusLabel: Record<Program["status"], string> = {
   pending: "Admissions open based on current course availability.",
 };
 
-/** Metadata rows, in the order the preview and accordion present them. */
+/** Metadata rows, in the order the preview and accordion present them. Unconfirmed (bracketed) values are omitted rather than shown. */
 export function programMetaRows(program: Program) {
   return [
     { label: "Duration", value: program.duration },
     { label: "Mode", value: program.mode },
     { label: "Level", value: program.level },
-  ];
+  ].filter((row): row is { label: string; value: string } => typeof row.value === "string" && !row.value.startsWith("["));
+}
+
+/** True for a real, confirmed value — false for `undefined` or a bracketed placeholder like `"[LEVEL]"`. */
+export function isConfirmedValue(value: string | undefined): value is string {
+  return typeof value === "string" && !value.startsWith("[");
 }

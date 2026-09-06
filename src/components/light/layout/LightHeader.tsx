@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { lightRoutes } from "@/lib/light/routes";
 import { LightButton } from "@/components/light/ui/LightButton";
+
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 const navItems = [
   { label: "Courses", href: lightRoutes.courses },
@@ -22,6 +24,9 @@ const navItems = [
 export function LightHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const wasOpenRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -37,6 +42,55 @@ export function LightHeader() {
     };
   }, [open]);
 
+  /*
+   * Move focus into the panel on open and back to the trigger on close —
+   * guarded by wasOpenRef so mounting the header (open: false) never steals
+   * focus onto the trigger button before anyone has opened anything.
+   */
+  useEffect(() => {
+    if (open) {
+      wasOpenRef.current = true;
+      const first = panelRef.current?.querySelector<HTMLElement>(FOCUSABLE);
+      first?.focus({ preventScroll: true });
+    } else if (wasOpenRef.current) {
+      wasOpenRef.current = false;
+      triggerRef.current?.focus({ preventScroll: true });
+    }
+  }, [open]);
+
+  // Escape closes the panel; Tab cycling is trapped inside it while open.
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const nodes = panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE);
+      if (!nodes || nodes.length === 0) return;
+
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus({ preventScroll: true });
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <header
       className={`sticky top-0 z-50 transition-colors duration-[var(--sl-dur-fast)] ${
@@ -46,12 +100,7 @@ export function LightHeader() {
       <div className="sl-container flex h-18 items-center justify-between">
         <Link href={lightRoutes.home} className="sl-focus flex items-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-sl-lime" aria-hidden="true" />
-          <span className="font-sl-display text-xl font-bold tracking-tight">
-            SRS Academy
-            <span className="ml-1.5 align-middle font-sl-mono text-[10px] font-medium tracking-[0.1em] text-sl-ink/45">
-              LIGHT PREVIEW
-            </span>
-          </span>
+          <span className="font-sl-display text-xl font-bold tracking-tight">SRS Academy</span>
         </Link>
 
         <nav className="hidden min-[1180px]:flex items-center gap-8" aria-label="Primary">
@@ -76,6 +125,7 @@ export function LightHeader() {
         </div>
 
         <button
+          ref={triggerRef}
           type="button"
           className="sl-focus flex h-10 w-10 min-[1180px]:hidden items-center justify-center rounded-[var(--radius-sl-sm)] border border-sl-ink/15"
           aria-expanded={open}
@@ -99,6 +149,10 @@ export function LightHeader() {
 
       <div
         id="light-mobile-nav"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
         className={`min-[1180px]:hidden fixed inset-x-0 top-18 bottom-0 bg-sl-paper transition-transform duration-[var(--sl-dur-med)] ease-[var(--sl-ease)] overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}

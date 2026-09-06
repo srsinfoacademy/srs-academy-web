@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState, useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/cn";
 import { getThemeCounterpartUrl } from "@/lib/theme-route-map";
+import { THEME_PREFERENCE_COOKIE, THEME_PREFERENCE_MAX_AGE } from "@/lib/theme-preference";
 
 const SCROLL_SHOW_THRESHOLD = 450;
 
@@ -121,6 +122,11 @@ function FloatingUtilityControlsInner({ variant }: { variant: Variant }) {
     window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
   }
 
+  function handleThemeSwitch() {
+    const nextPreference = isLight ? "dark" : "light";
+    document.cookie = `${THEME_PREFERENCE_COOKIE}=${nextPreference}; path=/; max-age=${THEME_PREFERENCE_MAX_AGE}; SameSite=Lax`;
+  }
+
   const buttonBase = cn(
     "flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md",
     "shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-200 ease-out",
@@ -143,6 +149,7 @@ function FloatingUtilityControlsInner({ variant }: { variant: Variant }) {
     >
       <Link
         href={counterpartUrl}
+        onClick={handleThemeSwitch}
         aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
         className={cn(buttonBase, "group")}
       >

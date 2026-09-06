@@ -8,6 +8,7 @@ import { lightRoutes } from "@/lib/light/routes";
 export const metadata: Metadata = {
   title: "Professional & Corporate Learning",
   description: "Upskill your team, or advance your own career, with practical, business-relevant learning tracks.",
+  alternates: { canonical: "/light/corporate-learning" },
 };
 
 const tracks = [

@@ -6,7 +6,7 @@ import { LightButton } from "@/components/light/ui/LightButton";
 import { aboutPage } from "@/content/pages";
 import { lightRoutes } from "@/lib/light/routes";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = { title: "About", alternates: { canonical: "/about" } };
 
 export default function LightAboutPage() {
   return (

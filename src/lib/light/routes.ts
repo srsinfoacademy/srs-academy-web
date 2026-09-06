@@ -13,6 +13,7 @@ export const lightRoutes = {
   creativeVocational: "/light/creative-vocational",
   gallery: "/light/gallery",
   resources: "/light/resources",
+  resource: (slug: string) => `/light/resources/${slug}`,
   updates: "/light/updates",
   update: (slug: string) => `/light/updates/${slug}`,
   contact: "/light/contact",

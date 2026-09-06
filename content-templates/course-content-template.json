@@ -33,8 +33,8 @@
       "1 Month",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to baking, covering Eggless Cake Sponge, Vanilla Sponge, Butterscotch Sponge, Chocolate Sponge, Mango Sponge and Strawberry Sponge, over a duration of 1 Month.",
+      "Understand eggless cake sponge. | Learn to vanilla sponge. | Practice butterscotch sponge. | Explore chocolate sponge. | Use basic mango sponge. | Develop familiarity with strawberry sponge.",
       "",
       "",
       "",
@@ -42,9 +42,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "basic-to-advance-nail-extension-course",
@@ -56,8 +56,8 @@
       "2 Months",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to nail art & extensions, covering Product Knowledge, Refilling, Gel Extension, Tip Application, Acrylic Extension and Remove, over a duration of 2 Months.",
+      "Understand product knowledge. | Learn to refilling. | Practice gel extension. | Explore tip application. | Use basic acrylic extension. | Develop familiarity with remove.",
       "",
       "",
       "",
@@ -65,9 +65,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "basic-to-advance-mehendi-masters-course",
@@ -79,8 +79,8 @@
       "3 Months",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to mehendi design, covering Basic Knowledge, Basic Lines, Humps, Dots, Spiral and Filler Elements, over a duration of 3 Months.",
+      "Understand basic knowledge. | Learn to basic lines. | Practice humps. | Explore dots. | Use basic spiral. | Develop familiarity with filler elements.",
       "",
       "",
       "",
@@ -88,9 +88,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "summer-internship-programme",
@@ -102,8 +102,8 @@
       "120 Hours",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to computer & digital literacy / foundation programs, covering Fundamentals of Computers, Operating System, MS Office and Internet, over a duration of 120 Hours.",
+      "Understand fundamentals of computers. | Learn to operating system. | Practice ms office. | Explore internet.",
       "",
       "",
       "",
@@ -111,9 +111,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "basic-internship-course",
@@ -125,7 +125,7 @@
       "120 Hours",
       "",
       "",
-      "",
+      "This course introduces learners to computer & digital literacy / foundation programs, covering Microsoft Office and Internet, over a duration of 120 Hours.",
       "",
       "",
       "",
@@ -134,9 +134,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "advanced-diploma-in-computer-application",
@@ -148,8 +148,8 @@
       "1 Year",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to computer applications, covering Computer Fundamentals, Operating System, Windows 7, MS Office, Internet & E-Mail and English Typing, over a duration of 1 Year.",
+      "Understand computer fundamentals. | Learn to operating system. | Practice windows 7. | Explore ms office. | Use basic internet & e-mail. | Develop familiarity with english typing.",
       "",
       "",
       "",
@@ -157,9 +157,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "advanced-diploma-in-digital-marketing",
@@ -171,8 +171,8 @@
       "1 Year",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to digital marketing, covering Digital Marketing Concept, Account Management, Campaign & Ad Group Management, Key Targeting, Language & Location Targeting and Budget & Bidding, over a duration of 1 Year.",
+      "Understand digital marketing concept. | Learn to account management. | Practice campaign & ad group management. | Explore key targeting. | Use basic language & location targeting. | Develop familiarity with budget & bidding.",
       "",
       "",
       "",
@@ -180,9 +180,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "it-siksha-with-ai",
@@ -194,18 +194,18 @@
       "3 Months",
       "",
       "",
+      "This course introduces learners to ai tools & applications, covering Computer Fundamentals, MS Office, Internet, AI Introduction, Chatbots and Content Writers, over a duration of 3 Months.",
+      "Understand computer fundamentals. | Learn to ms office. | Practice internet. | Explore ai introduction. | Use basic chatbots. | Develop familiarity with content writers.",
       "",
       "",
       "",
-      "",
-      "",
-      "Computer Fundamentals | MS Office (Word | Excel | PowerPoint) | Internet | AI Introduction | Chatbots | Content Writers | Code Generators | Create Images from Text Prompts | Website | Application & Game Making | AI Voice | AI Song | Sound Effect | AI Video Editing",
+      "Computer Fundamentals | MS Office (Word, Excel, PowerPoint) | Internet | AI Introduction | Chatbots | Content Writers | Code Generators | Create Images from Text Prompts | Website | Application & Game Making | AI Voice | AI Song | Sound Effect | AI Video Editing",
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "ai-with-digital-marketing-basic-siksha",
@@ -217,18 +217,18 @@
       "3 Months",
       "",
       "",
+      "This course introduces learners to ai & digital marketing, covering AI Introduction, Chatbots, Content Writers, Code Generators, Create Images from Text Prompts and Website, over a duration of 3 Months.",
+      "Understand ai introduction. | Learn to chatbots. | Practice content writers. | Explore code generators. | Use basic create images from text prompts. | Develop familiarity with website.",
       "",
       "",
       "",
-      "",
-      "",
-      "AI Introduction | Chatbots | Content Writers | Code Generators | Create Images from Text Prompts | Website | Application & Game Making | AI Voice | AI Song | Sound Effect | AI Video Editing | Digital Marketing Introduction | Social Media Marketing (Facebook | Instagram | WhatsApp | Twitter) | Email Marketing | YouTube Content Marketing | Search Engine Optimization (SEO) | Mobile Marketing | Pay-Per-Click | Affiliate Marketing",
+      "AI Introduction | Chatbots | Content Writers | Code Generators | Create Images from Text Prompts | Website | Application & Game Making | AI Voice | AI Song | Sound Effect | AI Video Editing | Digital Marketing Introduction | Social Media Marketing (Facebook, Instagram, WhatsApp, Twitter) | Email Marketing | YouTube Content Marketing | Search Engine Optimization (SEO) | Mobile Marketing | Pay-Per-Click | Affiliate Marketing",
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "digital-marketing-siksha",
@@ -240,8 +240,8 @@
       "3 Months",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to digital marketing, covering Social Media Marketing, Email Marketing, YouTube Content Marketing, Search Engine Optimization, Mobile Marketing and Pay-Per-Click, over a duration of 3 Months.",
+      "Understand social media marketing. | Learn to email marketing. | Practice youtube content marketing. | Explore search engine optimization. | Use basic mobile marketing. | Develop familiarity with pay-per-click.",
       "",
       "",
       "",
@@ -249,9 +249,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "it-siksha",
@@ -263,8 +263,8 @@
       "3 Months",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to computer & digital literacy, covering Computer Fundamentals, MS Office, Internet and PDP, over a duration of 3 Months.",
+      "Understand computer fundamentals. | Learn to ms office. | Practice internet. | Explore pdp.",
       "",
       "",
       "",
@@ -272,9 +272,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "digital-literacy-siksha",
@@ -286,8 +286,8 @@
       "3 Months",
       "",
       "",
-      "",
-      "",
+      "This course introduces learners to computer & digital literacy, covering Fundamentals, Windows, Microsoft Word, Microsoft Excel, Microsoft PowerPoint and Internet, over a duration of 3 Months.",
+      "Understand fundamentals. | Learn to windows. | Practice microsoft word. | Explore microsoft excel. | Use basic microsoft powerpoint. | Develop familiarity with internet.",
       "",
       "",
       "",
@@ -295,9 +295,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "29",
+      "mode | level | eligibility | certification | fees"
     ],
     [
       "certificate-in-assamese-typing",
@@ -309,7 +309,7 @@
       "3 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Assamese Typing, over a duration of 3 Months.",
       "",
       "",
       "",
@@ -318,9 +318,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "diploma-in-english-and-hindi-typing",
@@ -332,7 +332,7 @@
       "6 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering English & Hindi Typing, over a duration of 6 Months.",
       "",
       "",
       "",
@@ -341,9 +341,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "certificate-in-odia-typing",
@@ -355,7 +355,7 @@
       "3 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Odia Typing, over a duration of 3 Months.",
       "",
       "",
       "",
@@ -364,9 +364,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "diploma-in-english-and-bengali-typing",
@@ -378,7 +378,7 @@
       "6 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering English & Bengali Typing, over a duration of 6 Months.",
       "",
       "",
       "",
@@ -387,9 +387,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "certificate-in-hindi-typing",
@@ -401,7 +401,7 @@
       "3 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Hindi Typing, over a duration of 3 Months.",
       "",
       "",
       "",
@@ -410,9 +410,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "certificate-in-bengali-typing",
@@ -424,7 +424,7 @@
       "3 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Bengali Typing, over a duration of 3 Months.",
       "",
       "",
       "",
@@ -433,9 +433,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "certificate-in-english-typing",
@@ -447,7 +447,7 @@
       "3 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering English Typing, over a duration of 3 Months.",
       "",
       "",
       "",
@@ -456,9 +456,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "diploma-in-english-typing",
@@ -470,7 +470,7 @@
       "6 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering English Typing, over a duration of 6 Months.",
       "",
       "",
       "",
@@ -479,9 +479,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "diploma-in-hindi-typing",
@@ -493,7 +493,7 @@
       "6 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Computer Fundamental and Hindi Typing, over a duration of 6 Months.",
       "",
       "",
       "",
@@ -502,9 +502,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "diploma-in-bengali-typing",
@@ -516,7 +516,7 @@
       "6 Months",
       "",
       "",
-      "",
+      "This course introduces learners to regional language typing, covering Computer Fundamentals and Bengali Typing using Bijoy & Bengali Word, over a duration of 6 Months.",
       "",
       "",
       "",
@@ -525,9 +525,9 @@
       "FALSE",
       "live",
       "",
-      "minimal",
-      "0",
-      "mode | level | overview | outcomes | eligibility | certification | fees"
+      "partial",
+      "14",
+      "mode | level | outcomes | eligibility | certification | fees"
     ],
     [
       "full-stack-web-development",
@@ -564,8 +564,8 @@
   ],
   "completenessSummary": {
     "complete": 0,
-    "partial": 1,
-    "minimal": 22
+    "partial": 23,
+    "minimal": 0
   },
   "missingFieldReport": [
     {
@@ -574,8 +574,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -587,8 +585,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -600,8 +596,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -613,8 +607,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -626,7 +618,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -639,8 +630,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -652,8 +641,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -665,8 +652,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -678,8 +663,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -691,8 +674,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -704,8 +685,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -717,8 +696,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
-        "outcomes",
         "eligibility",
         "certification",
         "fees"
@@ -730,7 +707,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -743,7 +719,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -756,7 +731,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -769,7 +743,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -782,7 +755,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -795,7 +767,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -808,7 +779,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -821,7 +791,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -834,7 +803,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",
@@ -847,7 +815,6 @@
       "missingFields": [
         "mode",
         "level",
-        "overview",
         "outcomes",
         "eligibility",
         "certification",

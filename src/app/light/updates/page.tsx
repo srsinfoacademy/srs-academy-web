@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EditorialHero } from "@/components/light/ui/EditorialHero";
 import { updateFilters, updates } from "@/content/updates";
 
-export const metadata: Metadata = { title: "Updates" };
+export const metadata: Metadata = { title: "Updates", alternates: { canonical: "/updates" } };
 
 export default function LightUpdatesPage() {
   return (

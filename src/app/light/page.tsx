@@ -17,6 +17,7 @@ import { SprsRelationship } from "@/components/light/home/SprsRelationship";
 
 export const metadata: Metadata = {
   title: "Home",
+  alternates: { canonical: "/" },
 };
 
 export default function LightHomePage() {

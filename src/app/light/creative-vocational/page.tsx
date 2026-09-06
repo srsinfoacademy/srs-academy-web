@@ -9,6 +9,7 @@ import { lightRoutes } from "@/lib/light/routes";
 export const metadata: Metadata = {
   title: "Creative & Vocational Learning",
   description: "Makeup, mehendi, fashion and skilled-trades programs taught with the same structure and seriousness as any technical program.",
+  alternates: { canonical: "/light/creative-vocational" },
 };
 
 const spotlightCategories: (typeof courseCategories)[number]["id"][] = ["beauty", "creative", "fashion", "trades"];

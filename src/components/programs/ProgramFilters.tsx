@@ -87,7 +87,7 @@ export function ProgramFilters({
             type="search"
             value={filters.query}
             onChange={(e) => set({ query: e.target.value })}
-            placeholder="[SEARCH PROGRAMS]"
+            placeholder="Search programs…"
             className={cn(
               "h-11 w-full rounded-[var(--srs-radius-md)] border border-line bg-surface-2",
               "pl-3 pr-10 type-body-s text-primary placeholder:text-muted",

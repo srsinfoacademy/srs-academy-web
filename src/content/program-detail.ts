@@ -68,7 +68,7 @@ function makeDetail(overrides: Partial<ProgramDetail> = {}): ProgramDetail {
     ],
     relatedPrograms: [],
     startDate: undefined,
-    primaryCta: "[PRIMARY PROGRAM CTA]",
+    primaryCta: "Enquire About This Program",
     ...overrides,
   };
 }
