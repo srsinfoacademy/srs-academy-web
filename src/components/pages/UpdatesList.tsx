@@ -40,7 +40,7 @@ export function UpdatesList({ updates }: { updates: Update[] }) {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_1fr] lg:items-end">
         <SearchField
           label="Search updates"
-          placeholder="[SEARCH UPDATES]"
+          placeholder="Search updates…"
           value={query}
           onChange={setQuery}
         />

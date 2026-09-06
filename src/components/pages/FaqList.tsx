@@ -30,7 +30,7 @@ export function FaqList({ entries }: { entries: FaqEntry[] }) {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_1fr] lg:items-end">
         <SearchField
           label="Search questions"
-          placeholder="[SEARCH FAQ]"
+          placeholder="Search questions…"
           value={query}
           onChange={setQuery}
         />

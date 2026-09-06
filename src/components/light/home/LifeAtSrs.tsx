@@ -22,6 +22,10 @@ export function LifeAtSrs() {
           LIFE AT SRS ACADEMY
         </div>
         <h2 className="sl-h2 text-[1.5rem]">Classrooms, workshops, and hands-on practice</h2>
+        <p className="mt-2 max-w-120 text-sm text-sl-ink/55">
+          Illustrative imagery representing SRS Academy&rsquo;s learning environments — not photos of
+          specific classes, students, or events.
+        </p>
       </Reveal>
       <div
         className="relative"
