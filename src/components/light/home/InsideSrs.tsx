@@ -15,7 +15,10 @@ export function InsideSrs() {
         <div className="mb-2.5 font-sl-mono text-[11px] tracking-[0.16em] text-sl-ink/55">
           INSIDE SRS
         </div>
-        <h2 className="sl-h2 mb-6.5 text-[1.6rem]">A closer look, in motion</h2>
+        <h2 className="sl-h2 mb-2 text-[1.6rem]">A closer look, in motion</h2>
+        <p className="mb-6.5 max-w-120 text-sm text-sl-ink/55">
+          Illustrative imagery by learning area — not footage of specific classes or students.
+        </p>
       </Reveal>
       <Reveal
         className="sl-scrollbar-none -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2"

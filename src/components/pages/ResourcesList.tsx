@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Reveal } from "@/components/motion/Reveal";
@@ -8,6 +9,7 @@ import { FilterChips } from "@/components/ui/FilterChips";
 import { SearchField } from "@/components/ui/SearchField";
 import { cn } from "@/lib/cn";
 import { resourceCategories, type Resource } from "@/content/resources";
+import { routes } from "@/lib/routes";
 
 /**
  * Resource list. Downloads carry a distinct action label and the violet
@@ -66,17 +68,14 @@ export function ResourcesList({ resources }: { resources: Resource[] }) {
         <Reveal as="ul" className="border-t border-line">
             {results.map((resource) => {
               const isDownload = resource.type === "Download";
-
-              return (
-                <li
-                  key={resource.slug}
-                  className={cn(
-                    "group flex min-h-16 flex-col gap-2 border-b border-line py-5",
-                    "sm:flex-row sm:items-baseline sm:gap-6",
-                    "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
-                    "hover:bg-[rgb(242_244_239_/_0.03)]",
-                  )}
-                >
+              const rowClass = cn(
+                "group flex min-h-16 flex-col gap-2 border-b border-line py-5",
+                "sm:flex-row sm:items-baseline sm:gap-6",
+                "transition-colors duration-[var(--srs-duration-fast)] ease-standard",
+                "hover:bg-[rgb(242_244_239_/_0.03)]",
+              );
+              const content = (
+                <>
                   <span className="type-index shrink-0 sm:w-28">{resource.type}</span>
                   <span className="flex-1">
                     <span className="type-h4 block text-balance">{resource.title}</span>
@@ -91,6 +90,18 @@ export function ResourcesList({ resources }: { resources: Resource[] }) {
                   >
                     {isDownload ? "Download ↓" : "Read →"}
                   </span>
+                </>
+              );
+
+              return (
+                <li key={resource.slug}>
+                  {resource.body ? (
+                    <Link href={routes.resource(resource.slug)} className={rowClass}>
+                      {content}
+                    </Link>
+                  ) : (
+                    <div className={rowClass}>{content}</div>
+                  )}
                 </li>
               );
             })}
