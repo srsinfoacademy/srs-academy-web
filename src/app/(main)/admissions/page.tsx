@@ -30,10 +30,7 @@ export default function AdmissionsPage() {
         title="Admissions"
         lead={admissionsPage.intro}
         breadcrumb={[{ label: "Admissions" }]}
-        meta={[
-          { label: "Steps", value: "05" },
-          { label: "Intake", value: "[INTAKE DATES]" },
-        ]}
+        meta={[{ label: "Steps", value: "05" }]}
       />
 
       <Container className="pb-[var(--srs-section-loose)]">
@@ -88,7 +85,7 @@ export default function AdmissionsPage() {
           </h2>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button pending="[APPLICATION DESTINATION]" size="md">
-              {admissionsPage.ctaLabel}
+              Start application
             </Button>
             <Button href={routes.contact} variant="secondary" size="md">
               Contact admissions

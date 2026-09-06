@@ -34,7 +34,7 @@ export function ResourcesList({ resources }: { resources: Resource[] }) {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_1fr] lg:items-end">
         <SearchField
           label="Search resources"
-          placeholder="[SEARCH RESOURCES]"
+          placeholder="Search resources…"
           value={query}
           onChange={setQuery}
         />
