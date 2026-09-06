@@ -75,8 +75,12 @@ export const aboutPage: EditorialPage = {
     {
       num: "07",
       heading: "Principles",
-      body: "[GUIDING PRINCIPLES — PLACEHOLDER SET.]",
-      list: ["[PRINCIPLE 1]", "[PRINCIPLE 2]", "[PRINCIPLE 3]"],
+      body: "SRS Academy is guided by three core principles.",
+      list: [
+        "LEARN WITH PURPOSE — Understand the concepts, systems, and tools behind modern digital work.",
+        "BUILD THROUGH PRACTICE — Develop capability through exercises, projects, experimentation, and practical application.",
+        "ADVANCE CONTINUOUSLY — Use what you learn as a foundation for deeper skills, professional development, and future opportunities.",
+      ],
     },
   ],
 };
@@ -84,7 +88,8 @@ export const aboutPage: EditorialPage = {
 export const admissionsPage: EditorialPage = {
   kicker: "Admissions",
   title: "Admissions",
-  intro: "[ADMISSIONS INTRO — placeholder, one sentence.]",
+  intro:
+    "Choose a program, review the available learning details, and contact SRS Academy for current admission guidance.",
   ctaLabel: "[START APPLICATION]",
   sections: [
     {
@@ -95,8 +100,7 @@ export const admissionsPage: EditorialPage = {
     {
       num: "02",
       heading: "Required Documents",
-      body: "[DOCUMENT LIST — PLACEHOLDER SET.]",
-      list: ["[DOCUMENT 1]", "[DOCUMENT 2]", "[DOCUMENT 3]", "[DOCUMENT 4]"],
+      body: "Required documents may vary by program. SRS Academy will confirm the applicable documents during the admission process.",
     },
     {
       num: "03",
@@ -106,28 +110,28 @@ export const admissionsPage: EditorialPage = {
     {
       num: "04",
       heading: "Fees / Payment Information",
-      body: "[PAYMENT INFORMATION — PLACEHOLDER, CONFIRM BEFORE PUBLISH.]",
+      body: "Fees and payment details vary by program and are shared during the admission process.",
     },
     {
       num: "05",
       heading: "Important Dates",
-      body: "[IMPORTANT DATES — PLACEHOLDER, PER-INTAKE.]",
+      body: "Admission timelines and intake dates depend on current program availability.",
     },
     {
       num: "06",
       heading: "Verification Process",
-      body: "[VERIFICATION PROCESS — PLACEHOLDER.]",
+      body: "Submitted information may be reviewed before enrollment is confirmed.",
     },
   ],
 };
 
 /** The five-step admissions journey, in the shared node language. */
 export const admissionsJourney = [
-  { num: "01", title: "[REVIEW PROGRAMS]", body: "[STEP DESCRIPTION — placeholder.]" },
-  { num: "02", title: "[SUBMIT APPLICATION]", body: "[STEP DESCRIPTION — placeholder.]" },
-  { num: "03", title: "[VERIFICATION]", body: "[STEP DESCRIPTION — placeholder.]" },
-  { num: "04", title: "[CONFIRMATION]", body: "[STEP DESCRIPTION — placeholder.]" },
-  { num: "05", title: "[ENROLLMENT]", body: "[STEP DESCRIPTION — placeholder.]" },
+  { num: "01", title: "Explore a program", body: "Look through the programs available and their learning details." },
+  { num: "02", title: "Ask your questions", body: "Reach out to SRS Academy with any questions before applying." },
+  { num: "03", title: "Share the required details", body: "Provide the information needed to begin the admission process." },
+  { num: "04", title: "Complete the applicable admission steps", body: "Finish any additional steps confirmed for your chosen program." },
+  { num: "05", title: "Start learning", body: "Begin your program once admission is confirmed." },
 ];
 
 export const contactPage: EditorialPage = {
@@ -138,11 +142,23 @@ export const contactPage: EditorialPage = {
     {
       num: "01",
       heading: "General Enquiries",
-      body: "[DESCRIPTION + CONTACT ROUTE — PLACEHOLDER.]",
+      body: "For general questions about SRS Academy, programs, learning options, or academy information.",
     },
-    { num: "02", heading: "Admissions", body: "[DESCRIPTION + CONTACT ROUTE — PLACEHOLDER.]" },
-    { num: "03", heading: "Support", body: "[DESCRIPTION + CONTACT ROUTE — PLACEHOLDER.]" },
-    { num: "04", heading: "Partnerships", body: "[DESCRIPTION + CONTACT ROUTE — PLACEHOLDER.]" },
+    {
+      num: "02",
+      heading: "Admissions",
+      body: "For help choosing a program, understanding the admission process, or checking current course availability.",
+    },
+    {
+      num: "03",
+      heading: "Support",
+      body: "For assistance with an existing enquiry, website issue, or learning-related support request.",
+    },
+    {
+      num: "04",
+      heading: "Partnerships",
+      body: "For institutional, corporate, training, or collaboration enquiries.",
+    },
   ],
 };
 

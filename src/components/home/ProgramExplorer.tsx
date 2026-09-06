@@ -5,7 +5,7 @@ import { useCallback, useId, useRef, useState } from "react";
 import { ProgramArt } from "@/components/home/ProgramArt";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { categoryOf, programMetaRows, programs } from "@/content/programs";
+import { categoryOf, isConfirmedValue, programMetaRows, programs } from "@/content/programs";
 import { routes } from "@/lib/routes";
 
 /**
@@ -82,7 +82,9 @@ export function ProgramExplorer() {
                 {program.num}
               </span>
               <span className="type-h4 flex-1 text-current">{program.name}</span>
-              <span className="type-index">{program.level}</span>
+              {isConfirmedValue(program.level) ? (
+                <span className="type-index">{program.level}</span>
+              ) : null}
             </li>
           );
         })}
@@ -104,7 +106,7 @@ export function ProgramExplorer() {
           <p className="type-index text-lime">
             {active.num} / {categoryOf(active).label.toUpperCase()}
           </p>
-          <p className="type-index">{active.level}</p>
+          {isConfirmedValue(active.level) ? <p className="type-index">{active.level}</p> : null}
         </div>
 
         <div className="mt-6 h-40 rounded-[var(--srs-radius-lg)] border border-line-hairline p-6">

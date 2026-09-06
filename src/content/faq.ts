@@ -91,16 +91,16 @@ export const faqEntries: FaqEntry[] = [
     answer:
       "You can contact SRS Academy using the official email address, phone number, or contact options published on the Contact page.",
   },
-  // Admissions: no confirmed process content yet — kept as structural
-  // placeholders so the category and accordion remain exercisable.
   {
     category: "Admissions",
-    question: "[ADMISSIONS QUESTION 1]",
-    answer: "[ANSWER — approved copy pending. Nothing is asserted until confirmed.]",
+    question: "How do I apply for a course?",
+    answer:
+      "Choose the program you are interested in and contact SRS Academy for the current admission process and required details.",
   },
   {
     category: "Admissions",
-    question: "[ADMISSIONS QUESTION 2]",
-    answer: "[ANSWER — approved copy pending. Nothing is asserted until confirmed.]",
+    question: "Are admission dates the same for every course?",
+    answer:
+      "No. Admission timelines may vary by program and current availability. Contact SRS Academy for the latest information.",
   },
 ];
