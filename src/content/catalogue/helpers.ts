@@ -101,6 +101,8 @@ export function mergeEnrichment(
       curriculumModules: patch.curriculum !== undefined ? patch.curriculum : course.curriculumModules,
       primaryCta: patch.primaryCta !== undefined ? patch.primaryCta : course.primaryCta,
       notes: patch.notes !== undefined ? patch.notes : course.notes,
+      featured: patch.featured !== undefined ? patch.featured : course.featured,
+      status: patch.status !== undefined ? patch.status : course.status,
     };
   });
 }

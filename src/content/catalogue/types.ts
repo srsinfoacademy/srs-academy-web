@@ -161,4 +161,8 @@ export type CourseEnrichment = {
   primaryCta?: string | null;
   /** Internal editorial notes — never rendered on a public page. */
   notes?: string | null;
+  /** Overrides whether this course is featured — a deliberate editorial choice, never derived. */
+  featured?: boolean;
+  /** Overrides admissions status once SRS Academy confirms it (draft/live/placeholder). */
+  status?: CourseStatus;
 };
