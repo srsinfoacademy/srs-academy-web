@@ -1,0 +1,1344 @@
+[
+  {
+    "slug": "cake-bakery-course",
+    "courseCode": null,
+    "courseName": "Cake Bakery Course",
+    "category": "Food & Baking",
+    "subcategory": "Baking",
+    "courseType": "Course",
+    "duration": "1 Month",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Eggless Cake Sponge",
+      "Vanilla Sponge",
+      "Butterscotch Sponge",
+      "Chocolate Sponge",
+      "Mango Sponge",
+      "Strawberry Sponge",
+      "Pineapple Sponge",
+      "Rasmalai Sponge",
+      "With Egg Sponge Cake",
+      "Premix Cake Sponge"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to baking, covering Eggless Cake Sponge, Vanilla Sponge, Butterscotch Sponge, Chocolate Sponge, Mango Sponge and Strawberry Sponge, over a duration of 1 Month.",
+    "outcomesDraft": [
+      "Understand eggless cake sponge.",
+      "Learn to vanilla sponge.",
+      "Practice butterscotch sponge.",
+      "Explore chocolate sponge.",
+      "Use basic mango sponge.",
+      "Develop familiarity with strawberry sponge."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  },
+  {
+    "slug": "basic-to-advance-nail-extension-course",
+    "courseCode": "VTDB101",
+    "courseName": "Basic to Advance Nail Extension Course",
+    "category": "Beauty & Makeup",
+    "subcategory": "Nail Art & Extensions",
+    "courseType": "Course",
+    "duration": "2 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Product Knowledge",
+      "Refilling",
+      "Gel Extension",
+      "Tip Application",
+      "Acrylic Extension",
+      "Remove",
+      "Poly Gel Extensions",
+      "Colour Acrylic Extension",
+      "Poly Gel",
+      "Soft Gel Extension",
+      "Chrome / Mirror",
+      "French",
+      "Transfer Foil Art",
+      "Glitter Application",
+      "Permanent Polish",
+      "Stone Application",
+      "3D Art (Flower)",
+      "Pigment Art",
+      "Flex Art",
+      "Metallic Gel",
+      "Cat Eye",
+      "Omra Nail Art",
+      "Full Nail Glitter Art",
+      "Dry Flower Art",
+      "Isolated (Korean) Nail Art",
+      "Blooming Art",
+      "Glass Nail Art",
+      "Bridal Nail Art",
+      "Airbrush Nail Art",
+      "5D Art",
+      "Advanced Nail Art"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to nail art & extensions, covering Product Knowledge, Refilling, Gel Extension, Tip Application, Acrylic Extension and Remove, over a duration of 2 Months.",
+    "outcomesDraft": [
+      "Understand product knowledge.",
+      "Learn to refilling.",
+      "Practice gel extension.",
+      "Explore tip application.",
+      "Use basic acrylic extension.",
+      "Develop familiarity with remove."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  },
+  {
+    "slug": "basic-to-advance-mehendi-masters-course",
+    "courseCode": null,
+    "courseName": "Basic to Advance Mehendi Master's Course",
+    "category": "Mehendi & Creative Arts",
+    "subcategory": "Mehendi Design",
+    "courseType": "Course",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Basic Knowledge",
+      "Basic Lines",
+      "Humps",
+      "Dots",
+      "Spiral",
+      "Filler Elements",
+      "Different Types Of Grid",
+      "Check",
+      "Borders",
+      "Type Of Flowers",
+      "Semi Bridal",
+      "Arabic Design",
+      "Rajasthani Design",
+      "Mandala Design",
+      "Pakistani Design",
+      "Dubai Style",
+      "Floral Design",
+      "Sanai",
+      "Tabla",
+      "etc.",
+      "Agnikund",
+      "Gachkouto",
+      "Mukut",
+      "Engagement Style",
+      "Simple String Design",
+      "Client Handling",
+      "Cone Making",
+      "Organic Mehendi Making"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to mehendi design, covering Basic Knowledge, Basic Lines, Humps, Dots, Spiral and Filler Elements, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand basic knowledge.",
+      "Learn to basic lines.",
+      "Practice humps.",
+      "Explore dots.",
+      "Use basic spiral.",
+      "Develop familiarity with filler elements."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  },
+  {
+    "slug": "summer-internship-programme",
+    "courseCode": "SIP002",
+    "courseName": "Summer Internship Programme",
+    "category": "Digital & Business Skills",
+    "subcategory": "Computer & Digital Literacy / Foundation Programs",
+    "courseType": "Training Program",
+    "duration": "120 Hours",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Fundamentals of Computers",
+      "Operating System (DOS",
+      "Windows)",
+      "MS Office (Word",
+      "Excel",
+      "PowerPoint",
+      "Access)",
+      "Internet"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to computer & digital literacy / foundation programs, covering Fundamentals of Computers, Operating System, MS Office and Internet, over a duration of 120 Hours.",
+    "outcomesDraft": [
+      "Understand fundamentals of computers.",
+      "Learn to operating system.",
+      "Practice ms office.",
+      "Explore internet."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Training Program\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "basic-internship-course",
+    "courseCode": "BIC001",
+    "courseName": "Basic Internship Course",
+    "category": "Digital & Business Skills",
+    "subcategory": "Computer & Digital Literacy / Foundation Programs",
+    "courseType": "Training Program",
+    "duration": "120 Hours",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Microsoft Office (Word",
+      "Excel",
+      "PowerPoint)",
+      "Internet"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to computer & digital literacy / foundation programs, covering Microsoft Office and Internet, over a duration of 120 Hours.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 2 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Training Program\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "advanced-diploma-in-computer-application",
+    "courseCode": "ADCA0002",
+    "courseName": "Advanced Diploma in Computer Application",
+    "category": "Digital & Business Skills",
+    "subcategory": "Computer Applications",
+    "courseType": "Advanced Diploma",
+    "duration": "1 Year",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Computer Fundamentals",
+      "Operating System",
+      "Windows 7",
+      "MS Office (Word, Excel, PowerPoint, Access)",
+      "Internet & E-Mail",
+      "English Typing",
+      "Regional Typing",
+      "HTML",
+      "DHTML",
+      "C Programming",
+      "JavaScript",
+      "Tally Prime",
+      "PageMaker",
+      "Photoshop",
+      "CorelDRAW"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to computer applications, covering Computer Fundamentals, Operating System, Windows 7, MS Office, Internet & E-Mail and English Typing, over a duration of 1 Year.",
+    "outcomesDraft": [
+      "Understand computer fundamentals.",
+      "Learn to operating system.",
+      "Practice windows 7.",
+      "Explore ms office.",
+      "Use basic internet & e-mail.",
+      "Develop familiarity with english typing."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Course type \"Advanced Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "advanced-diploma-in-digital-marketing",
+    "courseCode": "ADDM0001",
+    "courseName": "Advanced Diploma in Digital Marketing",
+    "category": "Digital & Business Skills",
+    "subcategory": "Digital Marketing",
+    "courseType": "Advanced Diploma",
+    "duration": "1 Year",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Digital Marketing Concept",
+      "Account Management",
+      "Campaign & Ad Group Management",
+      "Key Targeting",
+      "Language & Location Targeting",
+      "Budget & Bidding",
+      "Search, Display & Video Ads",
+      "Ad Formats",
+      "AdWords Tools",
+      "Performance Monitoring & Reporting",
+      "AdWords API",
+      "Google Display Network",
+      "Introduction to SEO with HTML",
+      "Photo Editing",
+      "Facebook, Instagram, Twitter, LinkedIn Account Management"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to digital marketing, covering Digital Marketing Concept, Account Management, Campaign & Ad Group Management, Key Targeting, Language & Location Targeting and Budget & Bidding, over a duration of 1 Year.",
+    "outcomesDraft": [
+      "Understand digital marketing concept.",
+      "Learn to account management.",
+      "Practice campaign & ad group management.",
+      "Explore key targeting.",
+      "Use basic language & location targeting.",
+      "Develop familiarity with budget & bidding."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Course type \"Advanced Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "it-siksha-with-ai",
+    "courseCode": "ITSAI005",
+    "courseName": "IT Siksha with AI",
+    "category": "AI & Technology",
+    "subcategory": "AI Tools & Applications",
+    "courseType": null,
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Computer Fundamentals",
+      "MS Office (Word",
+      "Excel",
+      "PowerPoint)",
+      "Internet",
+      "AI Introduction",
+      "Chatbots",
+      "Content Writers",
+      "Code Generators",
+      "Create Images from Text Prompts",
+      "Website",
+      "Application & Game Making",
+      "AI Voice",
+      "AI Song",
+      "Sound Effect",
+      "AI Video Editing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to ai tools & applications, covering Computer Fundamentals, MS Office, Internet, AI Introduction, Chatbots and Content Writers, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand computer fundamentals.",
+      "Learn to ms office.",
+      "Practice internet.",
+      "Explore ai introduction.",
+      "Use basic chatbots.",
+      "Develop familiarity with content writers."
+    ],
+    "curriculumDraft": [
+      {
+        "title": "Foundations",
+        "topics": [
+          "Computer Fundamentals",
+          "MS Office (Word, Excel, PowerPoint)",
+          "Internet"
+        ]
+      },
+      {
+        "title": "AI Concepts",
+        "topics": [
+          "AI Introduction",
+          "Chatbots",
+          "Content Writers",
+          "Code Generators",
+          "Create Images from Text Prompts",
+          "Website",
+          "Application & Game Making",
+          "AI Voice",
+          "AI Song",
+          "Sound Effect",
+          "AI Video Editing"
+        ]
+      }
+    ],
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  },
+  {
+    "slug": "ai-with-digital-marketing-basic-siksha",
+    "courseCode": "AIDMS004",
+    "courseName": "AI with Digital Marketing Basic Siksha",
+    "category": "Digital & Business Skills",
+    "subcategory": "AI & Digital Marketing",
+    "courseType": null,
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "AI Introduction",
+      "Chatbots",
+      "Content Writers",
+      "Code Generators",
+      "Create Images from Text Prompts",
+      "Website",
+      "Application & Game Making",
+      "AI Voice",
+      "AI Song",
+      "Sound Effect",
+      "AI Video Editing",
+      "Digital Marketing Introduction",
+      "Social Media Marketing (Facebook",
+      "Instagram",
+      "WhatsApp",
+      "Twitter)",
+      "Email Marketing",
+      "YouTube Content Marketing",
+      "Search Engine Optimization (SEO)",
+      "Mobile Marketing",
+      "Pay-Per-Click",
+      "Affiliate Marketing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to ai & digital marketing, covering AI Introduction, Chatbots, Content Writers, Code Generators, Create Images from Text Prompts and Website, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand ai introduction.",
+      "Learn to chatbots.",
+      "Practice content writers.",
+      "Explore code generators.",
+      "Use basic create images from text prompts.",
+      "Develop familiarity with website."
+    ],
+    "curriculumDraft": [
+      {
+        "title": "AI Concepts",
+        "topics": [
+          "AI Introduction",
+          "Chatbots",
+          "Content Writers",
+          "Code Generators",
+          "Create Images from Text Prompts",
+          "Website",
+          "Application & Game Making",
+          "AI Voice",
+          "AI Song",
+          "Sound Effect",
+          "AI Video Editing"
+        ]
+      },
+      {
+        "title": "Digital Marketing Concepts",
+        "topics": [
+          "Digital Marketing Introduction",
+          "Social Media Marketing (Facebook, Instagram, WhatsApp, Twitter)",
+          "Email Marketing",
+          "YouTube Content Marketing",
+          "Search Engine Optimization (SEO)",
+          "Mobile Marketing",
+          "Pay-Per-Click",
+          "Affiliate Marketing"
+        ]
+      }
+    ],
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  },
+  {
+    "slug": "digital-marketing-siksha",
+    "courseCode": "DMS003",
+    "courseName": "Digital Marketing Siksha",
+    "category": "Digital & Business Skills",
+    "subcategory": "Digital Marketing",
+    "courseType": null,
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Social Media Marketing (Facebook",
+      "Instagram",
+      "WhatsApp",
+      "Twitter)",
+      "Email Marketing",
+      "YouTube Content Marketing",
+      "Search Engine Optimization (SEO)",
+      "Mobile Marketing",
+      "Pay-Per-Click",
+      "Affiliate Marketing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to digital marketing, covering Social Media Marketing, Email Marketing, YouTube Content Marketing, Search Engine Optimization, Mobile Marketing and Pay-Per-Click, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand social media marketing.",
+      "Learn to email marketing.",
+      "Practice youtube content marketing.",
+      "Explore search engine optimization.",
+      "Use basic mobile marketing.",
+      "Develop familiarity with pay-per-click."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "No obvious grouping present in the source topic list — kept as a flat list."
+    ]
+  },
+  {
+    "slug": "it-siksha",
+    "courseCode": "ITSS002",
+    "courseName": "IT Siksha",
+    "category": "Digital & Business Skills",
+    "subcategory": "Computer & Digital Literacy",
+    "courseType": null,
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Computer Fundamentals",
+      "MS Office (Word",
+      "Excel",
+      "PowerPoint)",
+      "Internet",
+      "PDP"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to computer & digital literacy, covering Computer Fundamentals, MS Office, Internet and PDP, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand computer fundamentals.",
+      "Learn to ms office.",
+      "Practice internet.",
+      "Explore pdp."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "No obvious grouping present in the source topic list — kept as a flat list."
+    ]
+  },
+  {
+    "slug": "digital-literacy-siksha",
+    "courseCode": "DLS001",
+    "courseName": "Digital Literacy Siksha",
+    "category": "Digital & Business Skills",
+    "subcategory": "Computer & Digital Literacy",
+    "courseType": null,
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Fundamentals",
+      "Windows",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft PowerPoint",
+      "Internet",
+      "Mobile of Mobile Application",
+      "Online Form Fill Up",
+      "Print",
+      "Scan",
+      "Xerox",
+      "Google Maps Searching",
+      "YouTube",
+      "Online Television",
+      "Video Calling",
+      "Email",
+      "Ticket Booking",
+      "Hotel Booking",
+      "Movie Ticket Booking",
+      "Online Shopping",
+      "UPI Payment",
+      "Money Transfer",
+      "Mobile Recharge",
+      "Online Bill Payment",
+      "Water Bill Etc.",
+      "Insurance Premium Payment",
+      "Loan Payment",
+      "LICI Premium",
+      "Fast Tag",
+      "Post / Courier Checking System",
+      "Vehicle Information & Insurance Payment Etc"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to computer & digital literacy, covering Fundamentals, Windows, Microsoft Word, Microsoft Excel, Microsoft PowerPoint and Internet, over a duration of 3 Months.",
+    "outcomesDraft": [
+      "Understand fundamentals.",
+      "Learn to windows.",
+      "Practice microsoft word.",
+      "Explore microsoft excel.",
+      "Use basic microsoft powerpoint.",
+      "Develop familiarity with internet."
+    ],
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "No obvious grouping present in the source topic list — kept as a flat list."
+    ]
+  },
+  {
+    "slug": "certificate-in-assamese-typing",
+    "courseCode": "CAT349",
+    "courseName": "Certificate in Assamese Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Certificate",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Assamese Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Assamese Typing, over a duration of 3 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Certificate\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "diploma-in-english-and-hindi-typing",
+    "courseCode": "DEH358",
+    "courseName": "Diploma in English & Hindi Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Diploma",
+    "duration": "6 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "English & Hindi Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering English & Hindi Typing, over a duration of 6 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "certificate-in-odia-typing",
+    "courseCode": "COT350",
+    "courseName": "Certificate in Odia Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Certificate",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Odia Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Odia Typing, over a duration of 3 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Certificate\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "diploma-in-english-and-bengali-typing",
+    "courseCode": "DEBT357",
+    "courseName": "Diploma in English & Bengali Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Diploma",
+    "duration": "6 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "English & Bengali Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering English & Bengali Typing, over a duration of 6 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "certificate-in-hindi-typing",
+    "courseCode": "CHT351",
+    "courseName": "Certificate in Hindi Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Certificate",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Hindi Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Hindi Typing, over a duration of 3 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Certificate\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "certificate-in-bengali-typing",
+    "courseCode": "CBT352",
+    "courseName": "Certificate in Bengali Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Certificate",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Bengali Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Bengali Typing, over a duration of 3 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Certificate\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "certificate-in-english-typing",
+    "courseCode": "CET353",
+    "courseName": "Certificate in English Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Certificate",
+    "duration": "3 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "English Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering English Typing, over a duration of 3 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Certificate\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "diploma-in-english-typing",
+    "courseCode": "DET354",
+    "courseName": "Diploma in English Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Diploma",
+    "duration": "6 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "English Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering English Typing, over a duration of 6 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 1 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "diploma-in-hindi-typing",
+    "courseCode": "DHT355",
+    "courseName": "Diploma in Hindi Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Diploma",
+    "duration": "6 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Computer Fundamental",
+      "Hindi Typing"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Computer Fundamental and Hindi Typing, over a duration of 6 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 2 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "diploma-in-bengali-typing",
+    "courseCode": "DBT356",
+    "courseName": "Diploma in Bengali Typing",
+    "category": "Communication & Career Skills",
+    "subcategory": "Regional Language Typing",
+    "courseType": "Diploma",
+    "duration": "6 Months",
+    "mode": null,
+    "level": null,
+    "overview": null,
+    "outcomes": null,
+    "eligibility": null,
+    "certification": null,
+    "fees": null,
+    "curriculum": [
+      "Computer Fundamentals",
+      "Bengali Typing using Bijoy & Bengali Word"
+    ],
+    "featured": false,
+    "status": "live",
+    "notes": null,
+    "completeness": {
+      "state": "minimal",
+      "percent": 0,
+      "missingFields": [
+        "mode",
+        "level",
+        "overview",
+        "outcomes",
+        "eligibility",
+        "certification",
+        "fees"
+      ]
+    },
+    "overviewDraft": "This course introduces learners to regional language typing, covering Computer Fundamentals and Bengali Typing using Bijoy & Bengali Word, over a duration of 6 Months.",
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": [
+      "Only 2 distinct topic(s) in the curriculum — not enough to safely draft 3–6 outcomes.",
+      "No obvious grouping present in the source topic list — kept as a flat list.",
+      "Course type \"Diploma\" — title alone is not treated as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing; overview/outcomes kept neutral."
+    ]
+  },
+  {
+    "slug": "full-stack-web-development",
+    "courseCode": null,
+    "courseName": "Full Stack Web Development",
+    "category": "Web & Software Development",
+    "subcategory": null,
+    "courseType": null,
+    "duration": "Approximately 4–6 months",
+    "mode": [
+      "Online"
+    ],
+    "level": "Beginner to Intermediate",
+    "overview": "A practical, project-based program covering web fundamentals, JavaScript, modern frontend and backend development, databases, and deployment — building toward a complete real-world web application.",
+    "outcomes": [
+      "Understand the structure and working principles of modern web applications.",
+      "Create responsive interfaces using HTML, CSS, and JavaScript.",
+      "Work with modern frontend development concepts and frameworks.",
+      "Understand server-side application development and APIs.",
+      "Work with databases and application data.",
+      "Use Git and common development workflows.",
+      "Deploy web projects to modern hosting platforms.",
+      "Plan and develop a complete practical web application project."
+    ],
+    "eligibility": [
+      "The program is suitable for students, beginners, career starters, and learners interested in web and software development. Previous professional development experience is not required.",
+      "Learners should have basic computer literacy, access to a computer suitable for development work, a stable internet connection, and a willingness to practice regularly.",
+      "Any formal academic eligibility requirements may be introduced separately where applicable."
+    ],
+    "certification": "SRS Academy Certificate of Completion — issued by SRS Academy, the training initiative of SPRS INFOTECH PVT LTD",
+    "fees": null,
+    "curriculum": [
+      "How the web works",
+      "Browsers and servers",
+      "Domains",
+      "HTML",
+      "Semantic markup",
+      "CSS fundamentals",
+      "Responsive design",
+      "Variables",
+      "Functions",
+      "Conditions",
+      "Loops",
+      "Arrays",
+      "Objects",
+      "DOM interaction",
+      "Events",
+      "Asynchronous concepts",
+      "Problem solving",
+      "Component-based interfaces",
+      "React fundamentals",
+      "Application structure",
+      "State",
+      "Forms",
+      "Routing",
+      "Responsive UI development",
+      "Server-side concepts",
+      "Node.js fundamentals",
+      "API architecture",
+      "Requests and responses",
+      "Validation",
+      "Basic authentication concepts",
+      "Database fundamentals",
+      "Structured data",
+      "CRUD operations",
+      "Data relationships",
+      "Application integration",
+      "Git",
+      "GitHub",
+      "Environment configuration",
+      "Debugging",
+      "Production builds",
+      "Deployment",
+      "Performance fundamentals",
+      "Basic web security practices"
+    ],
+    "featured": true,
+    "status": "live",
+    "notes": "Certificate verification method not yet documented (shows as unconfirmed on the live page).",
+    "completeness": {
+      "state": "partial",
+      "percent": 86,
+      "missingFields": [
+        "fees"
+      ]
+    },
+    "overviewDraft": null,
+    "outcomesDraft": null,
+    "curriculumDraft": null,
+    "draftStatus": "NEEDS REVIEW",
+    "draftFlags": []
+  }
+]

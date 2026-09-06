@@ -14,3 +14,17 @@ python3 scripts/generate-course-template.py
 - **`missing-field-report.md`** — which of the 7 tracked fields each course is still missing, in one glance.
 
 None of these files are read by the website at runtime — they're generated *from* the live catalogue (`src/content/catalogue/master-template.ts`), not the other way around. To change what visitors actually see, edit `src/content/catalogue/enrichment.ts` directly (see that file's own header for the format), then regenerate these exports so they reflect the update.
+
+## Draft content (`course-content-draft.xlsx`)
+
+A separate, review-only workbook with editorial *draft* suggestions for `overviewDraft`, `outcomesDraft` and `curriculumDraft` — generated only from course name, category, subcategory, duration and the existing verified curriculum topics, never from guessed facts. Regenerate with:
+
+```bash
+pnpm dlx tsx scripts/generate-course-draft.ts
+python3 scripts/generate-course-draft.py
+```
+
+- Verified/source columns (`slug` … `notes`) are carried through unchanged from the live catalogue; `mode`, `level`, `eligibility`, `certification`, `fees` stay blank unless already verified — this pass never drafts them.
+- Every row starts `draftStatus = "NEEDS REVIEW"`. Nothing with that status may be imported into the live enrichment source.
+- `draftFlags` calls out anything uncertain: too few curriculum topics to safely draft outcomes, no obvious grouping for `curriculumDraft`, or a sensitive course type (`Certificate` / `Diploma` / `Advanced Diploma` / `Training Program`) whose title must never be read as proof of accreditation, government recognition, university affiliation, internship placement, or professional licensing.
+- Approving a row here doesn't publish it — copy the approved text into `course-content-template.xlsx` and run the existing two-step `scripts/import-course-content.py` workflow as usual.
