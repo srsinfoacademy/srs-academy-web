@@ -13,6 +13,7 @@ export const routes = {
   program: (slug: string) => `/programs/${slug}`,
   admissions: "/admissions",
   resources: "/resources",
+  resource: (slug: string) => `/resources/${slug}`,
   updates: "/updates",
   update: (slug: string) => `/updates/${slug}`,
   contact: "/contact",
