@@ -1,25 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
+
+import { submitContactEnquiry } from "@/lib/contact/submit";
+
+/** Minimum gap between two submit attempts, guarding against a double-click race. */
+const RESUBMIT_GUARD_MS = 2000;
 
 /**
  * A clean, non-glass contact form — forms are explicitly excluded from
  * glass treatment per the Master Consolidation ("legal text, forms... are
- * never glassified"). No backend exists yet, so submission is disabled and
- * clearly labelled rather than silently doing nothing.
+ * never glassified"). Submits to the same /api/contact route the dark
+ * theme's form uses.
  */
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [honeypot, setHoneypot] = useState("");
+  const baseId = useId();
+  const [formRenderedAt] = useState(() => Date.now());
+  const lastSubmitAtRef = useRef(0);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lastSubmitAtRef.current < RESUBMIT_GUARD_MS) return;
+    lastSubmitAtRef.current = now;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    setStatus("sending");
+    const result = await submitContactEnquiry({
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+      honeypot,
+      formRenderedAt,
+      sourcePage: window.location.pathname,
+    });
+    setStatus(result.ok ? "done" : "error");
+  }
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
+      onSubmit={onSubmit}
       className="flex max-w-130 flex-col gap-5 rounded-[var(--radius-sl-lg)] border border-sl-ink/10 bg-white p-7"
       aria-describedby="contact-form-note"
     >
+      {/* Honeypot — off-screen and unreachable by keyboard, never seen by a real visitor. */}
+      <div className="absolute -left-[9999px]" aria-hidden="true">
+        <label htmlFor={`${baseId}-company`}>Leave this field empty</label>
+        <input
+          id={`${baseId}-company`}
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="text-sm font-semibold">
           Name
@@ -58,14 +99,17 @@ export function ContactForm() {
       </div>
       <button
         type="submit"
-        className="sl-focus rounded-[var(--radius-sl-md)] bg-sl-ink px-6 py-3 text-sm font-semibold text-sl-paper transition-[background-color] hover:bg-black"
+        disabled={status === "sending"}
+        className="sl-focus rounded-[var(--radius-sl-md)] bg-sl-ink px-6 py-3 text-sm font-semibold text-sl-paper transition-[background-color] hover:bg-black disabled:opacity-60"
       >
-        Send message
+        {status === "sending" ? "Sending…" : "Send message"}
       </button>
       <p id="contact-form-note" className="text-xs text-sl-ink/50" role="status">
-        {submitted
-          ? "This preview form does not send messages yet — please use the email or phone details on this page."
-          : "This is a visual preview form; it isn't connected to email yet."}
+        {status === "done"
+          ? "Thank you. Your enquiry has been received."
+          : status === "error"
+            ? "We couldn't send your enquiry right now. Please try again or contact us directly."
+            : null}
       </p>
     </form>
   );
