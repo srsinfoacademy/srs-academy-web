@@ -20,7 +20,12 @@ export function FinalCta() {
           <LightButton href={lightRoutes.courses} variant="dark" size="lg">
             Explore all courses <span aria-hidden="true">→</span>
           </LightButton>
-          <LightButton href={lightRoutes.contact} variant="secondary" size="lg" className="!border-sl-ink/25 !bg-white/40">
+          {/*
+            !bg-white/70 (not the default transparent secondary) keeps dark
+            ink text legible against every --sl-accent vibe this section can
+            take, including the near-black "dark" vibe.
+          */}
+          <LightButton href={lightRoutes.contact} variant="secondary" size="lg" className="!border-sl-ink/25 !bg-white/70 hover:!bg-white/85">
             Talk to an Advisor
           </LightButton>
         </div>

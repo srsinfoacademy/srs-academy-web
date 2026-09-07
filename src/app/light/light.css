@@ -65,9 +65,9 @@
   --sl-shadow-card: 0 20px 36px -24px rgba(17, 17, 17, 0.3);
   --sl-shadow-hero: 0 30px 60px -30px rgba(17, 17, 17, 0.25);
 
-  --sl-glass-bg: rgba(255, 255, 255, 0.55);
-  --sl-glass-border: rgba(255, 255, 255, 0.7);
-  --sl-glass-blur: blur(18px) saturate(170%);
+  --sl-glass-bg: rgba(255, 255, 255, 0.5);
+  --sl-glass-border: rgba(255, 255, 255, 0.65);
+  --sl-glass-blur: blur(20px) saturate(180%);
 
   --sl-dur-fast: 250ms;
   --sl-dur-med: 350ms;
@@ -119,7 +119,9 @@
 
 .sl-container {
   width: 100%;
-  max-width: 84rem;
+  /* Fluid: ~92-96vw up to a sensible cap, matching the dark theme's
+     container. Long-form copy keeps its own narrower max-w-* override. */
+  max-width: min(94vw, 92rem);
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 4rem);
 }
