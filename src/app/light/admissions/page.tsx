@@ -13,7 +13,7 @@ export default function LightAdmissionsPage() {
     <>
       <EditorialHero kicker={admissionsPage.kicker} title={admissionsPage.title} intro={admissionsPage.intro}>
         <div className="mt-6">
-          <LightButton pending={admissionsPage.ctaLabel ?? "[START APPLICATION]"} variant="dark">
+          <LightButton pending={admissionsPage.ctaLabel ?? "Application form"} variant="dark">
             Start application
           </LightButton>
         </div>

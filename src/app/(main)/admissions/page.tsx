@@ -84,7 +84,7 @@ export default function AdmissionsPage() {
             Questions about applying?
           </h2>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button pending="[APPLICATION DESTINATION]" size="md">
+            <Button pending="Application form" size="md">
               Start application
             </Button>
             <Button href={routes.contact} variant="secondary" size="md">

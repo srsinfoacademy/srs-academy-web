@@ -50,13 +50,13 @@ export const site = {
     student: {
       label: "Student Portal",
       href: process.env.NEXT_PUBLIC_STUDENT_PORTAL_URL || undefined,
-      pending: "[STUDENT PORTAL URL]",
+      pending: "Student portal",
       external: true,
     },
     admin: {
       label: "Admin Portal",
       href: process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || undefined,
-      pending: "[ADMIN PORTAL URL]",
+      pending: "Admin portal",
       external: true,
     },
   },
