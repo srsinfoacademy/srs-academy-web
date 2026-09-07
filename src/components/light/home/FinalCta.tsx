@@ -9,10 +9,16 @@ export function FinalCta() {
         className="relative overflow-hidden rounded-[var(--radius-sl-lg)] px-7 py-14 text-center min-[700px]:px-16"
         style={{ background: "var(--sl-accent)", boxShadow: "var(--sl-shadow-hero)" }}
       >
-        <h2 className="sl-h2 mx-auto mb-4 max-w-[24ch] text-[2rem] text-sl-ink">
+        <h2
+          className="sl-h2 mx-auto mb-4 max-w-[24ch] text-[2rem]"
+          style={{ color: "var(--sl-text-on-accent)" }}
+        >
           Ready to start learning something real?
         </h2>
-        <p className="mx-auto mb-8 max-w-105 text-[15px] leading-relaxed text-sl-ink/72">
+        <p
+          className="mx-auto mb-8 max-w-105 text-[15px] leading-relaxed"
+          style={{ color: "var(--sl-text-on-accent-secondary)" }}
+        >
           Browse the full catalogue, or talk to an advisor about the right path for
           where you&apos;re starting from.
         </p>
