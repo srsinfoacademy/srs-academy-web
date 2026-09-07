@@ -77,7 +77,10 @@ export default function LightCorporateLearningPage() {
           className="rounded-[var(--radius-sl-lg)] px-7 py-12 text-center min-[700px]:px-16"
           style={{ background: "var(--sl-accent)" }}
         >
-          <h2 className="sl-h2 mx-auto mb-4 max-w-[26ch] text-[1.9rem] text-sl-ink">
+          <h2
+            className="sl-h2 mx-auto mb-4 max-w-[26ch] text-[1.9rem]"
+            style={{ color: "var(--sl-text-on-accent)" }}
+          >
             Building a training plan for your organisation?
           </h2>
           <LightButton href={lightRoutes.contact} variant="dark" size="lg">

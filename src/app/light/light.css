@@ -62,6 +62,17 @@
   --sl-accent-strong: rgb(from var(--sl-accent) r g b / 0.32);
   --sl-accent-text: #5b6b12;
 
+  /*
+   * Text-on-accent: for panels that paint their background with the solid
+   * --sl-accent (never --sl-accent-soft/-strong, which stay light tints
+   * regardless of vibe). Every vibe's accent is a light/mid pastel except
+   * "dark", which sets --sl-accent to --color-sl-ink itself — so ink text
+   * on an ink background would be invisible. This token flips independently
+   * per vibe so primary text on an accent panel always stays readable.
+   */
+  --sl-text-on-accent: var(--color-sl-ink);
+  --sl-text-on-accent-secondary: rgb(from var(--sl-text-on-accent) r g b / 0.72);
+
   --sl-shadow-card: 0 20px 36px -24px rgba(17, 17, 17, 0.3);
   --sl-shadow-hero: 0 30px 60px -30px rgba(17, 17, 17, 0.25);
 
@@ -96,6 +107,7 @@
   --sl-accent-soft: rgba(17, 17, 17, 0.08);
   --sl-accent-strong: rgba(17, 17, 17, 0.16);
   --sl-accent-text: #111111;
+  --sl-text-on-accent: var(--color-sl-paper);
 }
 .srs-light[data-vibe="fresh"] {
   --sl-accent: var(--color-sl-lime);
