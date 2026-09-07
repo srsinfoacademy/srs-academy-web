@@ -221,7 +221,7 @@ export function ContactForm() {
           {/* Never pre-checked, and the label states exactly what the data is for. */}
           <label htmlFor={fieldId("consent")} className="type-body-s">
             I agree that SRS Academy may use the details above to respond to this
-            enquiry. [DATA USE WORDING — CONFIRM BEFORE PUBLISH.] <RequiredMark />
+            enquiry. <RequiredMark />
           </label>
         </div>
         <FieldError id={errorId("consent")} message={errors.consent} />
