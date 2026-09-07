@@ -51,18 +51,28 @@
     touch-action: none;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  /*
+   * Scoped away from `.srs-light` (the /light theme's independent root,
+   * see src/app/light/light.css): a direct rule on an element always wins
+   * over an *inherited* color, so an unscoped rule here would silently
+   * override --color-sl-ink set on .srs-light itself, even though that
+   * class carries higher selector specificity. Without this guard every
+   * unstyled light-theme heading/bold text renders in this (dark-theme)
+   * --srs-text-primary — a near-white token — on the light theme's
+   * near-white paper background, making it disappear.
+   */
+  h1:not(.srs-light *),
+  h2:not(.srs-light *),
+  h3:not(.srs-light *),
+  h4:not(.srs-light *),
+  h5:not(.srs-light *),
+  h6:not(.srs-light *) {
     color: var(--srs-text-primary);
     font-weight: var(--srs-weight-medium);
   }
 
-  strong,
-  b {
+  strong:not(.srs-light *),
+  b:not(.srs-light *) {
     color: var(--srs-text-primary);
     font-weight: var(--srs-weight-semibold);
   }
