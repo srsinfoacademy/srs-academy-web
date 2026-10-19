@@ -53,6 +53,24 @@ export function LightFooter() {
           <p className="max-w-[30ch] text-sm leading-relaxed text-white/60">
             A multi-skill academy for every starting point and every ambition.
           </p>
+          <nav aria-label="Social" className="mt-2 flex flex-col gap-2.5">
+            <div className="font-sl-mono text-[10px] tracking-[0.16em] text-sl-lime">SOCIAL</div>
+            <ul className="flex flex-col gap-2.5">
+              {site.social.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sl-focus text-sm text-white/62 hover:text-white"
+                  >
+                    {item.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
         {footerCols.map((col) => (
           <div key={col.title} className="flex flex-col gap-3">

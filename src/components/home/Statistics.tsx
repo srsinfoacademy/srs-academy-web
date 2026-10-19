@@ -9,11 +9,14 @@ import { cn } from "@/lib/cn";
  * No section heading, no cards, no icons: a single divided band between two
  * narrative sections, with vertical hairlines and no border on the last cell.
  *
- * Count-up is disabled until real figures exist. Animating a placeholder
- * glyph would present invented data as if it had been measured, so the values
- * render statically and are marked as pending for assistive technology.
+ * The band stays unmounted while `statistics` is empty. Confirmed counts have
+ * not been supplied, and placeholder glyphs must not render.
  */
 export function Statistics() {
+  // Nothing confirmed to show. An empty list must not paint the band,
+  // including its "Figure to be confirmed" fallback.
+  if (statistics.length === 0) return null;
+
   return (
     <section aria-label="Academy at a glance" className="rule-top rule-bottom bg-surface-1">
       <Container>

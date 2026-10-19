@@ -25,7 +25,9 @@ export default function AboutPage() {
         title="Built for what comes next."
         lead={aboutPage.intro}
         breadcrumb={[{ label: "About" }]}
-      />
+      >
+        <p className="type-body w-full max-w-[62ch]">Chief Executive Officer: S Roy</p>
+      </PageHero>
 
       <Container className="pb-[var(--srs-section-loose)]">
         <EditorialSections sections={aboutPage.sections} />
