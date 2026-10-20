@@ -61,4 +61,13 @@ export const site = {
     },
   },
   copyrightHolder: "SPRS INFOTECH PVT LTD",
+  /**
+   * Public profiles only. YouTube, X, and Google Business Profile are not
+   * listed here.
+   */
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/srstechacademy/" },
+    { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61576426912717" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/144007343/" },
+  ],
 } as const;

@@ -31,6 +31,27 @@ export function SiteFooter() {
               <span>{site.contact.email}</span>
               <span>{site.contact.phone}</span>
             </address>
+
+            <nav aria-label="Social">
+              <IndexLabel as="p" className="mb-2">
+                Social
+              </IndexLabel>
+              <ul className="-my-1.5 flex flex-col">
+                {site.social.map((item) => (
+                  <li key={item.href}>
+                    <TextLink
+                      href={item.href}
+                      external
+                      tone="muted"
+                      bare
+                      className="type-body-s inline-flex min-h-11 items-center"
+                    >
+                      {item.label}
+                    </TextLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
 
           <Reveal

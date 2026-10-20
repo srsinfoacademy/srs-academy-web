@@ -172,15 +172,10 @@ export const journeyStages = [
 ];
 
 /**
- * Placeholder glyphs only. Count-up is disabled until real figures exist —
- * animating a placeholder would present invented data as measured.
+ * Confirmed counts have not been supplied. The list stays empty so the home
+ * stats band does not render placeholder glyphs. Do not invent figures.
  */
-export const statistics: Statistic[] = [
-  { value: "XX+", label: "Programs" },
-  { value: "XXXX", label: "Learners" },
-  { value: "XX", label: "Projects" },
-  { value: "XX", label: "Certificates" },
-];
+export const statistics: Statistic[] = [];
 
 export const portalTeaser = {
   index: "06",

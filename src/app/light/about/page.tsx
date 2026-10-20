@@ -12,6 +12,7 @@ export default function LightAboutPage() {
   return (
     <>
       <EditorialHero kicker={aboutPage.kicker} title={aboutPage.title} intro={aboutPage.intro}>
+        <p className="mt-5 text-[16px] leading-relaxed text-sl-ink">Chief Executive Officer: S Roy</p>
         <div className="mt-6">
           <LightButton href={lightRoutes.courses} variant="dark">
             {aboutPage.ctaLabel}
