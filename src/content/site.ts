@@ -66,8 +66,8 @@ export const site = {
    * listed here.
    */
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/srstechacademy/" },
-    { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61576426912717" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/144007343/" },
+    { label: "Instagram", href: "https://www.instagram.com/srstechacademy/", icon: "instagram" },
+    { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61576426912717", icon: "facebook" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/144007343/", icon: "linkedin" },
   ],
 } as const;
