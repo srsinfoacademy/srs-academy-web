@@ -97,9 +97,12 @@
   /* ---------------------------------------------------------------
    * LAYOUT — one max width, fluid gutters, three section rhythms
    * --------------------------------------------------------------- */
-  --srs-content-max: 82rem; /* 1312px */
+  /* Fluid: ~92-96vw up to a sensible cap, so wide viewports don't strand
+     large side gutters. Long-form reading keeps its own ch-based measure
+     (see .measure/.measure-narrow) regardless of this width. */
+  --srs-content-max: min(94vw, 92rem); /* fluid, caps at 1472px */
   --srs-content-narrow: 52rem; /* long-form reading measure */
-  --srs-content-wide: 96rem; /* edge-to-edge structural bands */
+  --srs-content-wide: min(96vw, 104rem); /* edge-to-edge structural bands */
   /* 16 → 32 → 48 → 64, matching the responsive grid in the handoff. */
   --srs-gutter: 1rem;
 
