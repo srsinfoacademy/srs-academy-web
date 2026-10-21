@@ -3,6 +3,7 @@ import { Wordmark } from "@/components/layout/Wordmark";
 import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
 import { IndexLabel } from "@/components/ui/IndexLabel";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { TextLink } from "@/components/ui/TextLink";
 import { footerNav } from "@/content/navigation";
 import { site } from "@/content/site";
@@ -32,22 +33,22 @@ export function SiteFooter() {
               <span>{site.contact.phone}</span>
             </address>
 
-            <nav aria-label="Social">
-              <IndexLabel as="p" className="mb-2">
-                Social
+            <nav aria-label="Follow us">
+              <IndexLabel as="p" className="mb-3">
+                Follow us
               </IndexLabel>
-              <ul className="-my-1.5 flex flex-col">
+              <ul className="flex flex-wrap gap-2.5">
                 {site.social.map((item) => (
                   <li key={item.href}>
-                    <TextLink
+                    <a
                       href={item.href}
-                      external
-                      tone="muted"
-                      bare
-                      className="type-body-s inline-flex min-h-11 items-center"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${item.label} (opens in a new tab)`}
+                      className="flex size-10 items-center justify-center rounded-full border border-line-hairline text-muted transition-colors duration-[var(--srs-duration-fast)] ease-standard hover:border-border-strong hover:text-primary"
                     >
-                      {item.label}
-                    </TextLink>
+                      <SocialIcon id={item.icon} className="size-[18px]" />
+                    </a>
                   </li>
                 ))}
               </ul>
