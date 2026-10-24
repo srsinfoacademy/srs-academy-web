@@ -55,7 +55,12 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = baseMetadata;
+export const metadata: Metadata = {
+  ...baseMetadata,
+  other: {
+    "p:domain_verify": "793089aaf6d1e8ff5623e5867761095f",
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: "#0b0e0c",
