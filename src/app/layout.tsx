@@ -45,8 +45,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${newsreader.variable} ${mukta.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-dvh flex-col">
+      <head>
+        {/*
+         * Theme before first paint: saved `srs-theme` choice, else the OS
+         * preference (System is the default). ThemeProvider then follows
+         * live OS changes through a matchMedia listener.
+         */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="flex min-h-dvh flex-col">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
