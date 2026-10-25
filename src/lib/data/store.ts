@@ -49,14 +49,33 @@ export async function readJson<T>(pathname: string): Promise<T | null> {
       throw error;
     }
   }
+  // Blob occasionally answers 5xx; retry twice before giving up.
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      const result = await get(pathname, { access: "private", useCache: false });
+      if (!result || result.statusCode !== 200) return null;
+      const text = await new Response(result.stream).text();
+      return JSON.parse(text) as T;
+    } catch (error) {
+      if (error instanceof BlobNotFoundError) return null;
+      if (attempt >= 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, attempt * 300));
+    }
+  }
+}
+
+/**
+ * For public pages only: when the store can't be read, log and render the
+ * bundled content instead of failing the page (or the whole build). Admin
+ * screens and saves read without this, so they never treat an outage as
+ * "no data" and overwrite the stored document.
+ */
+export async function withFallback<T>(label: string, read: () => Promise<T>, fallback: () => T): Promise<T> {
   try {
-    const result = await get(pathname, { access: "private", useCache: false });
-    if (!result || result.statusCode !== 200) return null;
-    const text = await new Response(result.stream).text();
-    return JSON.parse(text) as T;
+    return await read();
   } catch (error) {
-    if (error instanceof BlobNotFoundError) return null;
-    throw error;
+    console.error(`Public data: ${label} could not be read from storage; showing the bundled content.`, error);
+    return fallback();
   }
 }
 

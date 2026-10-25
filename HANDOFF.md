@@ -32,6 +32,7 @@ Design source: the approved Claude Design file `SRS-Admin-Panel.dc.html` (navy s
 - Single admin account; no roles, no in-app password change or reset (env var for now).
 - Documents are rewritten whole on each save: two people saving the same document at the same moment means last write wins.
 - Login and contact rate limits are in-memory per server instance.
+- Blob reads retry twice on errors. If the store is still unreachable, public pages render the bundled content and log "Public data: … could not be read from storage" (a Vercel preview build failed once on a Blob 500 before this). A page built that way keeps the bundled data until the next admin save or deploy. Admin screens and saves never fall back, so an outage can't overwrite stored data.
 - Course images take a URL (Unsplash or a site path); there is no upload yet.
 - Legal pages (`src/content/legal.ts`) still read the phone and email from `site.ts`, because that text is approved policy wording. If the admin changes the phone or email, update `site.ts` too.
 - The Blob store and the real Vercel preview were not reachable from the build sandbox; Blob was exercised through the same code path with the local store. Check one save on the Vercel preview.

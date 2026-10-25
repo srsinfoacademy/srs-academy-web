@@ -3,7 +3,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 
 import { seedContact } from "@/lib/data/seed";
-import { docPaths, readJson, writeJson } from "@/lib/data/store";
+import { docPaths, readJson, withFallback, writeJson } from "@/lib/data/store";
 import { socialIds, socialLabels, type ContactDoc, type SocialId } from "@/lib/data/types";
 
 /**
@@ -26,8 +26,12 @@ export async function writeContact(doc: Omit<ContactDoc, "version" | "updatedAt"
   return saved;
 }
 
-/** Cached for public pages (tag `contact`). */
-export const getPublicContact = unstable_cache(readContact, ["srs-data-contact-v1"], { tags: [CONTACT_TAG] });
+const cachedContact = unstable_cache(readContact, ["srs-data-contact-v1"], { tags: [CONTACT_TAG] });
+
+/** Cached for public pages (tag `contact`); falls back to site.ts if storage is unreachable. */
+export function getPublicContact(): Promise<ContactDoc> {
+  return withFallback("contact", cachedContact, seedContact);
+}
 
 /* ---------- helpers mirroring the old site.ts ones, driven by the doc ---------- */
 

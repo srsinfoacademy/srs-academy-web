@@ -9,7 +9,7 @@ import type { CourseCardData } from "@/content/courses/types";
 import { site, type SiteImage } from "@/content/site";
 import { seedCategories, seedCourses } from "@/lib/data/seed";
 import { slugify } from "@/lib/data/schemas";
-import { docPaths, readJson, writeJson } from "@/lib/data/store";
+import { docPaths, readJson, withFallback, writeJson } from "@/lib/data/store";
 import type { CategoriesDoc, CategoryRecord, CategoryWithCount, CourseRecord, CoursesDoc } from "@/lib/data/types";
 
 /**
@@ -114,8 +114,11 @@ type PublicData = {
 };
 
 async function publicData(): Promise<PublicData> {
-  const all = await cachedCourses();
-  const categories = mergeCategories(await cachedCategoryDoc(), all);
+  const [all, storedCategories] = await Promise.all([
+    withFallback("courses", cachedCourses, seedCourses),
+    withFallback("categories", cachedCategoryDoc, () => null),
+  ]);
+  const categories = mergeCategories(storedCategories, all);
   const visible = new Set(categories.filter((category) => category.visible).map((category) => category.name));
   const courses = all.filter((course) => course.published && visible.has(course.category)).sort(sortCourses);
   return { courses, categories: categories.filter((category) => category.visible) };
