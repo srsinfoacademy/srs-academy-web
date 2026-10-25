@@ -5,8 +5,8 @@ This branch is the shared base. Build new public pages on a branch **off this on
 ## Branch and PR
 
 - Branch: `cursor/redesign-phase-1-cdd9`
-- PR: opened as a draft against `main` in the same session. The URL is in the pull request list for this branch. If this line still says “see the open draft”, the PR body is the source of truth once GitHub assigns a number.
-- Base for your work: `cursor/redesign-phase-1-cdd9`, not `main`.
+- PR: https://github.com/srsinfoacademy/srs-academy-web/pull/24 (draft, base `main`). Do not merge it.
+- Base for your work: `cursor/redesign-phase-1-cdd9`, not `main`. Open your pull request into this branch.
 
 ## DONE (do not rebuild)
 
