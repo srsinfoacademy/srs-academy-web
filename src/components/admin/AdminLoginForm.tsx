@@ -39,14 +39,15 @@ export function AdminLoginForm({ next }: { next: string }) {
         body: JSON.stringify({ email: email.trim(), password }),
         credentials: "same-origin",
       });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; retryAfter?: number };
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; retryAfter?: number; message?: string };
       if (res.ok && data.ok) {
         window.location.assign(next);
         return;
       }
       if (data.error === "rate_limited") {
         const minutes = Math.max(1, Math.ceil((data.retryAfter ?? 900) / 60));
-        setFailed(`Too many sign-in attempts. Try again in about ${minutes} minute${minutes === 1 ? "" : "s"}.`);
+        setFailed(data.message ?? `Too many failed sign-in attempts. Try again in about ${minutes} minute${minutes === 1 ? "" : "s"}.`);
+        setPassword("");
       } else if (data.error === "not_configured") {
         setFailed("Admin sign-in isn't configured on this deployment yet (ADMIN_EMAIL, ADMIN_PASSWORD, AUTH_SECRET).");
       } else if (data.error === "invalid") {

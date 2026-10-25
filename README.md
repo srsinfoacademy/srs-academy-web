@@ -127,7 +127,7 @@ admin. It stores JSON documents in the private Blob store:
   in production, 12-hour lifetime.
 - `src/proxy.ts` protects `/admin/*` and `/api/admin/*` (except the login
   page and login API); every page and API route checks the session again.
-- Timing-safe credential comparison; 5 login attempts per 15 minutes per IP.
+- Timing-safe credential comparison. After 5 failed sign-ins from one IP within 15 minutes that IP is locked out for 15 minutes (HTTP 429). The counters are stored in the Blob store under `security/login/` with the IP hashed, so the lockout holds across Vercel serverless instances.
 - Every admin mutation runs on the server, validates its body with `zod`,
   and rejects requests whose `Origin` isn't this site (CSRF).
 - `/admin` is `noindex` (meta and `X-Robots-Tag`), disallowed in
