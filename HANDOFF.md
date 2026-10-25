@@ -28,7 +28,7 @@ Design source: the approved Claude Design file `SRS-Admin-Panel.dc.html` (navy s
 
 ### Admin — open items
 
-- SheetJS: the npm `xlsx@0.18.5` build is used because this sandbox can't reach `cdn.sheetjs.com`. It is lazy-loaded only in the import dialog and parses files the signed-in admin picks, but the maintained build is the CDN tarball; switch with `pnpm add https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz` from a machine that can reach it.
+- SheetJS: uses the maintained CDN build (`xlsx` from `https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz`, pinned with an integrity hash in `pnpm-lock.yaml`), lazy-loaded only in the import dialog. Builds need to reach `cdn.sheetjs.com` for `pnpm install`.
 - Single admin account; no roles, no in-app password change or reset (env var for now).
 - Documents are rewritten whole on each save: two people saving the same document at the same moment means last write wins.
 - Login lockout is durable: 5 failed attempts per IP within 15 minutes lock that IP for 15 minutes (429 with a message and `Retry-After`). Counters live in Blob at `security/login/<sha256(IP + AUTH_SECRET)>.json` (no raw IPs); a successful sign-in deletes the record. If Blob is unreachable the counter falls back to the instance's memory instead of blocking sign-in. Two simultaneous attempts can race and get one extra try. The contact-form rate limit is still in-memory per instance.
