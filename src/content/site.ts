@@ -2,11 +2,10 @@
  * Canonical site configuration.
  *
  * Confirmed facts from SRS Academy live here. Anything marked TODO is still
- * unresolved and must not be invented: no phone number, no Mumbai address,
+ * unresolved and must not be invented: no other phone number, no Mumbai address,
  * no testimonials, no fees, no student counts, no accreditation claims.
  *
  * PLACEHOLDERS — replace in this file when the real asset or fact arrives:
- * - contact.phone / contact.phoneDigits (hides phone and WhatsApp while empty)
  * - features.showTestimonials (homepage stories stay unrendered while false)
  * - imagery.* (neutral Unsplash stand-ins until academy photography exists)
  * - portals.student / portals.admin (env URLs; hidden when unset)
@@ -53,15 +52,14 @@ export const site = {
      */
     enquiryInbox: "srsinfotechacademy@gmail.com",
     /**
-     * TODO: set the confirmed display phone, for example "+91 98765 43210".
-     * Leave empty to hide every phone control.
+     * Confirmed by the CEO on 25 Oct 2026. Leave empty to hide every phone control.
      */
-    phone: "",
+    phone: "+91 8008138008",
     /**
      * TODO: digits only, country code included, no plus — used as
      * https://wa.me/{phoneDigits}. Leave empty to hide WhatsApp.
      */
-    phoneDigits: "",
+    phoneDigits: "918008138008",
     hours: [
       { days: "Monday–Friday", time: "10 AM–6 PM" },
       { days: "Saturday", time: "12–4 PM" },
@@ -197,6 +195,13 @@ export function publicPhone(): string | null {
   return phone.length > 0 ? phone : null;
 }
 
+/** tel: link with digits only, e.g. tel:+918008138008 — null when no phone. */
+export function telHref(): string | null {
+  const digits = site.contact.phoneDigits.replace(/\D/g, "");
+  if (!publicPhone() || !digits) return null;
+  return `tel:+${digits}`;
+}
+
 /** https://wa.me/91XXXXXXXXXX — null until phoneDigits is set. */
 export function whatsappHref(): string | null {
   const digits = site.contact.phoneDigits.replace(/\D/g, "");
@@ -220,7 +225,7 @@ export function contactFacts(): ContactFact[] {
   ];
   const phone = publicPhone();
   if (phone) {
-    facts.splice(2, 0, { label: "Phone", value: phone, href: `tel:${phone}` });
+    facts.splice(2, 0, { label: "Phone", value: phone, href: telHref() ?? `tel:${phone.replace(/\s/g, "")}` });
   }
   const whatsapp = whatsappHref();
   if (whatsapp && phone) {

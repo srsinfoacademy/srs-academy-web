@@ -28,6 +28,8 @@
   --rd-inverse-muted: #c9ceda;
   --rd-danger: #a0321c;
   --rd-focus: #b4561a;
+  /** Hairline for inverse surfaces (e.g. the footer): the other theme's own line colour. */
+  --rd-inverse-line: #2e3b5e;
   color-scheme: light;
 }
 
@@ -52,6 +54,7 @@
   --rd-inverse-muted: #3a4459;
   --rd-danger: #f0b4a8;
   --rd-focus: #e9a56e;
+  --rd-inverse-line: #e7e1d3;
   color-scheme: dark;
 }
 
@@ -74,6 +77,7 @@
   --color-rd-eyebrow: var(--rd-eyebrow);
   --color-rd-inverse-text: var(--rd-inverse-text);
   --color-rd-inverse-muted: var(--rd-inverse-muted);
+  --color-rd-inverse-line: var(--rd-inverse-line);
   --color-rd-danger: var(--rd-danger);
 
   --font-rd-display: var(--font-rd-newsreader), Georgia, "Times New Roman", serif;
