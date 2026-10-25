@@ -69,6 +69,11 @@
   color-scheme: dark;
 }
 
+/* Light disc behind the logo mark in dark mode, where its navy outline would sink into the background. */
+.dark .rd-mark-backdrop {
+  background-color: #f3efe6;
+}
+
 /* The @theme block for these tokens lives at the end of globals.css, after the Knowledge OS reset. */
 
 @media (prefers-reduced-motion: reduce) {
