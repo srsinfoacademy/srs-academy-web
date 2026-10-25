@@ -28,12 +28,12 @@ This branch is the shared base. Build new public pages on a branch **off this on
 
 ## Phase 1 pages — DONE on this branch
 
-All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: skip link, `RdHeader`, `<main id="main-content">`, `RdFooter`, `RdMobileBar`) and the Light / Dark / System toggle.
+All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: skip link, `RdHeader`, `<main id="main-content">`, `RdFooter`, `RdMobileBar`, `RdFloatingControls`, `RdRevealObserver`) and the Light / Dark / System switcher.
 
-- **Chrome:** header with active-route underline, Courses dropdown (the SRS programs + "View all courses"), inline Enquire Now / Theme at 600–1180px, hamburger menu below 1180px (`nav:`). Footer on the inverse surface with `contactFacts`-style facts via the `site.ts` helpers, phone + WhatsApp from `telHref()` / `whatsappHref()`, all six socials, Student Portal / Admin links only when their env URLs are set, no Design-audit link. Fixed **Courses / Enquire Now** bar below 1180px with matching page padding. Branded 404 at `src/app/not-found.tsx`.
+- **Chrome:** header with active-route underline, Courses mega menu (see review round 1), inline Enquire Now at 600–1180px, hamburger menu below 1180px (`nav:`). Footer on the inverse surface with `contactFacts`-style facts via the `site.ts` helpers, phone + WhatsApp from `telHref()` / `whatsappHref()`, all six socials, Student Portal / Admin links only when their env URLs are set, no Design-audit link. Fixed **Courses / Enquire Now** bar below 1180px with matching page padding. Branded 404 at `src/app/not-found.tsx`.
 - **Home** (`/`): hero with `site.contact.locationSummary`, featured photo cards (`getHomeFeaturedCourses()` + Unsplash credits), course areas with counts from data, SRS programs, Why SRS, About teaser + mission quote, Learn/Build/Advance, enquiry section, FAQ. Testimonials are not rendered.
 - **About**: story, "Chief Executive Officer: S Roy", facts from `site.ts`, mission/vision, values.
-- **/courses**: `RdCourseCatalogue` (client) fed a slim `CourseCardData[]` (`toCourseCard`). Search over name/code/category/topics, category chips from `getCategories()`, `?q=` / `?category=` read on load and kept in the URL, 24 cards per "Show more", aria-live count, empty state. SRS programs listed separately.
+- **/courses**: `RdCourseCatalogue` (client) fed a slim `CourseCardData[]` (`toCourseCard`) of the 418 catalogue rows. Search per `search.ts` (below), category chips from `getCategories()`, `?q=` / `?category=` read on load and kept in the URL, 24 cards per "Show more", aria-live count, empty state. SRS programs listed separately.
 - **/courses/[slug]**: one template, `generateStaticParams` for every course, `dynamicParams = false`. Breadcrumb Home / Courses / name. Outcomes + curriculum accordion + "Who can apply" only where the data has them (Full Stack); topic list otherwise; dashed "details to be confirmed" panel when `modules` is empty. Certification paragraph on SRS programs only. Related courses via `relatedCourses()`. Enquire links go to `/contact?course=<slug>#enquire`.
 - **/technical-training** from `technicalProgramSlugs`.
 - **Admissions** (three `admissionsJourney` steps, now in `src/content/public-pages.ts`), **Contact**, **FAQ** (grouped by category), **Resources** + `/resources/[slug]`, **Updates** (empty state; `/updates/[slug]` generates nothing until `updates.ts` has entries), **Privacy / Terms / Refund / Accessibility** restyled from `legal.ts` text.
@@ -44,6 +44,19 @@ All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: s
 - **Tokens:** the redesign `@theme` block lives at the end of `src/app/globals.css` (the old reset was clearing every `rd-*` utility before). Added `--rd-inverse-hover`, `--rd-line-hover`, `--rd-field` (3:1 input borders), `--rd-shadow-card`, `--rd-shadow-raised`, `.rd-lattice`. Every text token pair passes WCAG AA in both themes.
 - Copy for the new pages is in `src/content/public-pages.ts`. `coursePath` is in `src/content/courses/paths.ts` so client components never bundle the catalogue JSON.
 - `pnpm install`, `pnpm lint`, `pnpm typecheck` and `pnpm build` pass.
+
+## CEO review round 1 — DONE (one commit per item)
+
+1. **Header audit** (1920/1440/1280/1180/1024/768/600/390/360, light and dark): nav labels, buttons and the logo no longer wrap (they did at 1180px); link padding tightens and the logo's "by SPRS INFOTECH PVT LTD" line hides between 1180 and 1360px so the row fits; every nav item is a 44px row; mobile menu marks the current page; sticky header z-40 above the mobile bar and floating controls (z-30).
+2. **Courses mega menu** (`RdCoursesMenu`): opens on hover after 120ms, stays open while the pointer moves into the panel (hover bridge), closes 220ms after leaving; click/tap toggles; Enter/Space toggle, ArrowDown opens and focuses the first link, Escape closes and returns focus, tabbing out closes. Panel = SRS programs + catalogue categories with counts + "View all N courses"; animated open/close.
+3. **Theme control moved** out of the header and mobile menu into `RdFloatingControls` (bottom-right): icon-only Light / Dark / System buttons with aria-label, aria-pressed and hover/focus tooltips, plus a Back to top button after 400px of scroll (smooth, instant under reduced motion). Below 1180px it sits above the Courses / Enquire Now bar. `ThemeToggle` was deleted.
+4. **Theme default = System**: no saved value → `prefers-color-scheme`, updated live by the matchMedia listener in `ThemeProvider`; a saved `srs-theme` value overrides. `THEME_INIT_SCRIPT` runs in `<head>` (no flash) and also adds `rd-js` to `<html>` for the reveal CSS.
+5. **Fluid layout**: `RdContainer` is one frame — full-width sections, content up to 1600px, padding `clamp(16px, 4vw, 64px)`. The old 1360px frame and 820px `prose` width are gone; long text sets its own measure (legal 75ch with a sticky "On this page" list, articles 72ch with a sticky side column, FAQ with a sticky topic list, `RdFaqSection` two-column on Home and Admissions).
+6. **Motion** (CSS + one IntersectionObserver, no new dependency): `data-reveal` / `data-reveal="stagger"` scroll reveal via `RdRevealObserver` (re-scans on navigation and on added content), `.rd-hero` entrance, `.rd-card` hover lift, button lift, animated nav underline (`.rd-nav-underline`), animated mega menu, 350ms colour cross-fade on theme change. Hidden-before-reveal only when `rd-js` is set, with a 3s CSS fallback; `prefers-reduced-motion` turns all of it off.
+- **Catalogue vs programs**: `getCatalogueCourses()` (418 spreadsheet rows) drives `/courses`, the category chips, the Home CTA, course areas and the mega menu counts; the five SRS programs are listed separately and `getSrsPrograms()` keeps `featured-programs.ts` order (Full Stack first). `getAllCourses()` still drives static params, the sitemap and the enquiry list.
+- **Search** (`src/content/courses/search.ts`, shared by the client filter and `searchCourses()`): words match the start of words in the course name, category or code, ranked name first; topic lines are searched only when nothing else matches, and the result line says so.
+- **Security headers** (`next.config.ts` `headers()`): CSP without nonces (keeps static generation; allows Unsplash images and the Vercel preview toolbar via vercel.live / vercel.com / assets.vercel.com / pusher; `'unsafe-eval'` only in development), X-Content-Type-Options, Referrer-Policy, X-Frame-Options SAMEORIGIN, Permissions-Policy. If a new third-party script, font or image host is added, extend the CSP list there.
+- `pnpm lint`, `pnpm typecheck` and `pnpm build` pass.
 
 ### Kept on purpose
 
@@ -78,7 +91,6 @@ All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: s
 - One catalogue row, "Diploma in Computer Application & FA", has no duration (`To be confirmed`).
 - Certificate verification process (not mentioned on the site until confirmed).
 - Updates: none published; the page shows its empty state.
-- Course order in menus and the programs list is alphabetical; set an explicit order in `featured-programs.ts` / `getSrsPrograms()` if Full Stack should lead.
 - In dark mode the inverse surfaces (footer, "How you learn") flip to cream, as the `.dark` tokens define. Revisit if a dark footer is preferred.
 - The data-entry card uses a stable Unsplash photo (Luke Chesser) because the design file's photo id did not look like a normal Unsplash id.
 - PR #24 description and before/after screenshots still need updating from a session with GitHub access.
