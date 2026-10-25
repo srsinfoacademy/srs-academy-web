@@ -45,7 +45,7 @@ export const resources: Resource[] = [
     summary:
       "A general guide to comparing programs by category, course type, and duration before choosing one.",
     body: [
-      "SRS Academy's course catalogue spans several subject areas — technology, business and digital skills, beauty and creative arts, and more. Reviewing a course's category and subcategory on the Programs page is a useful first step toward narrowing your choices to an area you're genuinely interested in.",
+      "SRS Academy's course catalogue spans several subject areas — technology, business and digital skills, beauty and creative arts, and more. Reviewing a course's category and subcategory on the Courses page is a useful first step toward narrowing your choices to an area you're genuinely interested in.",
       "Course type words like Certificate, Diploma, Advanced Diploma, and Training Program mainly describe the depth and length of a program rather than its subject focus. Two courses in the same subject area can have very different course types, so it's worth comparing duration and listed curriculum topics rather than the title alone.",
       "Each course's detail page lists the curriculum topics, mode, level, eligibility, and other details that SRS Academy has confirmed so far. A section that doesn't appear on a course page simply means that particular detail hasn't been published yet — it isn't a signal that the information doesn't exist or won't be added.",
       "If you're still unsure which course fits your goals, the Admissions and Contact pages are the right place to ask SRS Academy directly before applying.",

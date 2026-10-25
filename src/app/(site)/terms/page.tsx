@@ -1,21 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { LegalPage } from "@/components/pages/LegalPage";
+import { RdLegalPage } from "@/components/redesign/RdLegalPage";
 import { legalBySlug } from "@/content/legal";
 import { pageMetadata } from "@/lib/metadata";
 
-const document = legalBySlug("refund-policy");
+const document = legalBySlug("terms");
 
 export const metadata: Metadata = document
-  ? pageMetadata({
-      title: document.title,
-      description: `${document.title} for SRS Academy.`,
-      path: document.route,
-    })
+  ? pageMetadata({ title: document.title, description: `${document.title} for SRS Academy.`, path: document.route })
   : {};
 
 export default function Page() {
   if (!document) notFound();
-  return <LegalPage document={document} />;
+  return <RdLegalPage document={document} />;
 }

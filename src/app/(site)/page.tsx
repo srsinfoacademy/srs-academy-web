@@ -10,6 +10,7 @@ import { RdFaqList } from "@/components/redesign/RdFaqList";
 import { RdImageCredit } from "@/components/redesign/RdImageCredit";
 import { RdPill } from "@/components/redesign/RdPill";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
+import { RdEnquirySection } from "@/components/redesign/enquiry/RdEnquirySection";
 import {
   courseAreas,
   coursePath,
@@ -339,6 +340,8 @@ export default function HomePage() {
       </section>
 
       {/* Student stories stay unrendered while site.features.showTestimonials is false. */}
+
+      <RdEnquirySection tone="muted" />
 
       {/* FAQ */}
       <RdSection labelledBy="home-faq" width="prose">
