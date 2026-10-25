@@ -6,7 +6,6 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { RdButton } from "@/components/redesign/RdButton";
 import { coursePath } from "@/content/courses/paths";
-import type { Course } from "@/content/courses/types";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { isActivePath } from "@/components/redesign/chrome/RdNavLink";
 import { cn } from "@/lib/cn";
@@ -22,7 +21,7 @@ export function RdMobileMenu({
   programs,
   studentHref,
 }: {
-  programs: Course[];
+  programs: { slug: string; name: string }[];
   studentHref?: string;
 }) {
   const pathname = usePathname();

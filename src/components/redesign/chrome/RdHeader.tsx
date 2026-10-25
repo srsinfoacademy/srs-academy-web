@@ -4,16 +4,17 @@ import { RdCoursesMenu } from "@/components/redesign/chrome/RdCoursesMenu";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { RdMobileMenu } from "@/components/redesign/chrome/RdMobileMenu";
 import { RdNavLink } from "@/components/redesign/chrome/RdNavLink";
-import { getCatalogueCourses, getCategories, getSrsPrograms } from "@/content/courses";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { site } from "@/content/site";
+import { getPublicCatalogue, getPublicCategories, getPublicSrsPrograms } from "@/lib/data/courses";
 
 /**
  * Sticky public header. Server-rendered; the Courses dropdown and the
- * mobile menu are the only client-side pieces.
+ * mobile menu are the only client-side pieces. Courses and categories come
+ * from the admin data (published, visible, in admin order).
  */
-export function RdHeader() {
-  const programs = getSrsPrograms();
+export async function RdHeader() {
+  const [programs, categories, catalogue] = await Promise.all([getPublicSrsPrograms(), getPublicCategories(), getPublicCatalogue()]);
   const menuPrograms = programs.map(({ slug, name, duration }) => ({ slug, name, duration }));
   const studentHref = site.portals.student.href;
 
@@ -28,8 +29,8 @@ export function RdHeader() {
               <RdCoursesMenu
                 key={item.href}
                 programs={menuPrograms}
-                categories={getCategories()}
-                totalCourses={getCatalogueCourses().length}
+                categories={categories.map(({ category, count }) => ({ category, count }))}
+                totalCourses={catalogue.length}
               />
             ) : (
               <RdNavLink key={item.href} href={item.href}>
@@ -59,7 +60,7 @@ export function RdHeader() {
               Enquire Now
             </RdButton>
           </div>
-          <RdMobileMenu programs={programs} studentHref={studentHref} />
+          <RdMobileMenu programs={menuPrograms} studentHref={studentHref} />
         </div>
       </RdContainer>
     </header>

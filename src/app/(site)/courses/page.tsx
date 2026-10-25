@@ -6,8 +6,8 @@ import { RdCourseCard } from "@/components/redesign/RdCourseCard";
 import { RdPageHero } from "@/components/redesign/RdPageHero";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
 import { RdCourseCatalogue } from "@/components/redesign/courses/RdCourseCatalogue";
-import { getCatalogueCourses, getCategories, getSrsPrograms, toCourseCard } from "@/content/courses";
 import { coursesCopy } from "@/content/public-pages";
+import { getPublicCatalogue, getPublicCategories, getPublicSrsPrograms, toPublicCard } from "@/lib/data/courses";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -16,10 +16,10 @@ export const metadata: Metadata = pageMetadata({
   path: "/courses",
 });
 
-export default function CoursesPage() {
-  const cards = getCatalogueCourses().map((course) => toCourseCard(course, true));
-  const categories = getCategories();
-  const programs = getSrsPrograms().map((course) => toCourseCard(course));
+export default async function CoursesPage() {
+  const [catalogue, categories, srsPrograms] = await Promise.all([getPublicCatalogue(), getPublicCategories(), getPublicSrsPrograms()]);
+  const cards = catalogue.map((course) => toPublicCard(course, true));
+  const programs = srsPrograms.map((course) => toPublicCard(course));
 
   return (
     <>

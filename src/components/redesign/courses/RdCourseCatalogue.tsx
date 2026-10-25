@@ -35,14 +35,15 @@ export function RdCourseCatalogue({
   searchPlaceholder,
 }: {
   courses: CourseCardData[];
-  categories: { category: string; count: number }[];
+  categories: { category: string; slug?: string; count: number }[];
   searchPlaceholder: string;
 }) {
   const params = useSearchParams();
   const initialCategory = params.get("category") ?? ALL;
   const [query, setQuery] = useState(params.get("q") ?? "");
+  // ?category= takes the category name or its admin slug.
   const [category, setCategory] = useState(
-    categories.some((item) => item.category === initialCategory) ? initialCategory : ALL,
+    categories.find((item) => item.category === initialCategory || item.slug === initialCategory.toLowerCase())?.category ?? ALL,
   );
   const [visible, setVisible] = useState(PAGE_SIZE);
   const deferredQuery = useDeferredValue(query);

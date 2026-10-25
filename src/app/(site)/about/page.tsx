@@ -8,6 +8,7 @@ import { RdPageHero } from "@/components/redesign/RdPageHero";
 import { RdSection } from "@/components/redesign/RdSection";
 import { aboutCopy } from "@/content/public-pages";
 import { site } from "@/content/site";
+import { getPublicContact } from "@/lib/data/contact";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
@@ -17,11 +18,12 @@ export const metadata: Metadata = {
 
 const h2 = "font-rd-display text-[clamp(30px,3.4vw,44px)] font-medium leading-[1.1] tracking-[-0.02em] text-rd-ink";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const contact = await getPublicContact();
   const facts = [
     { label: "Parent company", value: site.organisation.legalName },
     { label: "Learning format", value: site.contact.locationSummary },
-    { label: "Address", value: site.contact.address },
+    ...(contact.address ? [{ label: "Address", value: contact.address }] : []),
   ];
   const image = site.imagery.about;
 
