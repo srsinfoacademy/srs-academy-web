@@ -1,5 +1,5 @@
 import { routes } from "@/lib/routes";
-import { site } from "@/content/site";
+import { publicPhone, site } from "@/content/site";
 
 export type LegalSection = { id: string; label: string; body: string };
 
@@ -19,9 +19,17 @@ export type LegalDocument = {
  * match the email, phone and address shown on the Contact page.
  */
 const CONTACT_EMAIL = site.contact.email;
-const CONTACT_PHONE = site.contact.phone;
 const CONTACT_ADDRESS = site.contact.address;
 const LEGAL_ENTITY = site.organisation.legalName;
+
+/** Phone is omitted while `site.contact.phone` is empty. The rest of the sentence stays. */
+function contactSentence(lead: string): string {
+  const phone = publicPhone();
+  if (phone) {
+    return `${lead} at ${CONTACT_EMAIL}, call ${phone}, or write to us at ${CONTACT_ADDRESS}.`;
+  }
+  return `${lead} at ${CONTACT_EMAIL}, or write to us at ${CONTACT_ADDRESS}.`;
+}
 
 const LAST_UPDATED = "25 October 2026";
 
@@ -57,7 +65,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "cookies",
         label: "Cookies and local storage",
-        body: "This website uses one cookie to remember your light/dark theme preference, and uses your browser's local storage to remember your chosen colour accent on the light theme — neither carries personal information or identifies you. We do not use advertising cookies, and no third-party analytics or tracking script runs on this website.",
+        body: "This website does not set cookies of its own. It stores one value in your browser's local storage, “srs-theme”, to remember whether you chose the light, dark or system colour theme — it carries no personal information and does not identify you. We do not use advertising cookies, and no third-party analytics or tracking script runs on this website.",
       },
       {
         id: "retention",
@@ -87,7 +95,9 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "contact",
         label: "Contact us",
-        body: `For any question about this Privacy Policy or your personal information, contact SRS Academy at ${CONTACT_EMAIL}, call ${CONTACT_PHONE}, or write to us at ${CONTACT_ADDRESS}.`,
+        body: contactSentence(
+          "For any question about this Privacy Policy or your personal information, contact SRS Academy",
+        ),
       },
     ],
   },
@@ -152,7 +162,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "contact",
         label: "Contact us",
-        body: `For any question about these Terms & Conditions, contact SRS Academy at ${CONTACT_EMAIL}, call ${CONTACT_PHONE}, or write to us at ${CONTACT_ADDRESS}.`,
+        body: contactSentence("For any question about these Terms & Conditions, contact SRS Academy"),
       },
     ],
   },
@@ -182,7 +192,9 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "how-to-request",
         label: "How to request a cancellation or refund",
-        body: `To request a cancellation or refund, email ${CONTACT_EMAIL} or call ${CONTACT_PHONE} with your name, the program you enrolled in, and the reason for your request. We will confirm receipt and respond with the next steps.`,
+        body: publicPhone()
+          ? `To request a cancellation or refund, email ${CONTACT_EMAIL} or call ${publicPhone()} with your name, the program you enrolled in, and the reason for your request. We will confirm receipt and respond with the next steps.`
+          : `To request a cancellation or refund, email ${CONTACT_EMAIL} with your name, the program you enrolled in, and the reason for your request. We will confirm receipt and respond with the next steps.`,
       },
       {
         id: "processing-time",
@@ -202,7 +214,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "contact",
         label: "Contact us",
-        body: `For any question about cancellations or refunds, contact SRS Academy at ${CONTACT_EMAIL}, call ${CONTACT_PHONE}, or write to us at ${CONTACT_ADDRESS}.`,
+        body: contactSentence("For any question about cancellations or refunds, contact SRS Academy"),
       },
     ],
   },
@@ -238,7 +250,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "contact",
         label: "Reporting an issue",
-        body: "If you experience difficulty accessing any part of the website, contact SRS Academy at srsinfotechacademy@gmail.com and describe the page or issue you encountered.",
+        body: `If you experience difficulty accessing any part of the website, contact SRS Academy at ${CONTACT_EMAIL} and describe the page or issue you encountered.`,
       },
     ],
   },

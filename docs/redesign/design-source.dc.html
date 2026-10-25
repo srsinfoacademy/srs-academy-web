@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:#FAF7F0;color:#16213A;font-family:'Mukta',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1E5A43;text-decoration:underline;text-underline-offset:3px}
+a:hover{color:#B4561A}
+button,input,select,textarea{font-family:inherit}
+:focus-visible{outline:3px solid #B4561A;outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+
+<sc-if value="{{ isShell }}" hint-placeholder-val="{{ false }}">
+<div style="height:100vh;display:flex;flex-direction:column;background:#E7E3DA;overflow:hidden">
+  <div style="background:#111A2E;color:#E9E4D8;padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;flex:none">
+    <div style="display:flex;align-items:baseline;gap:8px;margin-right:6px"><span style="font-family:'Newsreader',serif;font-size:24px;font-weight:600;color:#fff">SRS<span style="color:#E9A56E">.</span></span><span style="font-size:13px;font-weight:600;letter-spacing:.06em">UI PREVIEW</span></div>
+    <div role="group" aria-label="Workspace" style="display:flex;background:#1E2942;border-radius:10px;padding:3px;gap:3px">
+      <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.go }}" aria-pressed="{{ m.active }}" style="border:none;border-radius:8px;min-height:38px;padding:0 16px;font-weight:700;font-size:13.5px;letter-spacing:.06em;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }}">{{ m.label }}</button></sc-for>
+    </div>
+    <div role="group" aria-label="Area" style="display:flex;gap:4px;flex-wrap:wrap">
+      <sc-for list="{{ areas }}" as="a" hint-placeholder-count="3"><button onClick="{{ a.go }}" aria-pressed="{{ a.active }}" style="border:1px solid {{ a.bd }};border-radius:999px;min-height:36px;padding:0 14px;font-size:14px;cursor:pointer;background:{{ a.bg }};color:{{ a.fg }}">{{ a.label }}</button></sc-for>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px">Page
+      <select value="{{ route }}" onChange="{{ onPick }}" style="height:36px;max-width:300px;border:1px solid #3A4766;border-radius:8px;background:#1E2942;color:#fff;padding:0 8px;font-size:14px">
+        <sc-for list="{{ pageOptions }}" as="o" hint-placeholder-count="12"><option value="{{ o.r }}">{{ o.l }}</option></sc-for>
+      </select>
+    </label>
+    <div role="group" aria-label="Viewport width" style="display:flex;gap:4px;flex-wrap:wrap">
+      <sc-for list="{{ widths }}" as="w" hint-placeholder-count="6"><button onClick="{{ w.go }}" aria-pressed="{{ w.active }}" style="border:1px solid {{ w.bd }};border-radius:8px;min-height:32px;padding:0 10px;font-size:12.5px;cursor:pointer;background:{{ w.bg }};color:{{ w.fg }}">{{ w.label }}</button></sc-for>
+    </div>
+    <a href="{{ openHref }}" target="_blank" rel="noopener" style="margin-left:auto;color:#F2C79A;font-size:13.5px;font-weight:600">Open full width ↗</a>
+  </div>
+  <div style="flex:1;min-height:0;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:20px 16px">
+    <div style="width:{{ boxW }}px;height:{{ boxH }}px;flex:none;position:relative">
+      <div style="position:absolute;left:0;top:0;width:{{ outerW }}px;height:{{ outerH }}px;transform:scale({{ scale }});transform-origin:0 0;background:{{ bezelBg }};padding:{{ bezelPad }}px;border-radius:{{ bezelR }}px;box-shadow:0 30px 70px -30px rgba(17,26,46,.55)">
+        <iframe ref="{{ frameRef }}" title="SRS Academy site preview" src="{{ src }}" style="display:block;width:{{ vw }}px;height:{{ vh }}px;border:0;border-radius:{{ screenR }}px;background:#FAF7F0"></iframe>
+      </div>
+    </div>
+  </div>
+  <div style="flex:none;padding:6px 16px 8px;font-size:12.5px;color:#4A5468;text-align:center">{{ caption }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ pg.portal }}" hint-placeholder-val="{{ false }}"><dc-import name="SRS-Student-Portal" screen="{{ subScreen }}" go="{{ goRoute }}" hint-size="100%,100vh"></dc-import></sc-if>
+<sc-if value="{{ pg.admin }}" hint-placeholder-val="{{ false }}"><dc-import name="SRS-Admin-Panel" screen="{{ subScreen }}" go="{{ goRoute }}" hint-size="100%,100vh"></dc-import></sc-if>
+<sc-if value="{{ isPublic }}" hint-placeholder-val="{{ true }}">
+<header style="position:sticky;top:0;z-index:40;background:rgba(250,247,240,.96);backdrop-filter:blur(10px);border-bottom:1px solid #E7E1D3">
+  <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <button onClick="{{ goHome }}" aria-label="SRS Academy home" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:baseline;gap:10px;color:#16213A">
+      <span style="font-family:'Newsreader',serif;font-size:30px;font-weight:600;letter-spacing:-.02em">SRS<span style="color:#B4561A">.</span></span>
+      <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.1"><span style="font-weight:600;font-size:15px">SRS Academy</span><span style="font-size:11.5px;color:#5A6477">by SPRS Infotech Pvt Ltd</span></span>
+    </button>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main" style="display:flex;align-items:center;gap:4px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+          <sc-if value="{{ n.isCourses }}" hint-placeholder-val="{{ false }}">
+            <div style="position:relative" onMouseLeave="{{ closeDD }}">
+              <button onClick="{{ toggleDD }}" aria-expanded="{{ ddOpen }}" aria-haspopup="true" style="background:none;border:none;cursor:pointer;padding:10px 9px;font-size:15px;font-weight:500;color:#16213A;display:flex;gap:6px;align-items:center;border-bottom:2px solid {{ n.line }}">Courses <span aria-hidden="true" style="font-size:10px">▾</span></button>
+              <sc-if value="{{ ddOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:100%;left:-12px;width:340px;background:#fff;border:1px solid #E7E1D3;border-radius:14px;box-shadow:0 18px 40px -18px rgba(22,33,58,.28);padding:10px">
+                  <sc-for list="{{ programs }}" as="p" hint-placeholder-count="5">
+                    <button onClick="{{ p.open }}" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:10px 12px;border-radius:8px;display:flex;flex-direction:column;gap:2px;color:#16213A" style-hover="background:#F4EFE4">
+                      <span style="font-weight:600;font-size:15px">{{ p.title }}</span>
+                      <span style="font-size:13px;color:#5A6477">{{ p.cat }}</span>
+                    </button>
+                  </sc-for>
+                  <div style="border-top:1px solid #EFE9DC;margin-top:6px;padding:10px 12px 4px"><button onClick="{{ goCourses }}" style="background:none;border:none;padding:0;cursor:pointer;color:#1E5A43;font-weight:600;font-size:14.5px">View all courses →</button></div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ n.plain }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ n.go }}" style="background:none;border:none;cursor:pointer;padding:10px 9px;font-size:15px;font-weight:500;color:#16213A;border-bottom:2px solid {{ n.line }}" style-hover="color:#B4561A">{{ n.label }}</button>
+          </sc-if>
+        </sc-for>
+        <button onClick="{{ goStudentLogin }}" style="margin-left:10px;background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:10px 14px;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap" style-hover="border-color:#16213A">Student Login</button>
+        <button onClick="{{ goEnquire }}" style="margin-left:6px;white-space:nowrap;background:#B4561A;color:#fff;border:none;border-radius:10px;padding:11px 18px;font-weight:600;font-size:15px;cursor:pointer;transition:background .2s" style-hover="background:#94450F">Enquire Now</button>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:8px;align-items:center">
+      <sc-if value="{{ midW }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goStudentLogin }}" style="background:none;border:none;color:#1E5A43;font-weight:600;font-size:15px;min-height:44px;padding:0 6px;cursor:pointer">Student Login</button><button onClick="{{ goEnquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;min-height:44px;padding:0 14px;font-weight:600;font-size:15px;cursor:pointer">Enquire Now</button></sc-if>
+      <button onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="mobile-menu" style="background:#fff;border:1px solid #CFC7B5;border-radius:10px;padding:10px 16px;min-height:44px;font-weight:600;font-size:15px;color:#16213A;cursor:pointer">{{ menuLabel }}</button>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ showMobileMenu }}" hint-placeholder-val="{{ false }}">
+    <nav id="mobile-menu" aria-label="Main" style="border-top:1px solid #E7E1D3;background:#FAF7F0;padding:12px clamp(20px,4vw,40px) 24px;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 72px);overflow:auto">
+      <sc-for list="{{ mobileNav }}" as="n" hint-placeholder-count="7">
+        <button onClick="{{ n.go }}" style="text-align:left;background:none;border:none;border-bottom:1px solid #ECE6D9;padding:14px 4px;min-height:48px;font-size:17px;font-weight:500;color:#16213A;cursor:pointer">{{ n.label }}</button>
+      </sc-for>
+      <div style="font-size:12.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E;margin:18px 4px 6px">COURSES</div>
+      <sc-for list="{{ programs }}" as="p" hint-placeholder-count="5">
+        <button onClick="{{ p.open }}" style="text-align:left;background:none;border:none;padding:10px 4px;min-height:44px;font-size:16px;color:#3A4459;cursor:pointer">{{ p.title }}</button>
+      </sc-for>
+      <button onClick="{{ goEnquire }}" style="margin-top:16px;background:#B4561A;color:#fff;border:none;border-radius:10px;padding:15px;font-weight:600;font-size:16px;cursor:pointer">Enquire Now</button>
+      <button onClick="{{ goStudentLogin }}" style="margin-top:8px;background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:14px;font-weight:600;font-size:16px;cursor:pointer">Student Login</button>
+    </nav>
+  </sc-if>
+</header>
+
+<main id="main">
+
+<sc-if value="{{ pg.home }}" hint-placeholder-val="{{ true }}">
+  <section style="position:relative;overflow:hidden;border-bottom:1px solid #E7E1D3" data-screen-label="Home">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,7vw,96px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(36px,5vw,72px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;gap:10px;align-items:center;font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E"><span style="width:28px;height:2px;background:#B4561A"></span>ONLINE TECHNOLOGY ACADEMY · KOLKATA &amp; MUMBAI</div>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(40px,5.6vw,68px);line-height:1.02;letter-spacing:-.025em;text-wrap:balance">Learn skills. Build confidence. Shape your future.</h1>
+        <p style="margin:0;font-size:clamp(17px,1.6vw,19.5px);line-height:1.6;color:#3A4459;max-width:540px;text-wrap:pretty">SRS Academy is the training initiative of SPRS Infotech Pvt Ltd. We turn real experience in web development, software and digital design into practical, project-based programs you can take online.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button onClick="{{ goCourses }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:15px 24px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s" style-hover="background:#24345A">Explore Courses</button>
+          <button onClick="{{ goEnquire }}" style="background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:15px 24px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer;transition:border-color .2s" style-hover="border-color:#16213A">Enquire Now</button>
+        </div>
+        <ul style="list-style:none;margin:8px 0 0;padding:20px 0 0;border-top:1px solid #E7E1D3;display:flex;flex-wrap:wrap;gap:10px 28px;font-size:15px;color:#3A4459">
+          <li style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#1E5A43"></span>Online-first learning</li>
+          <li style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#1E5A43"></span>Project-based programs</li>
+          <li style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#1E5A43"></span>SRS Certificate of Completion</li>
+        </ul>
+      </div>
+      <div style="position:relative;padding:20px 0 20px 20px">
+        <div aria-hidden="true" style="position:absolute;inset:0 0 40px 0;border-radius:28px;background-color:#F1EADB;background-image:repeating-linear-gradient(45deg,rgba(30,90,67,.09) 0 1px,transparent 1px 22px),repeating-linear-gradient(-45deg,rgba(180,86,26,.09) 0 1px,transparent 1px 22px)"></div>
+        <div style="position:relative;aspect-ratio:4/4.4;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(22,33,58,.4);margin:24px 24px 0 0">
+          <image-slot id="srs-hero" shape="rect" placeholder="Hero photo: Indian learners working on laptops — approved SRS photography"></image-slot>
+        </div>
+        <div style="position:absolute;left:0;bottom:0;max-width:300px;background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:18px 20px;box-shadow:0 18px 40px -20px rgba(22,33,58,.3);display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12.5px;font-weight:600;letter-spacing:.08em;color:#1E5A43">FEATURED PROGRAM</span>
+          <span style="font-family:'Newsreader',serif;font-size:21px;font-weight:500;line-height:1.2">Full Stack Web Development</span>
+          <span style="font-size:14.5px;color:#4A5468">Approx. 4–6 months · Online · Beginner to Intermediate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0;background:#fff;border-bottom:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:36px">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-end">
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:680px">
+          <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ONLINE COURSES · PROPOSED CATALOGUE</span>
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Explore Our Online Courses</h2>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#3A4459;text-wrap:pretty">Discover practical digital, technology, communication, and vocational skills through flexible learning designed for beginners.</p>
+        </div>
+        <button onClick="{{ goAllOnline }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:14px 22px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#94450F">Explore All 15 Courses</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px">
+        <sc-for list="{{ homeFeatured }}" as="c" hint-placeholder-count="6">
+          <article style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s,transform .2s" style-hover="border-color:#B9AF99;box-shadow:0 18px 36px -24px rgba(22,33,58,.35);transform:translateY(-2px)">
+            <div style="aspect-ratio:16/10;background:#EFE9DC;position:relative"><image-slot id="{{ c.slot }}" shape="rect" src="{{ c.img }}" credit="{{ c.credit }}" credit-href="{{ c.href }}" placeholder="{{ c.title }}"></image-slot></div>
+            <div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span style="font-size:13px;font-weight:600;color:#1E5A43">{{ c.cat }}</span><span style="font-family:'Newsreader',serif;color:#B4561A;font-size:15px">{{ c.n }}</span></div>
+              <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:23px;line-height:1.2;text-wrap:balance">{{ c.title }}</h3>
+              <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5468">{{ c.desc }}</p>
+              <div style="display:flex;gap:8px;align-items:center;font-size:14.5px;color:#3A4459;border-top:1px solid #EFE9DC;padding-top:12px;margin-top:auto"><span style="color:#5A6477">Duration</span><span style="font-weight:600">{{ c.duration }}</span><span aria-hidden="true" style="color:#B9AF99">·</span><span>Online</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <button onClick="{{ c.open }}" style="flex:1 1 auto;background:#16213A;color:#fff;border:none;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#24345A">View Course</button>
+                <button onClick="{{ c.enquire }}" style="flex:1 1 auto;background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="border-color:#B4561A;color:#B4561A">Enquire Now</button>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <p style="margin:0;font-size:13.5px;color:#5A6477">Proposed courses shown for review. Availability, fees and certificates are to be confirmed before enrolment opens.</p>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-end">
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:620px">
+          <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">COURSE AREAS</span>
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Three areas, one practical approach</h2>
+        </div>
+        <button onClick="{{ goCourses }}" style="background:none;border:none;padding:0;cursor:pointer;color:#1E5A43;font-weight:600;font-size:16px" style-hover="color:#B4561A">Browse all courses →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+        <sc-for list="{{ categories }}" as="c" hint-placeholder-count="3">
+          <button onClick="{{ c.go }}" style="text-align:left;background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:28px;cursor:pointer;display:flex;flex-direction:column;gap:14px;color:#16213A;transition:border-color .2s,transform .2s,box-shadow .2s" style-hover="border-color:#B9AF99;transform:translateY(-2px);box-shadow:0 18px 36px -24px rgba(22,33,58,.35)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Newsreader',serif;font-size:15px;color:#B4561A">{{ c.num }}</span><span style="font-size:13px;color:#5A6477;background:#F4EFE4;border-radius:999px;padding:3px 10px">{{ c.countLabel }}</span></div>
+            <span style="font-family:'Newsreader',serif;font-size:25px;font-weight:500;line-height:1.15">{{ c.name }}</span>
+            <span style="font-size:15.5px;line-height:1.55;color:#4A5468">{{ c.desc }}</span>
+            <span style="font-size:14px;color:#3A4459;border-top:1px solid #EFE9DC;padding-top:14px">{{ c.list }}</span>
+            <span style="color:#1E5A43;font-weight:600;font-size:15px">View courses →</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0;background:#fff;border-top:1px solid #E7E1D3;border-bottom:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">FEATURED COURSES</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Start with a program built around real projects</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px">
+        <article style="background:#FAF7F0;border:1px solid #E7E1D3;border-radius:20px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:13px;font-weight:600;color:#1E5A43;background:#E3EEE7;border-radius:999px;padding:4px 12px">Web &amp; Software Development</span><span style="font-size:13px;font-weight:600;color:#8A3F0E;background:#F6E7D6;border-radius:999px;padding:4px 12px">Admissions open*</span></div>
+          <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,3vw,36px);line-height:1.1">Full Stack Web Development</h3>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#3A4459;text-wrap:pretty">A practical, project-based path from web fundamentals to full-stack development — frontend, backend, databases and deployment — building toward a complete real-world web application.</p>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;border-top:1px solid #E7E1D3;border-bottom:1px solid #E7E1D3;padding:18px 0">
+            <div><dt style="font-size:13px;color:#5A6477">Duration</dt><dd style="margin:2px 0 0;font-weight:600;font-size:16px">Approx. 4–6 months</dd></div>
+            <div><dt style="font-size:13px;color:#5A6477">Mode</dt><dd style="margin:2px 0 0;font-weight:600;font-size:16px">Online</dd></div>
+            <div><dt style="font-size:13px;color:#5A6477">Level</dt><dd style="margin:2px 0 0;font-weight:600;font-size:16px">Beginner to Intermediate</dd></div>
+          </dl>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ fsSkills }}" as="s" hint-placeholder-count="6"><span style="font-size:14px;color:#16213A;background:#fff;border:1px solid #E1DACB;border-radius:8px;padding:5px 10px">{{ s }}</span></sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:auto">
+            <button onClick="{{ fs.open }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:13px 20px;min-height:46px;font-weight:600;font-size:15.5px;cursor:pointer" style-hover="background:#24345A">View Details</button>
+            <button onClick="{{ fs.enquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:13px 20px;min-height:46px;font-weight:600;font-size:15.5px;cursor:pointer" style-hover="background:#94450F">Enquire Now</button>
+          </div>
+          <span style="font-size:13px;color:#5A6477">*Admissions open based on current course availability.</span>
+        </article>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
+          <sc-for list="{{ otherPrograms }}" as="p" hint-placeholder-count="4">
+            <article style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:13px;color:#1E5A43;font-weight:600">{{ p.cat }}</span>
+              <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:22px;line-height:1.2">{{ p.title }}</h3>
+              <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5468">{{ p.desc }}</p>
+              <span style="font-size:13.5px;color:#5A6477">Duration: to be confirmed</span>
+              <button onClick="{{ p.open }}" style="margin-top:auto;align-self:flex-start;background:none;border:none;padding:6px 0;cursor:pointer;color:#1E5A43;font-weight:600;font-size:15px" style-hover="color:#B4561A">View details →</button>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">WHY SRS ACADEMY</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Learning that comes from real technology work</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:1px;background:#E7E1D3;border:1px solid #E7E1D3;border-radius:18px;overflow:hidden">
+        <sc-for list="{{ whyItems }}" as="w" hint-placeholder-count="5">
+          <div style="background:#FAF7F0;padding:28px 24px;display:flex;flex-direction:column;gap:10px">
+            <span style="width:36px;height:36px;border-radius:10px;background:#E3EEE7;color:#1E5A43;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:17px">{{ w.n }}</span>
+            <h3 style="margin:6px 0 0;font-size:18px;font-weight:600;line-height:1.3">{{ w.t }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5468">{{ w.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0;background:#fff;border-top:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:center">
+      <div style="aspect-ratio:5/4;border-radius:20px;overflow:hidden"><image-slot id="srs-about" shape="rect" placeholder="Photo: SRS / SPRS Infotech team or studio — approved image"></image-slot></div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ABOUT THE ACADEMY</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">The training initiative of SPRS Infotech Pvt Ltd</h2>
+        <p style="margin:0;font-size:17px;line-height:1.65;color:#3A4459;text-wrap:pretty">SPRS Infotech works across web and application development, software solutions, UI/UX and digital design. SRS Academy brings that practical experience into structured, skill-focused programs — helping learners understand modern tools and build real capability.</p>
+        <blockquote style="margin:0;padding:4px 0 4px 20px;border-left:2px solid #B4561A;font-family:'Newsreader',serif;font-size:21px;line-height:1.45;color:#16213A">“To make practical, technology-focused education accessible to learners who want to turn knowledge into real-world capability.”<footer style="font-family:'Mukta',sans-serif;font-size:14px;color:#5A6477;margin-top:8px">— Our mission</footer></blockquote>
+        <button onClick="{{ goAbout }}" style="align-self:flex-start;background:none;border:none;padding:0;cursor:pointer;color:#1E5A43;font-weight:600;font-size:16px" style-hover="color:#B4561A">Learn more about us →</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0;background:#16213A;color:#F3EFE6">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#E9A56E">HOW YOU LEARN</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em;color:#fff">Learn. Build. Advance.</h2>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:#C9CEDA">Every SRS program follows the same simple system.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px">
+        <sc-for list="{{ lba }}" as="x" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#22305A"><image-slot id="{{ x.slot }}" shape="rect" placeholder="{{ x.ph }}"></image-slot></div>
+            <span style="font-size:13px;font-weight:600;letter-spacing:.1em;color:#E9A56E">{{ x.k }}</span>
+            <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:24px;color:#fff">{{ x.t }}</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#C9CEDA">{{ x.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(56px,8vw,104px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+          <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">STUDENT STORIES</span>
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">In our learners’ words</h2>
+        </div>
+        <span style="font-size:13.5px;font-weight:600;color:#8A3F0E;background:#F6E7D6;border-radius:8px;padding:6px 12px">Placeholder — replace with real, consented testimonials</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+        <sc-for list="{{ testimonialSlots }}" as="t" hint-placeholder-count="3">
+          <figure style="margin:0;border:1.5px dashed #CFC7B5;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:20px;background:#fff">
+            <blockquote style="margin:0;font-family:'Newsreader',serif;font-size:20px;line-height:1.5;color:#5A6477">[Approved student quote — 2–3 sentences about their learning experience]</blockquote>
+            <figcaption style="display:flex;gap:12px;align-items:center">
+              <div style="width:48px;height:48px;flex:none"><image-slot id="{{ t.slot }}" shape="circle" placeholder="Photo"></image-slot></div>
+              <div style="display:flex;flex-direction:column"><span style="font-weight:600">[Student name]</span><span style="font-size:14px;color:#5A6477">[Program · batch]</span></div>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.about }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0 clamp(40px,5vw,64px);border-bottom:1px solid #E7E1D3" data-screen-label="About">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:20px">
+      <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ABOUT US</span>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.05;letter-spacing:-.025em;max-width:820px;text-wrap:balance">Practical technology experience, turned into structured learning.</h1>
+      <p style="margin:0;font-size:18.5px;line-height:1.6;color:#3A4459;max-width:680px">SRS Academy is the academic and training initiative of SPRS INFOTECH PVT LTD. We operate primarily online, with presence and support in Kolkata and Mumbai.</p>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px)">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,3vw,38px)">Our story</h2>
+        <p style="margin:0;font-size:17px;line-height:1.7;color:#3A4459">SRS Academy was created to bring the practical technology experience of SPRS Infotech into a structured learning environment for students and aspiring professionals.</p>
+        <p style="margin:0;font-size:17px;line-height:1.7;color:#3A4459">SPRS Infotech works across web development, application development, software solutions, UI/UX and digital design, prototypes and mock-ups. Through SRS Academy, that experience becomes accessible, skill-focused programs that help learners understand modern tools and prepare for technology-driven opportunities.</p>
+        <dl style="margin:8px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;border-top:1px solid #E7E1D3;padding-top:20px">
+          <div><dt style="font-size:13px;color:#5A6477">Parent company</dt><dd style="margin:2px 0 0;font-weight:600">SPRS INFOTECH PVT LTD</dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Chief Executive Officer</dt><dd style="margin:2px 0 0;font-weight:600">S Roy</dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Learning format</dt><dd style="margin:2px 0 0;font-weight:600">Primarily online</dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Presence</dt><dd style="margin:2px 0 0;font-weight:600">Kolkata · Mumbai</dd></div>
+        </dl>
+      </div>
+      <div style="aspect-ratio:4/5;border-radius:20px;overflow:hidden;max-height:560px"><image-slot id="srs-about-story" shape="rect" placeholder="Photo: SPRS Infotech office, Salt Lake Sector V — approved image"></image-slot></div>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0;background:#fff;border-top:1px solid #E7E1D3;border-bottom:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px">
+      <div style="background:#FAF7F0;border:1px solid #E7E1D3;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:12px"><span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">MISSION</span><p style="margin:0;font-family:'Newsreader',serif;font-size:23px;line-height:1.45">To make practical, technology-focused education accessible to learners who want to build relevant skills, understand modern digital tools, and turn knowledge into real-world capability.</p></div>
+      <div style="background:#FAF7F0;border:1px solid #E7E1D3;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:12px"><span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#1E5A43">VISION</span><p style="margin:0;font-family:'Newsreader',serif;font-size:23px;line-height:1.45">To build a modern learning ecosystem where education, technology, practical experience, and continuous skill development work together to prepare learners for an evolving digital world.</p></div>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:32px">
+      <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,3vw,38px)">Our values</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:#E7E1D3;border:1px solid #E7E1D3;border-radius:18px;overflow:hidden">
+        <sc-for list="{{ values }}" as="v" hint-placeholder-count="6">
+          <div style="background:#FAF7F0;padding:26px;display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:18px;font-weight:600">{{ v.t }}</h3><p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">{{ v.d }}</p></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px"><button onClick="{{ goCourses }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:14px 22px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#24345A">Explore what we teach</button><button onClick="{{ goContact }}" style="background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:14px 22px;font-weight:600;font-size:16px;cursor:pointer" style-hover="border-color:#16213A">Contact us</button></div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.courses }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(44px,6vw,80px) 0 32px;border-bottom:1px solid #E7E1D3" data-screen-label="Courses">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ALL COURSES</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(36px,4.6vw,56px);line-height:1.05;letter-spacing:-.025em">Explore Our Online Courses</h1>
+        <p style="margin:0;font-size:17.5px;line-height:1.6;color:#3A4459">Discover practical digital, technology, communication, and vocational skills through flexible learning designed for beginners.</p>
+        <span style="align-self:flex-start;font-size:13.5px;font-weight:600;color:#8A3F0E;background:#F6E7D6;border-radius:8px;padding:6px 12px">Proposed online course demos — enrolment opens once confirmed</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <label for="course-search" style="font-size:14px;font-weight:600">Search courses</label>
+        <input id="course-search" type="search" value="{{ q }}" onChange="{{ onSearch }}" placeholder="Try “Excel”, “mehendi”, “AI” or “English”" style="width:100%;max-width:640px;height:54px;border:1px solid #CFC7B5;border-radius:12px;padding:0 18px;font-size:17px;background:#fff;color:#16213A" style-focus="outline:3px solid rgba(180,86,26,.35);border-color:#B4561A">
+        <div role="group" aria-label="Filter by course category" style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ ocChips }}" as="c" hint-placeholder-count="7">
+            <button onClick="{{ c.go }}" aria-pressed="{{ c.active }}" style="border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};border-radius:999px;padding:9px 16px;min-height:42px;font-size:15px;font-weight:500;cursor:pointer">{{ c.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding:32px 0 clamp(48px,7vw,88px)">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:20px">
+      <p aria-live="polite" style="margin:0;font-size:15px;font-weight:600;color:#3A4459">{{ ocLabel }}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px">
+        <sc-for list="{{ ocFiltered }}" as="c" hint-placeholder-count="15">
+          <article style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s,transform .2s" style-hover="border-color:#B9AF99;box-shadow:0 18px 36px -24px rgba(22,33,58,.35);transform:translateY(-2px)">
+            <div style="aspect-ratio:16/10;background:#EFE9DC;position:relative"><image-slot id="{{ c.slot }}" shape="rect" src="{{ c.img }}" credit="{{ c.credit }}" credit-href="{{ c.href }}" placeholder="{{ c.title }}"></image-slot></div>
+            <div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span style="font-size:13px;font-weight:600;color:#1E5A43">{{ c.cat }}</span><span style="font-family:'Newsreader',serif;color:#B4561A;font-size:15px">{{ c.n }}</span></div>
+              <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:23px;line-height:1.2;text-wrap:balance">{{ c.title }}</h3>
+              <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5468">{{ c.desc }}</p>
+              <div style="display:flex;gap:8px;align-items:center;font-size:14.5px;color:#3A4459;border-top:1px solid #EFE9DC;padding-top:12px;margin-top:auto"><span style="color:#5A6477">Duration</span><span style="font-weight:600">{{ c.duration }}</span><span aria-hidden="true" style="color:#B9AF99">·</span><span>Online</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <button onClick="{{ c.open }}" style="flex:1 1 auto;background:#16213A;color:#fff;border:none;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#24345A">View Course</button>
+                <button onClick="{{ c.enquire }}" style="flex:1 1 auto;background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="border-color:#B4561A;color:#B4561A">Enquire Now</button>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <sc-if value="{{ ocNone }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1.5px dashed #CFC7B5;border-radius:18px;padding:40px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center">
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:26px">No online courses match</h2>
+          <p style="margin:0;color:#4A5468;font-size:16px">Try a broader search or another category.</p>
+          <button onClick="{{ ocReset }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:12px 18px;font-weight:600;cursor:pointer">Show all courses</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0;background:#fff;border-top:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:720px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#1E5A43">PUBLISHED SRS PROGRAMS</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,3.2vw,40px);line-height:1.1">Current technology programs</h2>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#4A5468">The five programs listed on srstechacademy.com today.</p>
+      </div>
+      <div role="group" aria-label="Filter by area" style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.go }}" aria-pressed="{{ c.active }}" style="border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};border-radius:999px;padding:9px 16px;min-height:42px;font-size:15px;font-weight:500;cursor:pointer">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div role="group" aria-label="Filter by level" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <span style="font-size:14px;color:#5A6477;margin-right:4px">Level:</span>
+        <sc-for list="{{ levelChips }}" as="c" hint-placeholder-count="3">
+          <button onClick="{{ c.go }}" aria-pressed="{{ c.active }}" style="border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};border-radius:8px;padding:6px 12px;min-height:36px;font-size:14px;cursor:pointer">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <p aria-live="polite" style="margin:0;font-size:15px;color:#5A6477">{{ resultLabel }}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:20px">
+        <sc-for list="{{ filtered }}" as="p" hint-placeholder-count="5">
+          <article style="background:#FAF7F0;border:1px solid #E7E1D3;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:14px;transition:box-shadow .2s,border-color .2s" style-hover="border-color:#B9AF99;box-shadow:0 18px 36px -24px rgba(22,33,58,.35)">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><span style="font-size:13px;font-weight:600;color:#1E5A43">{{ p.cat }}</span><span style="font-family:'Newsreader',serif;color:#B4561A">{{ p.n }}</span></div>
+            <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:25px;line-height:1.15">{{ p.title }}</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">{{ p.desc }}</p>
+            <dl style="margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;border-top:1px solid #E7E1D3;padding-top:14px;font-size:14.5px">
+              <div><dt style="color:#5A6477;font-size:13px">Duration</dt><dd style="margin:0;font-weight:600">{{ p.duration }}</dd></div>
+              <div><dt style="color:#5A6477;font-size:13px">Level</dt><dd style="margin:0;font-weight:600">{{ p.level }}</dd></div>
+            </dl>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:4px">
+              <button onClick="{{ p.open }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#24345A">View Course Details</button>
+              <button onClick="{{ p.enquire }}" style="background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;font-size:15px;cursor:pointer" style-hover="border-color:#16213A">Enquire</button>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1.5px dashed #CFC7B5;border-radius:18px;padding:28px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
+          <p style="margin:0;color:#4A5468;font-size:16px">No published programs match these filters.</p>
+          <button onClick="{{ resetFilters }}" style="background:#16213A;color:#fff;border:none;border-radius:10px;padding:12px 18px;font-weight:600;cursor:pointer">Clear filters</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.online }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(28px,4vw,48px) 0 clamp(40px,6vw,72px);border-bottom:1px solid #E7E1D3;background-color:#F4EEE1;background-image:repeating-linear-gradient(45deg,rgba(30,90,67,.05) 0 1px,transparent 1px 22px),repeating-linear-gradient(-45deg,rgba(180,86,26,.05) 0 1px,transparent 1px 22px)" data-screen-label="Online course detail">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:24px">
+      <nav aria-label="Breadcrumb" style="font-size:14px;color:#5A6477;display:flex;gap:8px;flex-wrap:wrap"><button onClick="{{ goHome }}" style="background:none;border:none;padding:0;color:#1E5A43;cursor:pointer;font-size:14px">Home</button><span>/</span><button onClick="{{ goAllOnline }}" style="background:none;border:none;padding:0;color:#1E5A43;cursor:pointer;font-size:14px">Online courses</button><span>/</span><span aria-current="page">{{ oc.title }}</span></nav>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(28px,4vw,56px);align-items:center">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="font-size:13px;font-weight:600;color:#1E5A43;background:#E3EEE7;border-radius:999px;padding:4px 12px">{{ oc.cat }}</span><span style="font-size:13px;font-weight:600;color:#8A3F0E;background:#F6E7D6;border-radius:999px;padding:4px 12px">Proposed online course</span></div>
+          <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.025em;text-wrap:balance">{{ oc.title }}</h1>
+          <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459">{{ oc.desc }}</p>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:#E1DACB;border:1px solid #E1DACB;border-radius:14px;overflow:hidden">
+            <div style="background:#fff;padding:14px 16px"><dt style="font-size:13px;color:#5A6477">Duration</dt><dd style="margin:2px 0 0;font-weight:600">{{ oc.duration }}</dd></div>
+            <div style="background:#fff;padding:14px 16px"><dt style="font-size:13px;color:#5A6477">Format</dt><dd style="margin:2px 0 0;font-weight:600">Online</dd></div>
+            <div style="background:#fff;padding:14px 16px"><dt style="font-size:13px;color:#5A6477">Level</dt><dd style="margin:2px 0 0;font-weight:600">Beginner</dd></div>
+            <div style="background:#fff;padding:14px 16px"><dt style="font-size:13px;color:#5A6477">Fee</dt><dd style="margin:2px 0 0;font-weight:600">To be announced</dd></div>
+          </dl>
+          <div style="display:flex;flex-wrap:wrap;gap:12px"><button onClick="{{ oc.enquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:15px 24px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#94450F">Enquire Now</button><button onClick="{{ goAllOnline }}" style="background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;padding:15px 22px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="border-color:#16213A">All 15 courses</button></div>
+        </div>
+        <div style="aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(22,33,58,.4);background:#EFE9DC"><image-slot id="{{ oc.slotD }}" shape="rect" src="{{ oc.imgL }}" credit="{{ oc.credit }}" credit-href="{{ oc.href }}" placeholder="{{ oc.title }}"></image-slot></div>
+      </div>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:clamp(32px,5vw,64px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:44px">
+        <div style="display:flex;flex-direction:column;gap:14px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">Course overview</h2><p style="margin:0;font-size:16.5px;line-height:1.7;color:#3A4459">{{ oc.overview }}</p></div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">What you will learn</h2>
+          <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px 24px">
+            <sc-for list="{{ oc.learn }}" as="o" hint-placeholder-count="6"><li style="display:flex;gap:10px;font-size:16px;line-height:1.5;color:#3A4459"><span aria-hidden="true" style="color:#1E5A43;font-weight:700">✓</span>{{ o }}</li></sc-for>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">How online learning works</h2><span style="font-size:13px;font-weight:600;color:#8A3F0E;background:#F6E7D6;border-radius:8px;padding:4px 10px">Proposed learning model</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
+            <sc-for list="{{ ocFormat }}" as="x" hint-placeholder-count="5"><div style="background:#fff;border:1px solid #E7E1D3;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px"><span style="font-family:'Newsreader',serif;font-size:15px;color:#B4561A">{{ x.n }}</span><span style="font-weight:600;font-size:16px">{{ x.t }}</span><span style="font-size:14.5px;line-height:1.5;color:#4A5468">{{ x.d }}</span></div></sc-for>
+          </div>
+          <p style="margin:0;font-size:14.5px;line-height:1.55;color:#5A6477">Lessons may combine these formats as appropriate for each course. These services are still being set up and will be confirmed before enrolment.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px">
+          <div style="display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:26px">Practical assignments</h2><ul style="margin:0;padding-left:20px;font-size:16px;line-height:1.6;color:#3A4459;display:flex;flex-direction:column;gap:4px"><sc-for list="{{ oc.assign }}" as="a" hint-placeholder-count="4"><li>{{ a }}</li></sc-for></ul></div>
+          <div style="display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:26px">Device &amp; internet</h2><ul style="margin:0;padding-left:20px;font-size:16px;line-height:1.6;color:#3A4459;display:flex;flex-direction:column;gap:4px"><sc-for list="{{ oc.device }}" as="a" hint-placeholder-count="3"><li>{{ a }}</li></sc-for></ul></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:26px">Who this course is for</h2><p style="margin:0;font-size:16.5px;line-height:1.65;color:#3A4459">{{ oc.who }}</p></div>
+      </div>
+      <aside style="position:sticky;top:96px;background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <h2 style="margin:0;font-size:19px;font-weight:600">Interested in this course?</h2>
+        <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">Send an enquiry to hear when enrolment opens, plus fees and batch timing.</p>
+        <button onClick="{{ oc.enquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:14px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#94450F">Enquire Now</button>
+        <div style="border-top:1px solid #EFE9DC;padding-top:16px;display:flex;flex-direction:column;gap:12px">
+          <span style="font-size:13px;font-weight:600;letter-spacing:.08em;color:#5A6477">RELATED COURSES</span>
+          <sc-for list="{{ ocRelated }}" as="r" hint-placeholder-count="3">
+            <button onClick="{{ r.open }}" style="text-align:left;background:none;border:none;padding:4px 0;cursor:pointer;display:flex;gap:12px;align-items:center;color:#16213A" style-hover="color:#B4561A">
+              <div style="width:64px;height:48px;flex:none;border-radius:8px;overflow:hidden;background:#EFE9DC;pointer-events:none"><img src="{{ r.imgS }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px;line-height:1.3">{{ r.title }}</span><span style="font-size:13px;color:#5A6477">{{ r.duration }} · {{ r.cat }}</span></span>
+            </button>
+          </sc-for>
+        </div>
+      </aside>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.course }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(32px,5vw,56px) 0 clamp(40px,6vw,72px);border-bottom:1px solid #E7E1D3;background-color:#F4EEE1;background-image:repeating-linear-gradient(45deg,rgba(30,90,67,.05) 0 1px,transparent 1px 22px),repeating-linear-gradient(-45deg,rgba(180,86,26,.05) 0 1px,transparent 1px 22px)" data-screen-label="Course detail">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:22px">
+      <nav aria-label="Breadcrumb" style="font-size:14px;color:#5A6477;display:flex;gap:8px;flex-wrap:wrap"><button onClick="{{ goHome }}" style="background:none;border:none;padding:0;color:#1E5A43;cursor:pointer;font-size:14px">Home</button><span>/</span><button onClick="{{ goCourses }}" style="background:none;border:none;padding:0;color:#1E5A43;cursor:pointer;font-size:14px">Courses</button><span>/</span><span aria-current="page">{{ cp.title }}</span></nav>
+      <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">{{ cp.catUpper }}</span>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,62px);line-height:1.03;letter-spacing:-.025em;max-width:860px">{{ cp.title }}</h1>
+      <p style="margin:0;font-size:18.5px;line-height:1.6;color:#3A4459;max-width:720px">{{ cp.long }}</p>
+      <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:#E1DACB;border:1px solid #E1DACB;border-radius:14px;overflow:hidden;max-width:860px">
+        <div style="background:#fff;padding:16px 18px"><dt style="font-size:13px;color:#5A6477">Duration</dt><dd style="margin:2px 0 0;font-weight:600">{{ cp.duration }}</dd></div>
+        <div style="background:#fff;padding:16px 18px"><dt style="font-size:13px;color:#5A6477">Mode</dt><dd style="margin:2px 0 0;font-weight:600">{{ cp.mode }}</dd></div>
+        <div style="background:#fff;padding:16px 18px"><dt style="font-size:13px;color:#5A6477">Level</dt><dd style="margin:2px 0 0;font-weight:600">{{ cp.level }}</dd></div>
+        <div style="background:#fff;padding:16px 18px"><dt style="font-size:13px;color:#5A6477">Fee</dt><dd style="margin:2px 0 0;font-weight:600">To be announced</dd></div>
+      </dl>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><button onClick="{{ cp.enquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:15px 24px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#94450F">Enquire About This Course</button><span style="font-size:14.5px;color:#4A5468">Admissions open based on current course availability.</span></div>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:clamp(32px,5vw,64px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:44px">
+        <sc-if value="{{ cp.verified }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">What you will learn</h2>
+            <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px 24px">
+              <sc-for list="{{ fsOutcomes }}" as="o" hint-placeholder-count="8"><li style="display:flex;gap:10px;font-size:16px;line-height:1.5;color:#3A4459"><span aria-hidden="true" style="color:#1E5A43;font-weight:700">✓</span>{{ o }}</li></sc-for>
+            </ul>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">Curriculum</h2><span style="color:#5A6477;font-size:15px">7 modules</span></div>
+            <div style="border:1px solid #E7E1D3;border-radius:16px;overflow:hidden;background:#fff">
+              <sc-for list="{{ modules }}" as="m" hint-placeholder-count="7">
+                <div style="border-bottom:1px solid #EFE9DC">
+                  <h3 style="margin:0"><button onClick="{{ m.toggle }}" aria-expanded="{{ m.open }}" aria-controls="{{ m.id }}" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 22px;display:flex;gap:16px;align-items:center;color:#16213A;min-height:60px" style-hover="background:#FBF8F2"><span style="font-family:'Newsreader',serif;color:#B4561A;font-size:16px;width:24px">{{ m.n }}</span><span style="flex:1;font-weight:600;font-size:17px">{{ m.t }}</span><span aria-hidden="true" style="font-size:20px;color:#5A6477">{{ m.sign }}</span></button></h3>
+                  <sc-if value="{{ m.open }}" hint-placeholder-val="{{ false }}">
+                    <div id="{{ m.id }}" style="padding:0 22px 20px 62px;display:flex;flex-direction:column;gap:12px">
+                      <p style="margin:0;font-size:15.5px;line-height:1.6;color:#4A5468">{{ m.d }}</p>
+                      <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ m.topics }}" as="tp" hint-placeholder-count="5"><span style="font-size:13.5px;background:#F4EFE4;border-radius:6px;padding:4px 9px">{{ tp }}</span></sc-for></div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">Who can apply</h2>
+            <p style="margin:0;font-size:16.5px;line-height:1.65;color:#3A4459">Students, beginners, career starters and learners interested in web and software development. No previous professional development experience is required.</p>
+            <p style="margin:0;font-size:16.5px;line-height:1.65;color:#3A4459">You’ll need basic computer literacy, a computer suitable for development work, a stable internet connection, and a willingness to practise regularly. Any formal academic eligibility requirements may be introduced separately.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ cp.isTbc }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1.5px dashed #CFC7B5;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:12px;background:#fff">
+            <span style="font-size:13px;font-weight:600;color:#8A3F0E">DETAILS TO BE CONFIRMED</span>
+            <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:28px">Curriculum, duration and eligibility are being finalised</h2>
+            <p style="margin:0;font-size:16.5px;line-height:1.6;color:#4A5468">This page uses the same template as Full Stack Web Development. Outcomes, modules and eligibility will appear here once SRS Academy publishes them. Enquire to be notified.</p>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:32px">Certification</h2>
+          <p style="margin:0;font-size:16.5px;line-height:1.65;color:#3A4459">Learners who complete the required activities and completion criteria may receive an <strong>SRS Academy Certificate of Completion</strong>, issued by SRS Academy, the training initiative of SPRS INFOTECH PVT LTD.</p>
+          <p style="margin:0;font-size:14.5px;color:#8A3F0E">[Certificate verification process — to be confirmed]</p>
+        </div>
+      </div>
+      <aside style="position:sticky;top:96px;background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <h2 style="margin:0;font-size:19px;font-weight:600">Interested in this course?</h2>
+        <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">The fee hasn’t been announced yet. Send an enquiry for current fee and enrolment information.</p>
+        <button onClick="{{ cp.enquire }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:14px;min-height:48px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#94450F">Enquire Now</button>
+        <div style="border-top:1px solid #EFE9DC;padding-top:16px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;letter-spacing:.08em;color:#5A6477">RELATED COURSES</span>
+          <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+            <button onClick="{{ r.open }}" style="text-align:left;background:none;border:none;padding:8px 0;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:#16213A" style-hover="color:#B4561A"><span style="font-weight:600;font-size:15.5px">{{ r.title }}</span><span style="font-size:13px;color:#5A6477">{{ r.cat }}</span></button>
+          </sc-for>
+        </div>
+      </aside>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.technical }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0;border-bottom:1px solid #E7E1D3" data-screen-label="Technical Training">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,64px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">TECHNICAL TRAINING</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.025em">Software, web and AI skills — taught the way they’re used at work</h1>
+        <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459">Our technical programs draw on SPRS Infotech’s day-to-day work in web, application and software development. You learn the concepts, then apply them in exercises and projects.</p>
+      </div>
+      <div style="aspect-ratio:16/11;border-radius:20px;overflow:hidden"><image-slot id="srs-tech-hero" shape="rect" placeholder="Photo: learner writing code, screen visible — approved image"></image-slot></div>
+    </div>
+  </section>
+  <section style="padding:clamp(48px,7vw,88px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:28px">
+      <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,3.2vw,40px)">Technical programs</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+        <sc-for list="{{ techPrograms }}" as="p" hint-placeholder-count="3">
+          <article style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:13px;font-weight:600;color:#1E5A43">{{ p.cat }}</span>
+            <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:25px">{{ p.title }}</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">{{ p.desc }}</p>
+            <span style="font-size:14px;color:#3A4459">{{ p.duration }} · {{ p.level }}</span>
+            <button onClick="{{ p.open }}" style="margin-top:auto;align-self:flex-start;background:#16213A;color:#fff;border:none;border-radius:10px;padding:11px 16px;min-height:44px;font-weight:600;cursor:pointer" style-hover="background:#24345A">View Course Details</button>
+          </article>
+        </sc-for>
+      </div>
+      <div style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:clamp(24px,3vw,36px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+        <sc-for list="{{ lba }}" as="x" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;letter-spacing:.1em;color:#B4561A">{{ x.k }}</span><p style="margin:0;font-size:16px;line-height:1.55;color:#3A4459">{{ x.d }}</p></div></sc-for>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.admissions }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0;border-bottom:1px solid #E7E1D3" data-screen-label="Admissions">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ADMISSIONS &amp; ENQUIRY</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.025em">Start with a conversation</h1>
+        <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459">Admissions open based on current course availability. Send an enquiry and the SRS team will share fees, batch timing and next steps.</p>
+      </div>
+      <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <li style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Newsreader',serif;font-size:28px;color:#B4561A">{{ s.n }}</span><span style="font-weight:600;font-size:17px">{{ s.t }}</span><span style="font-size:15px;line-height:1.5;color:#4A5468">{{ s.d }}</span></li>
+        </sc-for>
+      </ol>
+      <p style="margin:0;font-size:14px;color:#8A3F0E">Steps 3–4 are a proposed flow — confirm the actual admission process before launch.</p>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.contact }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0 0" data-screen-label="Contact">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:16px;max-width:1200px">
+      <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">CONTACT US</span>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.025em">We’re here to help you choose</h1>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459;max-width:640px">Questions about courses, fees or eligibility? Write to us using the form below, or reach SRS Academy directly.</p>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.legal }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0" data-screen-label="Legal">
+    <div style="max-width:820px;margin:0 auto;padding:0 clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:24px">
+      <div role="tablist" aria-label="Policies" style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ legalTabs }}" as="t" hint-placeholder-count="4">
+          <button role="tab" aria-selected="{{ t.active }}" onClick="{{ t.go }}" style="border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};border-radius:999px;padding:8px 16px;min-height:42px;font-size:15px;cursor:pointer">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(34px,4.4vw,52px);line-height:1.06">{{ legal.title }}</h1>
+      <p style="margin:0;font-size:15px;color:#5A6477">Last updated: [date from current page] · Applies to srstechacademy.com</p>
+      <div style="border:1.5px dashed #CFC7B5;border-radius:14px;padding:20px;background:#fff;font-size:15.5px;line-height:1.6;color:#4A5468">Migrate the existing wording from <strong>{{ legal.path }}</strong> unchanged. This template only restyles it — legal text was not rewritten in this prototype.</div>
+      <sc-for list="{{ legal.sections }}" as="h" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:8px"><h2 style="margin:0;font-size:21px;font-weight:600">{{ h }}</h2><p style="margin:0;font-size:16.5px;line-height:1.7;color:#5A6477">[Existing policy text]</p></div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.resources }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0 clamp(32px,4vw,48px);border-bottom:1px solid #E7E1D3" data-screen-label="Resources">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">RESOURCES</span>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.025em">Learning resources</h1>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459;max-width:680px">Guides to help you choose a course and get set up for online learning. Resources appear here once they’re published.</p>
+    </div>
+  </section>
+  <section style="padding:clamp(40px,6vw,72px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:28px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
+        <sc-for list="{{ resCats }}" as="r" hint-placeholder-count="4">
+          <article style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px">
+            <span style="align-self:flex-start;font-size:12.5px;font-weight:600;border-radius:999px;padding:3px 10px;background:{{ r.pillBg }};color:{{ r.pillFg }}">{{ r.status }}</span>
+            <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:24px">{{ r.t }}</h2>
+            <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5468">{{ r.d }}</p>
+            <sc-if value="{{ r.cta }}" hint-placeholder-val="{{ false }}"><button onClick="{{ r.go }}" style="margin-top:auto;align-self:flex-start;background:#16213A;color:#fff;border:none;border-radius:10px;min-height:44px;padding:0 16px;font-weight:600;cursor:pointer">{{ r.cta }}</button></sc-if>
+          </article>
+        </sc-for>
+      </div>
+      <div style="border:1.5px dashed #CFC7B5;border-radius:18px;padding:clamp(24px,4vw,40px);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;background:#fff">
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:620px"><h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:26px">No public resources published yet</h2><p style="margin:0;font-size:16px;line-height:1.6;color:#4A5468">We haven’t added any downloadable files yet. Explore the courses, or ask us what you’d like to see here.</p></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><button onClick="{{ goCourses }}" style="background:#B4561A;color:#fff;border:none;border-radius:10px;min-height:46px;padding:0 18px;font-weight:600;cursor:pointer">Explore courses</button><button onClick="{{ goContact }}" style="background:#fff;color:#16213A;border:1px solid #CFC7B5;border-radius:10px;min-height:46px;padding:0 18px;font-weight:600;cursor:pointer">Contact us</button></div>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.updates }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(48px,7vw,88px) 0 clamp(32px,4vw,48px);border-bottom:1px solid #E7E1D3" data-screen-label="Updates">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">UPDATES</span>
+      <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.025em">Updates &amp; news</h1>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#3A4459;max-width:680px">Admission notices, new batches and academy news from SRS Academy.</p>
+    </div>
+  </section>
+  <section style="padding:clamp(40px,6vw,72px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px;align-items:start">
+      <div style="background:#fff;border:1px solid #E7E1D3;border-radius:18px;padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;gap:12px">
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:28px">No updates published yet</h2>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#4A5468">New posts will appear here. To ask about current admissions, send an enquiry.</p>
+        <button onClick="{{ goEnquire }}" style="align-self:flex-start;background:#B4561A;color:#fff;border:none;border-radius:10px;min-height:46px;padding:0 18px;font-weight:600;cursor:pointer">Enquire Now</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:13px;font-weight:600;letter-spacing:.08em;color:#5A6477">UPDATE CARD LAYOUT · PLACEHOLDER</span>
+        <sc-for list="{{ updSlots }}" as="u" hint-placeholder-count="3"><article style="border:1.5px dashed #CFC7B5;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:6px;background:#FAF7F0"><span style="font-size:13px;color:#8A5A2E;font-weight:600">[Date] · [Category]</span><span style="font-family:'Newsreader',serif;font-size:21px;color:#5A6477">[Update title]</span><span style="font-size:15px;color:#8A8F9C">[Short summary, 1–2 lines]</span></article></sc-for>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ pg.audit }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(40px,6vw,72px) 0" data-screen-label="Audit">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:48px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:820px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">PHASE 1–2 · AUDIT &amp; DIRECTION</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(36px,4.6vw,54px);line-height:1.05">Design assessment</h1>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:#3A4459">Pages were read as text. Desktop and mobile layouts were not viewed in a browser, so visual notes on the references come from their structure and copy.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">
+        <sc-for list="{{ audit }}" as="a" hint-placeholder-count="5">
+          <article style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap"><h2 style="margin:0;font-size:19px;font-weight:600">{{ a.name }}</h2><span style="font-size:12.5px;color:#5A6477">{{ a.access }}</span></div>
+            <div style="font-size:13px;font-weight:600;color:#1E5A43">ADOPT</div>
+            <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.55;color:#3A4459;display:flex;flex-direction:column;gap:4px"><sc-for list="{{ a.use }}" as="u" hint-placeholder-count="3"><li>{{ u }}</li></sc-for></ul>
+            <div style="font-size:13px;font-weight:600;color:#8A3F0E">AVOID / FIX</div>
+            <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.55;color:#3A4459;display:flex;flex-direction:column;gap:4px"><sc-for list="{{ a.avoid }}" as="u" hint-placeholder-count="2"><li>{{ u }}</li></sc-for></ul>
+          </article>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px">
+        <article style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font-size:19px;font-weight:600">Structure decisions</h2>
+          <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.6;color:#3A4459;display:flex;flex-direction:column;gap:6px"><sc-for list="{{ decisions }}" as="d" hint-placeholder-count="5"><li>{{ d }}</li></sc-for></ul>
+        </article>
+        <article style="background:#FDF5EC;border:1px solid #EBD3BA;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font-size:19px;font-weight:600">Content to confirm before launch</h2>
+          <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.6;color:#3A4459;display:flex;flex-direction:column;gap:6px"><sc-for list="{{ toConfirm }}" as="d" hint-placeholder-count="6"><li>{{ d }}</li></sc-for></ul>
+        </article>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:34px">Design system</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+          <sc-for list="{{ swatches }}" as="s" hint-placeholder-count="8">
+            <div style="border:1px solid #E7E1D3;border-radius:12px;overflow:hidden;background:#fff"><div style="height:64px;background:{{ s.hex }}"></div><div style="padding:10px 12px;display:flex;flex-direction:column"><span style="font-weight:600;font-size:14px">{{ s.name }}</span><span style="font-size:12.5px;color:#5A6477">{{ s.hex }} · {{ s.use }}</span></div></div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">
+          <div style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:13px;font-weight:600;color:#5A6477">TYPE — Newsreader (display) · Mukta (UI &amp; body; Indian-designed, Devanagari-ready)</span>
+            <span style="font-family:'Newsreader',serif;font-size:44px;line-height:1.05;font-weight:500">H1 clamp 40–68</span>
+            <span style="font-family:'Newsreader',serif;font-size:32px;font-weight:500">H2 clamp 30–44</span>
+            <span style="font-size:18px;font-weight:600">H3 18–25 · Mukta 600</span>
+            <span style="font-size:17px;color:#3A4459">Body 16–18 / 1.6 · min 15px for meta</span>
+            <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">EYEBROW 13.5 · +0.1em</span>
+          </div>
+          <div style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px">
+            <span style="font-size:13px;font-weight:600;color:#5A6477">BUTTONS · min-height 44–48px</span>
+            <div style="display:flex;flex-wrap:wrap;gap:10px"><span style="background:#B4561A;color:#fff;border-radius:10px;padding:12px 18px;font-weight:600">Enquire (conversion)</span><span style="background:#16213A;color:#fff;border-radius:10px;padding:12px 18px;font-weight:600">Primary</span><span style="background:#fff;border:1px solid #CFC7B5;border-radius:10px;padding:12px 18px;font-weight:600">Secondary</span><span style="color:#1E5A43;padding:12px 4px;font-weight:600">Text link →</span></div>
+            <span style="font-size:13px;font-weight:600;color:#5A6477">LAYOUT</span>
+            <ul style="margin:0;padding-left:18px;font-size:14.5px;line-height:1.6;color:#3A4459"><li>Container 1200px · gutter clamp(20–40px)</li><li>Section padding clamp(56–104px) · card gap 16–20px</li><li>Radii 8 (chips) · 10 (buttons) · 16–20 (cards)</li><li>Grids: auto-fit minmax — 1 col &lt;600, 2 col tablet, 3–4 col desktop; nav collapses &lt;920px</li><li>Borders #E7E1D3; one soft shadow on hover only</li><li>Motif: faint 45° jaali lattice — hero and course header only</li></ul>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px">
+        <article style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font-size:19px;font-weight:600">SEO · URLs &amp; titles</h2>
+          <sc-for list="{{ seo }}" as="s" hint-placeholder-count="8"><div style="display:flex;flex-direction:column;border-top:1px solid #EFE9DC;padding-top:8px"><code style="font-size:13px;color:#1E5A43">{{ s.url }}</code><span style="font-size:14.5px">{{ s.title }}</span></div></sc-for>
+          <p style="margin:6px 0 0;font-size:14px;color:#5A6477;line-height:1.55">One H1 per page, Open Graph per page, sitemap/robots from the existing app. Use Course structured data only with real duration/fee values; no Review markup until real reviews exist.</p>
+        </article>
+        <article style="background:#fff;border:1px solid #E7E1D3;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font-size:19px;font-weight:600">Implementation &amp; QA status</h2>
+          <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.6;color:#3A4459;display:flex;flex-direction:column;gap:6px"><sc-for list="{{ impl }}" as="d" hint-placeholder-count="5"><li>{{ d }}</li></sc-for></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showEnquiry }}" hint-placeholder-val="{{ true }}">
+  <section id="enquire" style="padding:clamp(56px,8vw,104px) 0;background:#fff;border-top:1px solid #E7E1D3">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(32px,5vw,72px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">ENQUIRE</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Tell us what you’d like to learn</h2>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:#3A4459">We’ll reply with course details, current fees and how to enrol.</p>
+        <dl style="margin:8px 0 0;display:flex;flex-direction:column;gap:16px;border-top:1px solid #E7E1D3;padding-top:20px">
+          <div><dt style="font-size:13px;color:#5A6477">Address</dt><dd style="margin:2px 0 0;font-size:16px">5C, Webel More, Salt Lake City, Sector V, Kolkata</dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Phone</dt><dd style="margin:2px 0 0;font-size:16px">+91-900007799 <span style="font-size:13px;color:#8A3F0E">[verify — appears to be 9 digits]</span></dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Email</dt><dd style="margin:2px 0 0;font-size:16px;color:#8A3F0E">[Academy email — confirm; obscured on current site]</dd></div>
+          <div><dt style="font-size:13px;color:#5A6477">Follow</dt><dd style="margin:2px 0 0;font-size:16px;display:flex;gap:16px;flex-wrap:wrap"><a href="https://www.instagram.com/srstechacademy/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/profile.php?id=61576426912717" target="_blank" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/144007343/" target="_blank" rel="noopener">LinkedIn</a></dd></div>
+        </dl>
+      </div>
+      <div style="background:#FAF7F0;border:1px solid #E7E1D3;border-radius:20px;padding:clamp(22px,3vw,36px)">
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex;flex-direction:column;gap:14px">
+            <span style="width:44px;height:44px;border-radius:50%;background:#E3EEE7;color:#1E5A43;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700">✓</span>
+            <h3 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:28px">Thank you, {{ fv.name }}.</h3>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#3A4459">Your enquiry about <strong>{{ fv.course }}</strong> has been captured.</p>
+            <p style="margin:0;font-size:14.5px;line-height:1.55;color:#8A3F0E;background:#FDF5EC;border:1px solid #EBD3BA;border-radius:10px;padding:12px 14px">Prototype state — nothing was sent. Connect a form service or the site’s API before launch.</p>
+            <button onClick="{{ resetForm }}" style="align-self:flex-start;background:#fff;border:1px solid #CFC7B5;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer">Send another enquiry</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" noValidate style="display:flex;flex-direction:column;gap:18px">
+            <sc-if value="{{ hasErrors }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FBEAE6;border:1px solid #E8B4A8;color:#8A2A16;border-radius:10px;padding:12px 14px;font-size:15px">{{ errorSummary }}</div></sc-if>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:18px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <label for="f-name" style="font-weight:600;font-size:15px">Full name <span style="color:#B4561A">*</span></label>
+                <input id="f-name" autocomplete="name" value="{{ fv.name }}" onChange="{{ on.name }}" aria-invalid="{{ fi.name }}" aria-describedby="e-name" style="height:50px;border:1px solid {{ fb.name }};border-radius:10px;padding:0 14px;font-size:16px;background:#fff;color:#16213A" style-focus="outline:3px solid rgba(180,86,26,.35)">
+                <span id="e-name" style="font-size:14px;color:#A0321C">{{ fe.name }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <label for="f-mobile" style="font-weight:600;font-size:15px">Mobile number <span style="color:#B4561A">*</span></label>
+                <input id="f-mobile" type="tel" inputMode="numeric" autocomplete="tel" placeholder="10-digit mobile" value="{{ fv.mobile }}" onChange="{{ on.mobile }}" aria-invalid="{{ fi.mobile }}" aria-describedby="e-mobile" style="height:50px;border:1px solid {{ fb.mobile }};border-radius:10px;padding:0 14px;font-size:16px;background:#fff;color:#16213A" style-focus="outline:3px solid rgba(180,86,26,.35)">
+                <span id="e-mobile" style="font-size:14px;color:#A0321C">{{ fe.mobile }}</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <label for="f-email" style="font-weight:600;font-size:15px">Email <span style="font-weight:400;color:#5A6477">(optional)</span></label>
+              <input id="f-email" type="email" autocomplete="email" value="{{ fv.email }}" onChange="{{ on.email }}" aria-invalid="{{ fi.email }}" aria-describedby="e-email" style="height:50px;border:1px solid {{ fb.email }};border-radius:10px;padding:0 14px;font-size:16px;background:#fff;color:#16213A" style-focus="outline:3px solid rgba(180,86,26,.35)">
+              <span id="e-email" style="font-size:14px;color:#A0321C">{{ fe.email }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:18px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <label for="f-course" style="font-weight:600;font-size:15px">Course of interest <span style="color:#B4561A">*</span></label>
+                <select id="f-course" value="{{ fv.course }}" onChange="{{ on.course }}" aria-invalid="{{ fi.course }}" aria-describedby="e-course" style="height:50px;border:1px solid {{ fb.course }};border-radius:10px;padding:0 12px;font-size:16px;background:#fff;color:#16213A">
+                  <option value="">Select a course</option>
+                  <sc-for list="{{ courseOptions }}" as="o" hint-placeholder-count="6"><option value="{{ o }}">{{ o }}</option></sc-for>
+                </select>
+                <span id="e-course" style="font-size:14px;color:#A0321C">{{ fe.course }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <label for="f-format" style="font-weight:600;font-size:15px">Preferred format</label>
+                <select id="f-format" value="{{ fv.format }}" onChange="{{ on.format }}" style="height:50px;border:1px solid #CFC7B5;border-radius:10px;padding:0 12px;font-size:16px;background:#fff;color:#16213A">
+                  <option value="">No preference</option><option value="Online">Online</option><option value="Need guidance">Need guidance</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <label for="f-msg" style="font-weight:600;font-size:15px">Message <span style="font-weight:400;color:#5A6477">(optional)</span></label>
+              <textarea id="f-msg" rows="3" value="{{ fv.message }}" onChange="{{ on.message }}" style="border:1px solid #CFC7B5;border-radius:10px;padding:12px 14px;font-size:16px;background:#fff;color:#16213A;resize:vertical" style-focus="outline:3px solid rgba(180,86,26,.35)"></textarea>
+            </div>
+            <button type="submit" style="background:#B4561A;color:#fff;border:none;border-radius:10px;padding:15px;min-height:52px;font-weight:600;font-size:16.5px;cursor:pointer" style-hover="background:#94450F">Send Enquiry</button>
+            <span style="font-size:13.5px;color:#5A6477">By submitting you agree to be contacted about your enquiry. See our <a href="#privacy" onClick="{{ goPrivacy }}">Privacy Policy</a>.</span>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showFaq }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:clamp(56px,8vw,104px) 0">
+    <div style="max-width:860px;margin:0 auto;padding:0 clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:13.5px;font-weight:600;letter-spacing:.1em;color:#8A5A2E">FAQ</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em">Frequently asked questions</h2>
+      </div>
+      <div style="border-top:1px solid #E1DACB">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="7">
+          <div style="border-bottom:1px solid #E1DACB">
+            <h3 style="margin:0"><button onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" aria-controls="{{ f.id }}" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:20px 0;min-height:60px;display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:17.5px;font-weight:600;color:#16213A" style-hover="color:#B4561A"><span>{{ f.q }}</span><span aria-hidden="true" style="font-size:22px;color:#5A6477;flex:none">{{ f.sign }}</span></button></h3>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div id="{{ f.id }}" style="padding:0 0 22px;font-size:16px;line-height:1.65;color:#3A4459;max-width:720px">{{ f.a }}</div></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</sc-if>
+</main>
+
+<footer style="background:#16213A;color:#C9CEDA;padding:clamp(48px,7vw,80px) 0 28px">
+  <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:40px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:32px">
+      <div style="display:flex;flex-direction:column;gap:14px;grid-column:span 1;min-width:0">
+        <span style="font-family:'Newsreader',serif;font-size:30px;font-weight:600;color:#fff">SRS<span style="color:#E9A56E">.</span> <span style="font-family:'Mukta',sans-serif;font-size:16px;font-weight:600">SRS Academy</span></span>
+        <p style="margin:0;font-size:14.5px;line-height:1.6">The academic and training initiative of SPRS INFOTECH PVT LTD, extending its practical experience in technology, software, digital products and design into structured learning.</p>
+        <p style="margin:0;font-size:14.5px;line-height:1.6">5C, Webel More, Salt Lake City, Sector V, Kolkata<br>+91-900007799</p>
+      </div>
+      <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="3">
+        <nav aria-label="{{ col.h }}" style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:13px;font-weight:600;letter-spacing:.1em;color:#fff;margin-bottom:6px">{{ col.h }}</span>
+          <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
+            <button onClick="{{ l.go }}" style="text-align:left;background:none;border:none;padding:5px 0;color:#C9CEDA;font-size:15px;cursor:pointer" style-hover="color:#fff">{{ l.label }}</button>
+          </sc-for>
+        </nav>
+      </sc-for>
+    </div>
+    <div style="border-top:1px solid #2E3B5E;padding-top:22px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;font-size:14px">
+      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center"><span>© 2026 SPRS INFOTECH PVT LTD</span><button onClick="{{ goAdminLogin }}" style="background:none;border:none;padding:4px 0;color:#9AA3B5;font-size:13.5px;cursor:pointer;text-decoration:underline">Admin / Staff Login</button><button onClick="{{ goAudit }}" style="background:none;border:none;padding:4px 0;color:#9AA3B5;font-size:13.5px;cursor:pointer;text-decoration:underline">Design audit</button></div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://www.instagram.com/srstechacademy/" target="_blank" rel="noopener" style="color:#E9E4D8">Instagram</a><a href="https://www.facebook.com/profile.php?id=61576426912717" target="_blank" rel="noopener" style="color:#E9E4D8">Facebook</a><a href="https://www.linkedin.com/company/144007343/" target="_blank" rel="noopener" style="color:#E9E4D8">LinkedIn</a></div>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+  <div style="position:sticky;bottom:0;z-index:30;background:rgba(250,247,240,.97);border-top:1px solid #E1DACB;padding:10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button onClick="{{ goCourses }}" style="background:#fff;border:1px solid #CFC7B5;border-radius:10px;min-height:48px;font-weight:600;font-size:15.5px;color:#16213A;cursor:pointer">Courses</button>
+    <button onClick="{{ goEnquire }}" style="background:#B4561A;border:none;border-radius:10px;min-height:48px;font-weight:600;font-size:15.5px;color:#fff;cursor:pointer">Enquire Now</button>
+  </div>
+</sc-if>
+
+</sc-if>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PROGRAMS = [
+  { id:'full-stack', n:'01', title:'Full Stack Web Development', cat:'Web & Software Development', level:'Beginner to Intermediate', duration:'Approx. 4–6 months', mode:'Online', verified:true,
+    desc:'A practical, project-based path from web fundamentals to full-stack development — frontend, backend, databases and deployment.',
+    long:'A practical, project-based program covering web fundamentals, JavaScript, modern frontend and backend development, databases and deployment — building toward a complete real-world web application.',
+    skills:['HTML & CSS','JavaScript','React','Node.js & APIs','Databases','Git & deployment'] },
+  { id:'ai', n:'02', title:'Artificial Intelligence', cat:'AI & Technology', level:'To be confirmed', duration:'To be confirmed', mode:'To be confirmed',
+    desc:'Explore practical learning in AI tools, digital workflows and emerging technology.', skills:['AI tools','Digital workflows'] },
+  { id:'tech', n:'03', title:'Technology Programs', cat:'AI & Technology', level:'To be confirmed', duration:'To be confirmed', mode:'To be confirmed',
+    desc:'Build practical knowledge across modern technology and digital systems.', skills:['Digital systems'] },
+  { id:'biz', n:'04', title:'Business & Entrepreneurship', cat:'Digital & Business Skills', level:'To be confirmed', duration:'To be confirmed', mode:'To be confirmed',
+    desc:'Learn practical business, digital and entrepreneurship-focused skills.', skills:['Business','Entrepreneurship'] },
+  { id:'digital', n:'05', title:'Digital Skills', cat:'Digital & Business Skills', level:'To be confirmed', duration:'To be confirmed', mode:'To be confirmed',
+    desc:'Develop useful digital skills for study, work, business and everyday technology use.', skills:['Everyday technology'] },
+];
+const CATS = [
+  { name:'Web & Software Development', desc:'Build websites and web applications, from the fundamentals to deployment.' },
+  { name:'AI & Technology', desc:'Practical learning in AI tools, digital systems and emerging technology.' },
+  { name:'Digital & Business Skills', desc:'Digital, business and entrepreneurship skills for study and work.' },
+];
+const MODULES = [
+  ['Web Foundations','How the web works, browsers and servers, domains, HTML, semantic markup, CSS fundamentals and responsive design.',['How the web works','Browsers & servers','Domains','HTML','Semantic markup','CSS','Responsive design']],
+  ['JavaScript & Programming Fundamentals','Variables, functions, conditions, loops, arrays, objects, DOM interaction, events, asynchronous concepts and problem solving.',['Variables','Functions','Loops','Arrays & objects','DOM & events','Async','Problem solving']],
+  ['Modern Frontend Development','Component-based interfaces, React fundamentals, application structure, state, forms, routing and responsive UI development.',['Components','React','State','Forms','Routing','Responsive UI']],
+  ['Backend & APIs','Server-side concepts, Node.js fundamentals, API architecture, requests and responses, validation and basic authentication concepts.',['Node.js','API architecture','Requests & responses','Validation','Authentication basics']],
+  ['Databases & Application Data','Database fundamentals, structured data, CRUD operations, data relationships and application integration.',['Database fundamentals','CRUD','Relationships','Integration']],
+  ['Development Workflow & Deployment','Git, GitHub, environment configuration, debugging, production builds, deployment, performance fundamentals and basic web security.',['Git & GitHub','Environments','Debugging','Builds','Deployment','Performance','Security basics']],
+  ['Practical Project','Planning, designing, developing, testing and deploying a complete web application based on the skills covered throughout the program.',['Planning','Design','Development','Testing','Deployment']],
+];
+const OUTCOMES = ['Understand how modern web applications are structured and work','Create responsive interfaces with HTML, CSS and JavaScript','Work with modern frontend concepts and frameworks','Understand server-side development and APIs','Work with databases and application data','Use Git and common development workflows','Deploy web projects to modern hosting platforms','Plan and build a complete practical web application'];
+const FAQS = [
+  ['Which courses are available?','SRS Academy currently lists five programs: Full Stack Web Development, Artificial Intelligence, Technology Programs, Business & Entrepreneurship and Digital Skills. Full details are published for Full Stack Web Development; details for the others are being finalised. A catalogue of 15 proposed online courses is also shown for review and is not yet open for enrolment.'],
+  ['Who can enrol?','Full Stack Web Development is open to students, beginners, career starters and anyone interested in web and software development. No previous professional experience is needed — basic computer literacy, a suitable computer, a stable internet connection and regular practice are recommended.'],
+  ['How long are the courses?','Full Stack Web Development runs for approximately 4–6 months. Durations for other programs are to be confirmed.'],
+  ['Are classes online or offline?','SRS Academy operates primarily online, with presence and support in Kolkata and Mumbai. [In-person class availability — to be confirmed.]'],
+  ['What are the fees?','Program fees have not been announced yet. Send an enquiry or contact SRS Academy for current fee and enrolment information.'],
+  ['Will I receive a certificate?','Learners who complete the required activities and completion criteria may receive an SRS Academy Certificate of Completion.'],
+  ['How do I enquire or apply?','Use the enquiry form on this page or on any course page. Admissions open based on current course availability, and the team will share next steps.'],
+];
+const TITLES = { home:'SRS Academy — Practical technology courses online | Kolkata', about:'About SRS Academy — Training initiative of SPRS Infotech', courses:'Courses — SRS Academy', course:'Course — SRS Academy', technical:'Technical Training — SRS Academy', admissions:'Admissions & Enquiry — SRS Academy', contact:'Contact SRS Academy — Salt Lake Sector V, Kolkata', legal:'Policies — SRS Academy', pending:'SRS Academy', audit:'Design audit — SRS Academy redesign', resources:'Resources — SRS Academy', updates:'Updates — SRS Academy', online:'Online course — SRS Academy' };
+const LEGAL = {
+  privacy:{ title:'Privacy Policy', path:'/privacy', sections:['Information we collect','How we use your information','Sharing and retention','Your rights and contact'] },
+  terms:{ title:'Terms & Conditions', path:'/terms', sections:['Use of this website','Programs and enrolment','Intellectual property','Limitation of liability'] },
+  refund:{ title:'Refund Policy', path:'/refund-policy', sections:['Eligibility for refunds','How to request a refund','Processing time'] },
+  accessibility:{ title:'Accessibility', path:'/accessibility', sections:['Our commitment','Standards we follow','Report a barrier'] },
+};
+const EMPTY = { name:'', mobile:'', email:'', course:'', format:'', message:'' };
+
+const U=(p,w)=>`https://images.unsplash.com/${p}?auto=format&fit=crop&w=${w}&q=75`;
+const ONLINE=[
+  ['digital-literacy','Digital Literacy Siksha','3 months','Digital & Technology','Learn smartphone basics, internet use, email, online forms, digital services, video calling, and online safety.','photo-1645538165779-81d7f49baa6f','SUSHMITA NAG','susnag'],
+  ['ai-dm-basic','AI with Digital Marketing Basic Siksha','3 months','AI & Digital Marketing','Explore AI tools, content creation, social media, digital marketing fundamentals, and practical applications of modern technology.','photo-1563986768494-4dee2763ff3f','Austin Distel','austindistel'],
+  ['data-entry-excel','Certificate in Data Entry & Advanced Excel','3 months','Computer & Office Skills','Learn data entry, spreadsheets, Excel formulas, data organization, charts, and practical office tasks.','photo-1783115259399-3a5a3e0e4592','Gorilla ROI Data Connector','gorillaroi'],
+  ['spoken-english','Certificate Course in Spoken English','3 months','Communication & Career','Practise everyday English conversations, vocabulary, listening, introductions, and speaking confidence.','photo-1698891667813-b445f80aace7','Resume Genius','resumegenius'],
+  ['english-typing','Certificate in English Typing','3 months','Computer & Office Skills','Develop keyboard familiarity, typing accuracy, speed, and practical document-typing skills.','photo-1758874573138-f3dd1ed25c7e','Vitaly Gariev','silverkblack'],
+  ['bridal-makeup','Bridal Makeup Course','1 month','Beauty & Bridal','Explore bridal makeup fundamentals, skin preparation, eye makeup, product selection, and bridal-look demonstrations.','photo-1610173827043-9db50e0d8ef9','Alok Verma','theweddingfocus'],
+  ['mehendi','Certificate In Mehendi Course','2 months','Beauty & Bridal','Learn mehendi fundamentals, floral patterns, Arabic designs, decorative details, and bridal mehendi practice.','photo-1730003873829-09b4b16444c1','anik das','anik01993'],
+  ['makeup','Certificate In Makeup Course','2 months','Beauty & Bridal','Explore makeup basics, product knowledge, skin preparation, blending, eye makeup, and party makeup techniques.','photo-1516975080664-ed2fc6a32937','Rosa Rafael','rosarafael'],
+  ['cake-bakery','Cake Bakery Course','1 month','Vocational & Creative Skills','Learn cake preparation, baking principles, ingredients, decoration techniques, and practical baking demonstrations.','photo-1649773289945-93a96051fd18','Mick Haupt','rocinante_11'],
+  ['tailoring','Certificate In Tailoring','3 months','Vocational & Creative Skills','Learn measurements, fabric handling, stitching fundamentals, sewing-machine operation, and simple garment construction.','photo-1630930678172-63343537a00a','Omar Alrawi','omaralrawi'],
+  ['beautician','Basic Beautician (Parlour) Course','2 months','Beauty & Bridal','Explore basic beauty-care concepts, hygiene, skincare fundamentals, and introductory salon procedures.','photo-1785852790570-0d2858068c70','Sum Sum','surprisechef'],
+  ['nail-extension','Basic to Advance Nail Extension Course','2 months','Beauty & Bridal','Explore nail preparation, extension techniques, nail art, product handling, hygiene, and safe removal principles.','photo-1519014816548-bf5fe059798b','DESIGNECOLOGIST','designecologist'],
+  ['digital-marketing','Digital Marketing Siksha','3 months','AI & Digital Marketing','Learn content planning, social media marketing, basic SEO, digital campaign fundamentals, and online business promotion.','photo-1499914485622-a88fac536970','Christin Hume','christinhumephoto'],
+  ['personality','Personality Development Course','1 month','Communication & Career','Practise self-confidence, communication, introductions, interpersonal skills, professional presentation, and speaking exercises.','photo-1623303366639-0e330d7c3d9f','Muhammad Zaid','imdzaid'],
+  ['certificate-ai','Certificate in AI','3 months','AI & Digital Marketing','Explore AI fundamentals, generative AI tools, prompt writing, practical AI applications, and responsible AI use.','photo-1676272682018-b1435bad1cf0','Rolf van Root','freshvanroot'],
+].map(([id,title,duration,cat,desc,p,name,user],i)=>({ id, n:String(i+1).padStart(2,'0'), title, duration, cat, desc, img:U(p,900), imgL:U(p,1400), imgS:U(p,200), credit:'Photo by '+name+' on Unsplash', href:'https://unsplash.com/@'+user,
+  learn: desc.replace(/^(Learn|Explore|Practise|Develop)\s+/,'').replace(/\.$/,'').split(/,\s*(?:and\s+)?/).map(t=>t.charAt(0).toUpperCase()+t.slice(1)) }));
+const OC_CATS=['Digital & Technology','AI & Digital Marketing','Computer & Office Skills','Communication & Career','Beauty & Bridal','Vocational & Creative Skills'];
+const CAT_INFO={
+  'Digital & Technology':{ who:'Complete beginners, home-makers, senior learners and students who want everyday digital confidence.', assign:['Set up and send an email','Fill in a sample online form','Make a practice video call','Complete an online-safety checklist'], device:['Smartphone or a computer','Stable internet connection','Headphones recommended for live sessions'] },
+  'AI & Digital Marketing':{ who:'Students, small-business owners, freelancers and job seekers who are new to AI tools and online marketing.', assign:['Draft social posts with an AI assistant','Plan a one-week content calendar','Write and refine prompts for a real task','Review a sample campaign'], device:['Laptop or desktop (a smartphone works for some tasks)','Stable internet connection','Free accounts on the tools used in class'] },
+  'Computer & Office Skills':{ who:'Students, job seekers and office staff who want practical computer and keyboard skills.', assign:['Timed practice exercises','Create and format a sample worksheet or document','Enter and check a practice dataset','Weekly speed and accuracy log'], device:['Laptop or desktop with a physical keyboard','Excel or a free spreadsheet alternative','Stable internet connection'] },
+  'Communication & Career':{ who:'Students, freshers and working learners who want to speak and present with more confidence.', assign:['Recorded self-introduction','Paired conversation practice in live sessions','Short presentation with instructor feedback','Daily vocabulary or reflection task'], device:['Smartphone or computer with camera and microphone','Stable internet connection for live sessions','A quiet space to practise speaking'] },
+  'Beauty & Bridal':{ who:'Beginners and aspiring beauty professionals who want guided, practical skill-building.', assign:['Follow-along practice after each demonstration','Photo or video submission of practice work','Product and hygiene checklist','Final look submitted for instructor feedback'], device:['Smartphone or computer to watch lessons and upload practice photos','Stable internet connection','Practice kit and materials (list to be confirmed)'] },
+  'Vocational & Creative Skills':{ who:'Beginners and home-based learners who want a practical, hands-on skill.', assign:['Step-by-step practice after each demonstration','Photo submission of finished pieces','Measurement or recipe worksheets','Final project with instructor feedback'], device:['Smartphone or computer to watch lessons','Stable internet connection','Basic tools and materials (list to be confirmed)'] },
+};
+const FORMAT=[
+  { n:'01', t:'Recorded video lessons', d:'Step-by-step lessons to watch at your own pace and revisit any time.' },
+  { n:'02', t:'Audio lessons', d:'Listen and revise on the go, even on a slower connection.' },
+  { n:'03', t:'Live Google Meet sessions', d:'Scheduled classes to ask questions and practise with the instructor.' },
+  { n:'04', t:'Downloadable notes', d:'Summaries, worksheets and checklists for each module.' },
+  { n:'05', t:'Instructor feedback', d:'Submit practice work and get guidance on what to improve.' },
+];
+
+const LEGAL_ROUTE={ privacy:'/privacy', terms:'/terms', refund:'/refund-policy', accessibility:'/accessibility' };
+const SP_SCREENS=[['login','Login'],['dashboard','Dashboard'],['my-courses','My Courses'],['lessons','Lessons (course learning)'],['assignments','Assignments'],['progress','Progress'],['certificates','Certificates'],['schedule','Class Schedule'],['profile','My Profile'],['support','Help & Support']];
+const AD_SCREENS=[['login','Admin Login'],['dashboard','Dashboard'],['courses','Courses'],['students','Students'],['admissions','Admissions'],['enquiries','Enquiries'],['classes','Live Classes'],['assignments','Assignments'],['certificates','Certificates'],['content','Content'],['settings','Settings']];
+const IS_FRAME=new URLSearchParams(location.search).has('frame');
+const initRoute=()=>decodeURIComponent((location.hash||'#/').slice(1))||'/';
+
+class Component extends DCLogic {
+  frameRef = React.createRef();
+  shellSrc = location.pathname + '?frame=1#' + initRoute();
+  state = { mode:'desktop', dw:1440, mw:390, route:initRoute(), h:window.innerHeight, lastByArea:{}, sub:'login', page:'home', programId:'full-stack', w: typeof window!=='undefined' ? window.innerWidth : 1280, menuOpen:false, ddOpen:false, q:'', cat:'All', level:'All', faqOpen:0, modOpen:0, legalTab:'privacy', form:{...EMPTY}, errors:{}, tried:false, submitted:false, pendingName:'', onlineId:'digital-literacy', ocCat:'All' };
+
+  componentDidMount(){
+    this.onR=()=>this.setState({ w: window.innerWidth, h: window.innerHeight }); window.addEventListener('resize', this.onR);
+    if (IS_FRAME) {
+      this.onHash=()=>{ const r=initRoute(); const patch=this.parse(r); this.setState({ ...patch, menuOpen:false, ddOpen:false }, ()=>{ this.setTitle(); if(!this.keepScroll) window.scrollTo({ top:0 }); this.keepScroll=false; }); if (window.parent!==window) window.parent.postMessage({ type:'srs-route', route:r }, '*'); };
+      window.addEventListener('hashchange', this.onHash);
+      this.onMsg=(e)=>{ if(e.data&&e.data.type==='srs-go'&&e.data.route!==initRoute()) location.hash=e.data.route; };
+      window.addEventListener('message', this.onMsg);
+      this.setState(this.parse(initRoute()), ()=>this.setTitle());
+    } else {
+      this.onMsg=(e)=>{ if(e.data&&e.data.type==='srs-route'){ this.setState(x=>({ route:e.data.route, lastByArea:{ ...x.lastByArea, [this.areaOf(e.data.route)]:e.data.route } })); history.replaceState(null,'','#'+e.data.route); } };
+      window.addEventListener('message', this.onMsg);
+      document.title='SRS Academy — UI preview';
+    }
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this.onR); window.removeEventListener('hashchange', this.onHash); window.removeEventListener('message', this.onMsg); }
+  areaOf(r){ return r.startsWith('/student-portal')?'portal':r.startsWith('/admin')?'admin':'public'; }
+  parse(r){
+    const seg=(r||'/').split('/').filter(Boolean);
+    if(!seg.length) return { page:'home' };
+    const [a,b]=seg, simple={ about:'about', courses:'courses', 'technical-training':'technical', admissions:'admissions', contact:'contact', resources:'resources', updates:'updates', 'design-audit':'audit' };
+    if(a==='courses'&&b) return ONLINE.find(o=>o.id===b)?{ page:'online', onlineId:b }:{ page:'courses' };
+    if(a==='programs'&&b) return PROGRAMS.find(p=>p.id===b)?{ page:'course', programId:b, modOpen:0 }:{ page:'courses' };
+    const lt=Object.keys(LEGAL_ROUTE).find(k=>LEGAL_ROUTE[k]==='/'+a); if(lt) return { page:'legal', legalTab:lt };
+    if(a==='student-portal') return { page:'portal', sub:SP_SCREENS.some(x=>x[0]===b)?b:'login' };
+    if(a==='admin') return { page:'admin', sub:AD_SCREENS.some(x=>x[0]===b)?b:'login' };
+    return { page:simple[a]||'home' };
+  }
+  routeOf(st){
+    switch(st.page){ case 'about':return '/about'; case 'courses':return '/courses'; case 'online':return '/courses/'+st.onlineId; case 'course':return '/programs/'+st.programId; case 'technical':return '/technical-training'; case 'admissions':return '/admissions'; case 'contact':return '/contact'; case 'resources':return '/resources'; case 'updates':return '/updates'; case 'legal':return LEGAL_ROUTE[st.legalTab]; case 'audit':return '/design-audit'; case 'portal':return '/student-portal/'+st.sub; case 'admin':return '/admin/'+st.sub; default:return '/'; }
+  }
+  setTitle(){ const st=this.state, p=PROGRAMS.find(x=>x.id===st.programId), oc=ONLINE.find(x=>x.id===st.onlineId);
+    document.title = st.page==='online'&&oc ? oc.title+' — SRS Academy' : st.page==='course'&&p ? p.title+' — SRS Academy' : st.page==='portal' ? 'Student Portal — SRS Academy' : st.page==='admin' ? 'Administration — SRS Academy' : (TITLES[st.page]||'SRS Academy'); }
+  goRoute(r){ if(IS_FRAME) location.hash=r; }
+
+  go(page, extra={}){
+    this.setState({ page, menuOpen:false, ddOpen:false, ...extra }, () => {
+      const r=this.routeOf(this.state); if (IS_FRAME && initRoute()!==r) { this.keepScroll=!!extra.toForm; location.hash=r; }
+      const p = PROGRAMS.find(x=>x.id===this.state.programId);
+      const oc=ONLINE.find(x=>x.id===this.state.onlineId); document.title = page==='online' && oc ? `${oc.title} — SRS Academy` : page==='course' && p ? `${p.title} — SRS Academy` : (TITLES[page]||'SRS Academy');
+      if (extra.toForm) { const el=document.getElementById('enquire'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80 }); }
+      else window.scrollTo({ top:0 });
+    });
+  }
+  enquireFor(title){ this.setState(s=>({ form:{...s.form, course:title}, submitted:false })); this.go(['home','course','contact','online'].includes(this.state.page) ? this.state.page : 'admissions', { toForm:true }); }
+
+  validate(f){
+    const e={};
+    if (f.name.trim().length<2) e.name='Enter your full name.';
+    const m=f.mobile.replace(/[\s-]/g,'').replace(/^(\+91|91|0)/,'');
+    if (!m) e.mobile='Enter your mobile number.'; else if (!/^[6-9]\d{9}$/.test(m)) e.mobile='Enter a valid 10-digit Indian mobile number.';
+    if (f.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email='Enter a valid email address, or leave it blank.';
+    if (!f.course) e.course='Choose a course, or “Not sure yet”.';
+    return e;
+  }
+  setField(k,v){ this.setState(s=>{ const form={...s.form,[k]:v}; return { form, errors: s.tried ? this.validate(form) : s.errors }; }); }
+
+  renderVals(){
+    const s=this.state, narrow=s.w<1180;
+    const P=PROGRAMS.map(p=>({ ...p, isTbc:!p.verified, catUpper:p.cat.toUpperCase(),
+      open:()=>this.go('course',{ programId:p.id, modOpen:0 }), enquire:()=>this.enquireFor(p.title) }));
+    const q=s.q.trim().toLowerCase();
+    const filtered=P.filter(p=>(s.cat==='All'||p.cat===s.cat)
+      &&(s.level==='All'||(s.level==='Beginner to Intermediate'?p.level===s.level:p.level==='To be confirmed'))
+      &&(!q||[p.title,p.desc,p.cat,...p.skills].join(' ').toLowerCase().includes(q)));
+    const chip=(active)=>({ bg:active?'#16213A':'#fff', fg:active?'#fff':'#16213A', bd:active?'#16213A':'#CFC7B5' });
+    const cp=P.find(p=>p.id===s.programId)||P[0];
+    const related=[...P.filter(p=>p.id!==cp.id&&p.cat===cp.cat),...P.filter(p=>p.id!==cp.id&&p.cat!==cp.cat)].slice(0,3);
+    const page=s.page;
+    const pg={}; ['home','about','courses','course','technical','admissions','contact','legal','resources','updates','audit','online','portal','admin'].forEach(k=>pg[k]=page===k);
+    const navDef=[['Home','home'],['About Us','about'],['Courses','courses'],['Technical Training','technical'],['Admissions','admissions'],['Resources','resources'],['Contact Us','contact']];
+    const navItems=navDef.map(([label,k])=>({ label, isCourses:k==='courses', plain:k!=='courses', line:(page===k||(k==='courses'&&(page==='course'||page==='online')))?'#B4561A':'transparent', go:()=>this.go(k) }));
+    const mobileNav=navDef.map(([label,k])=>({ label: k==='courses'?'All Courses':label, go:()=>this.go(k) }));
+    const f=s.form, e=s.errors;
+    const fb={}, fi={}; ['name','mobile','email','course'].forEach(k=>{ fb[k]=e[k]?'#C0432A':'#CFC7B5'; fi[k]=!!e[k]; });
+    const on={}; Object.keys(EMPTY).forEach(k=>on[k]=(ev)=>this.setField(k,ev.target.value));
+    const errCount=Object.keys(e).length;
+    const pending=(name)=>()=>this.go('pending',{ pendingName:name });
+    const legalGo=(t)=>()=>this.go('legal',{ legalTab:t });
+
+    const OC=ONLINE.map(o=>({ ...o, slot:'oc-'+o.id, slotD:'oc-'+o.id+'-detail', slotT:'oc-'+o.id+'-thumb', open:()=>this.go('online',{ onlineId:o.id }), enquire:()=>this.enquireFor(o.title) }));
+    const ocF=OC.filter(o=>(s.ocCat==='All'||o.cat===s.ocCat)&&(!q||[o.title,o.cat,o.desc].join(' ').toLowerCase().includes(q)));
+    const ocCur=OC.find(o=>o.id===s.onlineId)||OC[0], info=CAT_INFO[ocCur.cat];
+    const ocVals={
+      homeFeatured:['digital-literacy','ai-dm-basic','data-entry-excel','spoken-english','bridal-makeup','mehendi'].map(id=>OC.find(o=>o.id===id)),
+      ocFiltered:ocF, ocNone:ocF.length===0,
+      ocLabel: ocF.length===OC.length ? OC.length+' online course demos' : `Showing ${ocF.length} of ${OC.length} online course demos`,
+      ocChips:['All',...OC_CATS].map(c=>({ label:c==='All'?'All Courses':c, active:s.ocCat===c, ...chip(s.ocCat===c), go:()=>this.setState({ ocCat:c }) })),
+      ocReset:()=>this.setState({ q:'', ocCat:'All' }),
+      oc:{ ...ocCur, who:info.who, assign:info.assign, device:info.device, overview:ocCur.desc+' This proposed '+ocCur.duration+' online course is designed for beginners, with short lessons, demonstrations and guided practice you can follow from home.' },
+      ocRelated:[...OC.filter(o=>o.id!==ocCur.id&&o.cat===ocCur.cat),...OC.filter(o=>o.id!==ocCur.id&&o.cat!==ocCur.cat)].slice(0,3),
+      ocFormat:FORMAT, goAllOnline:()=>this.go('courses',{ ocCat:'All', q:'' }),
+    };
+    const area=this.areaOf(s.route), W=s.w, H=s.h, barH=W>1240?62:W>760?108:168;
+    const AREA_PAGES={ public:[['/','Home'],['/about','About Us'],['/courses','Courses (catalogue)'],...ONLINE.map(o=>['/courses/'+o.id,'Course · '+o.title]),...PROGRAMS.map(p=>['/programs/'+p.id,'Program · '+p.title]),['/technical-training','Technical Training'],['/admissions','Admissions'],['/contact','Contact Us'],['/resources','Resources'],['/updates','Updates'],['/privacy','Privacy Policy'],['/terms','Terms & Conditions'],['/refund-policy','Refund Policy'],['/accessibility','Accessibility'],['/design-audit','Design audit & system']],
+      portal:SP_SCREENS.map(([k,l])=>['/student-portal/'+k,l]), admin:AD_SCREENS.map(([k,l])=>['/admin/'+k,l]) };
+    const pick=(r)=>{ this.setState(x=>({ route:r, lastByArea:{ ...x.lastByArea, [this.areaOf(r)]:r } })); history.replaceState(null,'','#'+r); const f=this.frameRef.current; if(f&&f.contentWindow) f.contentWindow.postMessage({ type:'srs-go', route:r }, '*'); };
+    const isD=s.mode==='desktop', vw=isD?s.dw:s.mw, availW=Math.max(280,W-32), availH=Math.max(300,H-barH-70);
+    const pad=isD?0:12, outerW=vw+pad*2, vh0=isD?null:844, outerH0=isD?null:vh0+pad*2;
+    const scale=isD?Math.min(1,availW/vw):Math.min(1,availH/outerH0,availW/outerW);
+    const vh=isD?Math.round(availH/scale):vh0, outerH=isD?vh:outerH0;
+    const curLabel=(AREA_PAGES[area].find(p=>p[0]===s.route)||['','Page'])[1];
+    const tab=(a)=>({ bg:a?'#F2C79A':'transparent', fg:a?'#111A2E':'#E9E4D8', bd:a?'#F2C79A':'#3A4766' });
+    const shellVals = IS_FRAME ? {} : {
+      modes:[['desktop','DESKTOP / WEB'],['mobile','MOBILE']].map(([k,l])=>{ const a=s.mode===k; return { label:l, active:a, bg:a?'#fff':'transparent', fg:a?'#111A2E':'#C9CEDA', go:()=>this.setState({ mode:k }) }; }),
+      areas:[['public','Public Website'],['portal','Student Portal'],['admin','Admin Panel']].map(([k,l])=>({ label:l, active:area===k, ...tab(area===k), go:()=>pick(s.lastByArea[k]||AREA_PAGES[k][0][0]) })),
+      pageOptions:AREA_PAGES[area].map(([r,l])=>({ r, l })), route:s.route, onPick:(e)=>pick(e.target.value),
+      widths:(isD?[[1920,'1920'],[1440,'1440'],[1280,'1280'],[1024,'1024'],[820,'Tablet 820'],[768,'Tablet 768']]:[[430,'430'],[390,'390'],[360,'360']]).map(([n,l])=>{ const a=vw===n; return { label:l, active:a, ...tab(a), go:()=>this.setState(isD?{ dw:n }:{ mw:n }) }; }),
+      openHref:location.pathname+'?frame=1#'+s.route, frameRef:this.frameRef, src:this.shellSrc,
+      vw, vh, outerW, outerH, scale, boxW:Math.round(outerW*scale), boxH:Math.round(outerH*scale), bezelBg:isD?'#fff':'#111A2E', bezelPad:pad, bezelR:isD?10:54, screenR:isD?10:42,
+      caption:(isD?'Desktop / Web':'Mobile')+' · '+vw+' px · '+{ public:'Public Website', portal:'Student Portal', admin:'Admin Panel' }[area]+' · '+curLabel+(scale<1?' · shown at '+Math.round(scale*100)+'%':''),
+    };
+    return {
+      ...shellVals, isShell:!IS_FRAME, isSite:IS_FRAME, isPublic:page!=='portal'&&page!=='admin', subScreen:s.sub, goRoute:(r)=>this.goRoute(r),
+      midW:narrow&&s.w>=600, goStudentLogin:()=>this.goRoute('/student-portal/login'), goAdminLogin:()=>this.goRoute('/admin/login'),
+      resCats:[['Course guides','How to choose a course and what to expect from online learning.','Coming soon'],['Lesson notes & downloads','Shared with enrolled students inside the Student Portal.','For students','Student Login'],['Getting started online','Joining Google Meet classes, plus a device and internet checklist.','Coming soon'],['Study & career tips','Practical advice for learners balancing study, work and home.','Coming soon']]
+        .map(([t,d,st,cta])=>({ t, d, status:st, cta:cta||'', pillBg:cta?'#E3EEE7':'#F6E7D6', pillFg:cta?'#174A36':'#7A3A10', go:()=>this.goRoute('/student-portal/login') })),
+      updSlots:[1,2,3],
+      ...ocVals,
+      wide:!narrow, narrow, menuOpen:s.menuOpen, showMobileMenu:narrow&&s.menuOpen, menuLabel:s.menuOpen?'Close':'Menu', ddOpen:s.ddOpen,
+      pageName: page==='online'?ocCur.title:page==='course'?cp.title:(page==='pending'?s.pendingName:(navDef.find(n=>n[1]===page)||[page==='audit'?'Audit & design system':page==='legal'?'Policies':page])[0]),
+      toggleMenu:()=>this.setState(x=>({ menuOpen:!x.menuOpen })), toggleDD:()=>this.setState(x=>({ ddOpen:!x.ddOpen })), closeDD:()=>this.setState({ ddOpen:false }),
+      goHome:()=>this.go('home'), goCourses:()=>this.go('courses'), goAbout:()=>this.go('about'), goContact:()=>this.go('contact'), goAudit:()=>this.go('audit'),
+      goEnquire:()=>this.go(['home','course','contact','admissions','online'].includes(page)?page:'admissions',{ toForm:true }),
+      goPrivacy:(ev)=>{ ev.preventDefault(); this.go('legal',{ legalTab:'privacy' }); },
+      navItems, mobileNav, pg, programs:P,
+      fs:P[0], fsSkills:P[0].skills, otherPrograms:P.slice(1),
+      categories:CATS.map((c,i)=>{ const list=P.filter(p=>p.cat===c.name); return { ...c, num:'0'+(i+1), countLabel:list.length+(list.length===1?' program':' programs'), list:list.map(p=>p.title).join(' · '), go:()=>this.go('courses',{ cat:c.name, q:'', level:'All' }) }; }),
+      whyItems:[
+        { n:'1', t:'Practical and project-based', d:'Programs build toward working projects — Full Stack ends with a complete, deployed web application.' },
+        { n:'2', t:'Rooted in real industry work', d:'Built on SPRS Infotech’s experience in web, app, software and UI/UX projects.' },
+        { n:'3', t:'Structured curriculum', d:'Clear modules that move from foundations to applied work, revised as tools change.' },
+        { n:'4', t:'Learn online, from anywhere', d:'Quality learning beyond geographical limits, with support in Kolkata and Mumbai.' },
+        { n:'5', t:'Certificate of Completion', d:'Issued by SRS Academy to learners who meet the completion criteria.' },
+      ],
+      lba:[
+        { slot:'srs-learn', ph:'Photo: live online class / mentor explaining a concept', k:'LEARN WITH PURPOSE', t:'Understand the why', d:'Understand the concepts, systems and tools behind modern digital work.' },
+        { slot:'srs-build', ph:'Photo: learner building a project on a laptop', k:'BUILD THROUGH PRACTICE', t:'Make real things', d:'Develop capability through exercises, projects, experimentation and practical application.' },
+        { slot:'srs-advance', ph:'Photo: learner presenting finished work', k:'ADVANCE CONTINUOUSLY', t:'Keep growing', d:'Use what you learn as a foundation for deeper skills, professional development and future opportunities.' },
+      ],
+      testimonialSlots:[{ slot:'srs-t1' },{ slot:'srs-t2' },{ slot:'srs-t3' }],
+      values:[
+        { t:'Practical Learning', d:'Education should connect knowledge with meaningful application.' },
+        { t:'Continuous Growth', d:'Technology changes constantly, and learning should evolve with it.' },
+        { t:'Clarity', d:'Complex ideas should be taught in a structured, understandable way.' },
+        { t:'Accessibility', d:'Quality learning should be available beyond geographical limitations.' },
+        { t:'Curiosity', d:'Strong learners ask questions, experiment and explore.' },
+        { t:'Responsibility', d:'Technology should be approached professionally, ethically and thoughtfully.' },
+      ],
+      q:s.q, onSearch:(ev)=>this.setState({ q:ev.target.value }),
+      catChips:['All',...CATS.map(c=>c.name)].map(c=>({ label:c==='All'?'All areas':c, active:s.cat===c, ...chip(s.cat===c), go:()=>this.setState({ cat:c }) })),
+      levelChips:[['All','All'],['Beginner to Intermediate','Beginner to Intermediate'],['TBC','Level to be confirmed']].map(([v,l])=>({ label:l, active:s.level===v, ...chip(s.level===v), go:()=>this.setState({ level:v }) })),
+      filtered, noResults:filtered.length===0, resultLabel: filtered.length===0?'0 courses':`Showing ${filtered.length} of ${P.length} courses`,
+      resetFilters:()=>this.setState({ q:'', cat:'All', level:'All' }),
+      cp, related, fsOutcomes:OUTCOMES,
+      modules:MODULES.map(([t,d,topics],i)=>({ n:'0'+(i+1), t, d, topics, id:'mod-'+i, open:s.modOpen===i, sign:s.modOpen===i?'−':'+', toggle:()=>this.setState(x=>({ modOpen:x.modOpen===i?-1:i })) })),
+      techPrograms:P.filter(p=>p.cat!=='Digital & Business Skills'),
+      steps:[
+        { n:'01', t:'Explore courses', d:'Compare programs, durations and eligibility.' },
+        { n:'02', t:'Send an enquiry', d:'Tell us your course of interest and how to reach you.' },
+        { n:'03', t:'Talk to the team', d:'[Counselling call — confirm] Get fee and batch details.' },
+        { n:'04', t:'Enrol', d:'[Enrolment & payment steps — confirm with SRS]' },
+      ],
+      legalTabs:Object.keys(LEGAL).map(k=>({ label:LEGAL[k].title, active:s.legalTab===k, ...chip(s.legalTab===k), go:()=>this.setState({ legalTab:k }) })),
+      legal:LEGAL[s.legalTab], pendingName:s.pendingName,
+      showEnquiry:['home','course','admissions','contact','online'].includes(page),
+      showFaq:['home','admissions'].includes(page),
+      faqs:FAQS.map(([q2,a],i)=>({ q:q2, a, id:'faq-'+i, open:s.faqOpen===i, sign:s.faqOpen===i?'−':'+', toggle:()=>this.setState(x=>({ faqOpen:x.faqOpen===i?-1:i })) })),
+      fv:f, fe:e, fb, fi, on, submitted:s.submitted, notSubmitted:!s.submitted,
+      hasErrors:errCount>0, errorSummary:`Please fix ${errCount} field${errCount===1?'':'s'} below.`,
+      courseOptions:[...PROGRAMS.map(p=>p.title),...ONLINE.map(o=>o.title),'Not sure yet'],
+      submit:(ev)=>{ ev.preventDefault(); const errs=this.validate(s.form); this.setState({ errors:errs, tried:true, submitted:Object.keys(errs).length===0 }); },
+      resetForm:()=>this.setState({ form:{...EMPTY}, errors:{}, tried:false, submitted:false }),
+      footerCols:[
+        { h:'ACADEMY', links:[{ label:'About Us', go:()=>this.go('about') },{ label:'Courses', go:()=>this.go('courses') },{ label:'Technical Training', go:()=>this.go('technical') },{ label:'Admissions', go:()=>this.go('admissions') }] },
+        { h:'INFORMATION', links:[{ label:'Resources', go:()=>this.go('resources') },{ label:'Updates', go:()=>this.go('updates') },{ label:'FAQ', go:()=>this.go('admissions') },{ label:'Contact Us', go:()=>this.go('contact') },{ label:'Student Portal', go:()=>this.goRoute('/student-portal/login') }] },
+        { h:'LEGAL', links:[{ label:'Privacy Policy', go:legalGo('privacy') },{ label:'Terms & Conditions', go:legalGo('terms') },{ label:'Refund Policy', go:legalGo('refund') },{ label:'Accessibility', go:legalGo('accessibility') }] },
+      ],
+      audit:[
+        { name:'srstechacademy.com (current)', access:'Home, About, Full Stack page read', use:['Honest content: fees “to be announced”, durations “to be confirmed”','Strong course-detail structure: overview, outcomes, 7-module curriculum, eligibility, certificate, fees, FAQ, related','Legal set already in place: privacy, terms, refund, accessibility'], avoid:['Dark, abstract “Knowledge OS” framing hides what is taught and who it is for','Bracketed placeholders are visible on the live homepage','Nav says “Academy” for Home; Student Portal is a label with no link','Phone shows 9 digits after +91; email hidden by obfuscation'] },
+        { name:'IIVET India', access:'Homepage read', use:['Course cards that show eligibility, duration and fee range up front','Admission tasks grouped in one Student Zone'], avoid:['Login and franchise links crowd the header','Counters showing “0” and broad certification claims weaken trust'] },
+        { name:'Lalani Computer Academy', access:'Homepage read', use:['Courses grouped by category in the menu, so a large catalogue stays scalable','Notice board for batch and job updates','Alumni format of name, role and employer (only with real data)'], avoid:['Ticker marquee and emoji in the top bar','Dense placement statistics, which SRS cannot claim'] },
+        { name:'Digital Indian', access:'Not inspectable: client-rendered, only metadata returned', use:['From its metadata and your brief: level and duration labels, career-focused course framing'], avoid:['Layout not reviewed, so no visual patterns were taken from it'] },
+        { name:'AWTIM', access:'Homepage read', use:['Card meta row of duration, mode and projects, plus paired Details and Enquire buttons','Detailed FAQ that answers eligibility, modes and fees','Sticky mobile action bar'], avoid:['Keyword-stuffed headings','“100% job” and “#1” claims'] },
+      ],
+      decisions:['Primary brand stays “SRS Academy”, keeping the “SRS.” mark and the “by SPRS Infotech” endorsement','Vocational Courses page left out because SRS doesn’t currently list vocational programs','Testimonials page left out because no content exists yet. The homepage has a clearly marked placeholder block','Technical Training groups Web & Software Development with AI & Technology','Resources, Updates and Student Portal kept as existing routes pending content','Course detail is one template, filled with verified data for Full Stack and shown as “to be confirmed” for the rest','Digital Skills is placed under Digital & Business Skills (inferred from the site, so please confirm)'],
+      toConfirm:['Whether the 15 proposed online courses will be offered, plus their fees, certificates and delivery tools (recorded video, audio, Google Meet)','Licensed or original photos to replace the Unsplash stock images on the 15 course cards','Correct phone number (+91-900007799 looks incomplete) and the academy email','Duration, level, mode and curriculum for AI, Technology Programs, Business & Entrepreneurship and Digital Skills','Fees, batch dates and the admission steps after enquiry','Whether any in-person classes run in Kolkata or Mumbai','Certificate verification process','Real student testimonials and photos with consent; approved academy photography','Student Portal URL and status'],
+      swatches:[
+        { name:'Ink', hex:'#16213A', use:'text, primary' },{ name:'Ink 2', hex:'#3A4459', use:'body copy' },{ name:'Ivory', hex:'#FAF7F0', use:'page' },{ name:'White', hex:'#FFFFFF', use:'cards' },
+        { name:'Saffron', hex:'#B4561A', use:'enquire CTA' },{ name:'Saffron tint', hex:'#F6E7D6', use:'notices' },{ name:'Deep green', hex:'#1E5A43', use:'links, tags' },{ name:'Green tint', hex:'#E3EEE7', use:'chips' },{ name:'Line', hex:'#E7E1D3', use:'borders' },
+      ],
+      seo:[
+        { url:'/', title:TITLES.home },{ url:'/about', title:TITLES.about },{ url:'/courses', title:TITLES.courses+' (keep /programs as a 301)' },
+        { url:'/courses/full-stack-web-development', title:'Full Stack Web Development Course (Online) — SRS Academy' },{ url:'/technical-training', title:TITLES.technical },
+        { url:'/admissions', title:TITLES.admissions },{ url:'/contact', title:TITLES.contact },{ url:'/privacy · /terms · /refund-policy · /accessibility', title:'Existing legal routes (unchanged)' },
+      ],
+      impl:['The current site runs on Next.js (detected from its page metadata). No source code was available, so this is a standalone, clickable prototype','Recommended next step: build these pages as React components inside the existing Next.js repo, keeping its routes and portals','The enquiry form validates on the page only and is not connected to any backend or form service','No lint, type check or build was run, because there is no codebase here to run them on','Images are drop-in placeholders. Add approved photos with descriptive alt text and lazy-load everything below the fold'],
+    };
+  }
+}
+</script>
+</body>
+</html>

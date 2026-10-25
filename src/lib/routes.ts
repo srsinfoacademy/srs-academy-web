@@ -1,16 +1,13 @@
 /**
- * Every internal route the public website will serve. Keeping them in one
- * place means navigation, footer, breadcrumbs and the sitemap cannot drift
- * apart from each other.
- *
- * Phase 1 implements the foundation only; routes marked as planned have no
- * page yet but are already part of the information architecture.
+ * Internal routes of the public website. Legal documents, the sitemap and
+ * the footer read these so they cannot drift apart.
  */
 export const routes = {
   home: "/",
   about: "/about",
-  programs: "/programs",
-  program: (slug: string) => `/programs/${slug}`,
+  courses: "/courses",
+  course: (slug: string) => `/courses/${slug}`,
+  technicalTraining: "/technical-training",
   admissions: "/admissions",
   resources: "/resources",
   resource: (slug: string) => `/resources/${slug}`,
@@ -24,11 +21,12 @@ export const routes = {
   accessibility: "/accessibility",
 } as const;
 
-/** Static routes only — dynamic segments are added by their own generators. */
+/** Static routes only — dynamic segments are added by the sitemap from data. */
 export const staticRoutes: readonly string[] = [
   routes.home,
   routes.about,
-  routes.programs,
+  routes.courses,
+  routes.technicalTraining,
   routes.admissions,
   routes.resources,
   routes.updates,
@@ -39,13 +37,3 @@ export const staticRoutes: readonly string[] = [
   routes.refundPolicy,
   routes.accessibility,
 ];
-
-/** True when `pathname` is the given route or one of its descendants. */
-export function isRouteActive(pathname: string, href: string): boolean {
-  if (href === routes.home) return pathname === routes.home;
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-export function isExternalHref(href: string): boolean {
-  return /^(https?:)?\/\//.test(href) || href.startsWith("mailto:") || href.startsWith("tel:");
-}

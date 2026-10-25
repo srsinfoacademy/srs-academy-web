@@ -45,7 +45,7 @@ export const resources: Resource[] = [
     summary:
       "A general guide to comparing programs by category, course type, and duration before choosing one.",
     body: [
-      "SRS Academy's course catalogue spans several subject areas — technology, business and digital skills, beauty and creative arts, and more. Reviewing a course's category and subcategory on the Programs page is a useful first step toward narrowing your choices to an area you're genuinely interested in.",
+      "SRS Academy's course catalogue spans several subject areas — technology, business and digital skills, beauty and creative arts, and more. Reviewing a course's category and subcategory on the Courses page is a useful first step toward narrowing your choices to an area you're genuinely interested in.",
       "Course type words like Certificate, Diploma, Advanced Diploma, and Training Program mainly describe the depth and length of a program rather than its subject focus. Two courses in the same subject area can have very different course types, so it's worth comparing duration and listed curriculum topics rather than the title alone.",
       "Each course's detail page lists the curriculum topics, mode, level, eligibility, and other details that SRS Academy has confirmed so far. A section that doesn't appear on a course page simply means that particular detail hasn't been published yet — it isn't a signal that the information doesn't exist or won't be added.",
       "If you're still unsure which course fits your goals, the Admissions and Contact pages are the right place to ask SRS Academy directly before applying.",
@@ -97,7 +97,7 @@ export const resources: Resource[] = [
     category: "Academic Resources",
     summary: "Where to go on this website for admissions questions, and what each contact route is for.",
     body: [
-      "The Admissions page walks through the general shape of applying to SRS Academy, including eligibility, the required-documents process, fees and payment information, and verification — each confirmed as SRS Academy publishes it.",
+      "The Admissions page walks through the general shape of applying to SRS Academy, including eligibility, the required-documents process, and verification — each confirmed as SRS Academy publishes it.",
       "For a direct question, the Contact page separates enquiries into General Enquiries, Admissions, Support, and Partnerships, so your message reaches the right context. You can also reach SRS Academy by email at srsinfotechacademy@gmail.com.",
       "If you're not yet sure which course you want to ask about, it's fine to reach out with a general enquiry first — SRS Academy will help point you toward the right program and next steps.",
     ],

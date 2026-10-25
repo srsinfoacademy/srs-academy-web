@@ -3,7 +3,6 @@ export const faqCategories = [
   "General",
   "Programs",
   "Admissions",
-  "Payments",
   "Certification",
   "Student Support",
 ] as const;
@@ -47,7 +46,7 @@ export const faqEntries: FaqEntry[] = [
     category: "General",
     question: "Where is SRS Academy located?",
     answer:
-      "SRS Academy has presence associated with Kolkata and Mumbai, while most learning activities are designed to be delivered online.",
+      "Most courses are online-first, with classroom support in Kolkata.",
   },
   {
     category: "Programs",
@@ -74,12 +73,6 @@ export const faqEntries: FaqEntry[] = [
       "SRS Academy does not claim government, university, or external accreditation unless such recognition has been formally obtained. Any applicable recognition will be clearly stated on the relevant program page.",
   },
   {
-    category: "Payments",
-    question: "How can I know the course fee?",
-    answer:
-      "Fees are published or communicated separately for each program. If a fee is not currently displayed, learners can contact SRS Academy for current enrollment information.",
-  },
-  {
     category: "Student Support",
     question: "How are classes conducted?",
     answer:
@@ -89,7 +82,7 @@ export const faqEntries: FaqEntry[] = [
     category: "Student Support",
     question: "How can I contact SRS Academy?",
     answer:
-      "You can contact SRS Academy using the official email address, phone number, or contact options published on the Contact page.",
+      "You can contact SRS Academy using the email address and the other contact options published on the Contact page.",
   },
   {
     category: "Admissions",

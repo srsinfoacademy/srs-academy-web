@@ -1,0 +1,347 @@
+[
+  {
+    "source": "/programs",
+    "destination": "/courses",
+    "permanent": true
+  },
+  {
+    "source": "/light",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/light/about",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/light/accessibility",
+    "destination": "/accessibility",
+    "permanent": true
+  },
+  {
+    "source": "/light/admissions",
+    "destination": "/admissions",
+    "permanent": true
+  },
+  {
+    "source": "/light/contact",
+    "destination": "/contact",
+    "permanent": true
+  },
+  {
+    "source": "/light/corporate-learning",
+    "destination": "/technical-training",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses",
+    "destination": "/courses",
+    "permanent": true
+  },
+  {
+    "source": "/light/creative-vocational",
+    "destination": "/courses?category=Vocational",
+    "permanent": true
+  },
+  {
+    "source": "/light/faq",
+    "destination": "/faq",
+    "permanent": true
+  },
+  {
+    "source": "/light/gallery",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/light/jobs",
+    "destination": "/contact",
+    "permanent": true
+  },
+  {
+    "source": "/light/privacy",
+    "destination": "/privacy",
+    "permanent": true
+  },
+  {
+    "source": "/light/refund-policy",
+    "destination": "/refund-policy",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources",
+    "destination": "/resources",
+    "permanent": true
+  },
+  {
+    "source": "/light/terms",
+    "destination": "/terms",
+    "permanent": true
+  },
+  {
+    "source": "/light/updates",
+    "destination": "/updates",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources/how-to-choose-the-right-course",
+    "destination": "/resources/how-to-choose-the-right-course",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources/online-vs-offline-vs-hybrid-learning",
+    "destination": "/resources/online-vs-offline-vs-hybrid-learning",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources/preparing-for-your-first-class",
+    "destination": "/resources/preparing-for-your-first-class",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources/understanding-course-duration-and-curriculum",
+    "destination": "/resources/understanding-course-duration-and-curriculum",
+    "permanent": true
+  },
+  {
+    "source": "/light/resources/how-to-contact-srs-academy-for-admissions",
+    "destination": "/resources/how-to-contact-srs-academy-for-admissions",
+    "permanent": true
+  },
+  {
+    "source": "/programs/full-stack-web-development",
+    "destination": "/courses/full-stack-web-development",
+    "permanent": true
+  },
+  {
+    "source": "/programs/artificial-intelligence",
+    "destination": "/courses/artificial-intelligence",
+    "permanent": true
+  },
+  {
+    "source": "/programs/technology-programs",
+    "destination": "/courses/technology-programs",
+    "permanent": true
+  },
+  {
+    "source": "/programs/business-and-entrepreneurship",
+    "destination": "/courses/business-and-entrepreneurship",
+    "permanent": true
+  },
+  {
+    "source": "/programs/digital-skills",
+    "destination": "/courses/digital-skills",
+    "permanent": true
+  },
+  {
+    "source": "/programs/cake-bakery-course",
+    "destination": "/courses/cake-bakery-course",
+    "permanent": true
+  },
+  {
+    "source": "/programs/basic-to-advance-nail-extension-course",
+    "destination": "/courses/basic-to-advance-nail-extension-course",
+    "permanent": true
+  },
+  {
+    "source": "/programs/basic-to-advance-mehendi-masters-course",
+    "destination": "/courses/basic-to-advance-mehendi-masters-course",
+    "permanent": true
+  },
+  {
+    "source": "/programs/summer-internship-programme",
+    "destination": "/courses/summer-internship-programme",
+    "permanent": true
+  },
+  {
+    "source": "/programs/basic-internship-course",
+    "destination": "/courses/basic-internship-course",
+    "permanent": true
+  },
+  {
+    "source": "/programs/advance-diploma-in-computer-application",
+    "destination": "/courses?q=Advance+Diploma+in+Computer+Application",
+    "permanent": true
+  },
+  {
+    "source": "/programs/advance-diploma-in-digital-marketing",
+    "destination": "/courses?q=Advance+Diploma+In+Digital+Marketing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/it-sikhsha-with-ai",
+    "destination": "/courses/it-sikhsha-with-ai",
+    "permanent": true
+  },
+  {
+    "source": "/programs/ai-with-digital-marketing-basic-siksha",
+    "destination": "/courses/ai-with-digital-marketing-basic-siksha",
+    "permanent": true
+  },
+  {
+    "source": "/programs/digital-marketing-siksha",
+    "destination": "/courses/digital-marketing-siksha",
+    "permanent": true
+  },
+  {
+    "source": "/programs/it-siksha",
+    "destination": "/courses/it-siksha",
+    "permanent": true
+  },
+  {
+    "source": "/programs/digital-literacy-siksha",
+    "destination": "/courses/digital-literacy-siksha",
+    "permanent": true
+  },
+  {
+    "source": "/programs/certificate-in-assamese-typing",
+    "destination": "/courses/certificate-in-assamese-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/diploma-in-english-and-hindi-typing",
+    "destination": "/courses/diploma-in-english-and-hindi-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/certificate-in-odia-typing",
+    "destination": "/courses?q=Certificate+in+Odia+Typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/diploma-in-english-and-bengali-typing",
+    "destination": "/courses/diploma-in-english-and-bengali-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/certificate-in-hindi-typing",
+    "destination": "/courses/certificate-in-hindi-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/certificate-in-bengali-typing",
+    "destination": "/courses/certificate-in-bengali-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/certificate-in-english-typing",
+    "destination": "/courses/certificate-in-english-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/diploma-in-english-typing",
+    "destination": "/courses/diploma-in-english-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/diploma-in-hindi-typing",
+    "destination": "/courses/diploma-in-hindi-typing",
+    "permanent": true
+  },
+  {
+    "source": "/programs/diploma-in-bengali-typing",
+    "destination": "/courses/diploma-in-bengali-typing",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/full-stack-web-development",
+    "destination": "/courses/full-stack-web-development",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/artificial-intelligence-fundamentals",
+    "destination": "/courses?q=artificial+intelligence",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/python-programming",
+    "destination": "/courses?q=python",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/java-programming",
+    "destination": "/courses?q=java",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/hardware-and-networking",
+    "destination": "/courses?q=hardware+networking",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/digital-marketing",
+    "destination": "/courses?q=digital+marketing",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/tally-and-gst",
+    "destination": "/courses?q=tally",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/graphic-design",
+    "destination": "/courses?q=graphic+design",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/autocad",
+    "destination": "/courses?q=autocad",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/makeup-artistry",
+    "destination": "/courses?q=makeup",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/bridal-makeup-artistry",
+    "destination": "/courses?q=bridal+makeup",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/beauty-therapy",
+    "destination": "/courses?q=beautician",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/nail-extension",
+    "destination": "/courses?q=nail",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/mehendi-design",
+    "destination": "/courses?q=mehendi",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/tailoring-and-fashion-design",
+    "destination": "/courses?q=tailoring",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/electrician-training",
+    "destination": "/courses?q=electrician",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/ac-repair-and-servicing",
+    "destination": "/courses?q=ac+repair",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/plumbing",
+    "destination": "/courses?q=plumbing",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/spoken-english",
+    "destination": "/courses?q=spoken+english",
+    "permanent": true
+  },
+  {
+    "source": "/light/courses/corporate-team-upskilling",
+    "destination": "/technical-training",
+    "permanent": true
+  }
+]

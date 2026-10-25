@@ -1,0 +1,207 @@
+/*
+ * Redesign tokens. The cream / navy / rust palette is the light theme.
+ * `.dark` is the derived theme. Existing Knowledge OS tokens stay in
+ * tokens.css until the public pages are rebuilt on these utilities.
+ *
+ * Utilities: bg-rd-bg, text-rd-ink, font-rd-display, border-rd-line, …
+ * Nav collapses below the `nav` breakpoint (1180px).
+ */
+
+:root {
+  --rd-bg: #faf7f0;
+  --rd-elevated: #ffffff;
+  --rd-muted: #f4efe4;
+  --rd-inverse: #16213a;
+  --rd-inverse-hover: #24345a;
+  --rd-ink: #16213a;
+  --rd-body: #3a4459;
+  --rd-soft: #5a6477;
+  --rd-accent: #b4561a;
+  --rd-accent-hover: #94450f;
+  --rd-on-accent: #ffffff;
+  --rd-link: #1e5a43;
+  --rd-line: #e7e1d3;
+  --rd-line-strong: #cfc7b5;
+  --rd-line-hover: #b9af99;
+  /* Form-field boundary: 3:1 against white and ivory (WCAG 1.4.11). */
+  --rd-field: #8a8170;
+  --rd-tint-green: #e3eee7;
+  --rd-tint-saffron: #f6e7d6;
+  --rd-eyebrow: #8a5a2e;
+  --rd-inverse-text: #f3efe6;
+  --rd-inverse-muted: #c9ceda;
+  --rd-danger: #a0321c;
+  --rd-focus: #b4561a;
+  /** Hairline for inverse surfaces (e.g. the footer): the other theme's own line colour. */
+  --rd-inverse-line: #2e3b5e;
+  --rd-shadow-card: 0 18px 36px -24px rgba(22, 33, 58, 0.35);
+  --rd-shadow-raised: 0 30px 60px -30px rgba(22, 33, 58, 0.4);
+  color-scheme: light;
+}
+
+.dark {
+  --rd-bg: #10182b;
+  --rd-elevated: #18233a;
+  --rd-muted: #1e2944;
+  --rd-inverse: #f3efe6;
+  --rd-inverse-hover: #e7e1d3;
+  --rd-ink: #f4efe6;
+  --rd-body: #d5d0c6;
+  --rd-soft: #b7c0d0;
+  --rd-accent: #e9a56e;
+  --rd-accent-hover: #f2c79a;
+  --rd-on-accent: #1a120c;
+  --rd-link: #8fcbb0;
+  --rd-line: #2e3b5e;
+  --rd-line-strong: #3a4766;
+  --rd-line-hover: #5a6890;
+  --rd-field: #7884a6;
+  --rd-tint-green: #1a332c;
+  --rd-tint-saffron: #3a2a1c;
+  --rd-eyebrow: #e9a56e;
+  --rd-inverse-text: #16213a;
+  --rd-inverse-muted: #3a4459;
+  --rd-danger: #f0b4a8;
+  --rd-focus: #e9a56e;
+  --rd-inverse-line: #e7e1d3;
+  --rd-shadow-card: 0 18px 36px -20px rgba(0, 0, 0, 0.6);
+  --rd-shadow-raised: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+/* The @theme block for these tokens lives at the end of globals.css, after the Knowledge OS reset. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Faint 45° "jaali" lattice — hero and course headers only. */
+.rd-lattice {
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--rd-link) 7%, transparent) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--rd-accent) 7%, transparent) 0 1px, transparent 1px 22px);
+}
+
+/* Header links: 2px accent underline that grows from the centre on hover/focus and stays on the current page. */
+.rd-nav-underline {
+  position: relative;
+}
+.rd-nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--rd-accent);
+  transform: scaleX(0);
+  transition: transform 0.22s ease-out;
+}
+.rd-nav-underline:hover::after,
+.rd-nav-underline:focus-visible::after,
+.rd-nav-underline.is-active::after {
+  transform: scaleX(1);
+}
+
+/*
+ * Motion. Content is only hidden for the reveal when the init script has
+ * marked the page with .rd-js; a timed fallback shows it even if the
+ * observer never runs. prefers-reduced-motion turns all of it off.
+ */
+@keyframes rd-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rd-force-show {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html.rd-js [data-reveal]:not([data-reveal="stagger"]):not(.is-revealed),
+html.rd-js [data-reveal="stagger"]:not(.is-revealed) > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rd-force-show 0.01s linear 3s forwards;
+}
+
+[data-reveal]:not([data-reveal="stagger"]).is-revealed,
+[data-reveal="stagger"].is-revealed > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal="stagger"].is-revealed > :nth-child(2) { transition-delay: 70ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(3) { transition-delay: 140ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(4) { transition-delay: 210ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(5) { transition-delay: 280ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(6) { transition-delay: 350ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(n + 7) { transition-delay: 400ms; }
+
+/* Hero entrance: children rise in one after another on first paint. */
+.rd-hero > * {
+  animation: rd-fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rd-hero > :nth-child(2) { animation-delay: 80ms; }
+.rd-hero > :nth-child(3) { animation-delay: 160ms; }
+.rd-hero > :nth-child(4) { animation-delay: 240ms; }
+.rd-hero > :nth-child(n + 5) { animation-delay: 320ms; }
+
+/* Card lift on hover (pointer devices only). */
+@media (hover: hover) {
+  .rd-card {
+    transition:
+      transform 0.2s ease-out,
+      box-shadow 0.2s ease-out,
+      border-color 0.2s ease-out;
+  }
+  .rd-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--rd-line-hover);
+    box-shadow: var(--rd-shadow-card);
+  }
+}
+
+/* Short colour cross-fade while the theme changes (class set by ThemeProvider). */
+html.rd-theme-transition,
+html.rd-theme-transition *,
+html.rd-theme-transition *::before,
+html.rd-theme-transition *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    fill 0.35s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.rd-js [data-reveal]:not([data-reveal="stagger"]):not(.is-revealed),
+  html.rd-js [data-reveal="stagger"]:not(.is-revealed) > *,
+  .rd-hero > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .rd-card:hover {
+    transform: none;
+  }
+}

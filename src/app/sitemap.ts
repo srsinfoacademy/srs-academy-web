@@ -1,49 +1,27 @@
 import type { MetadataRoute } from "next";
 
-import { allCoursePrograms as programs } from "@/content/programs";
+import { getAllCourses } from "@/content/courses";
 import { resources } from "@/content/resources";
 import { site } from "@/content/site";
 import { updates } from "@/content/updates";
 import { routes, staticRoutes } from "@/lib/routes";
 
-/**
- * Static routes plus every program, resource, and update detail page.
- * Resource/update entries only exist once real content does — `resources`/
- * `updates` stay empty until SRS Academy has real content, so these arrays
- * are naturally empty (or partial) rather than needing separate gating.
- */
+/** Static routes plus every course, published resource and update page, on the www origin. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-
-  const staticEntries = staticRoutes.map((route) => ({
-    url: new URL(route, site.url).toString(),
+  const entry = (path: string, priority: number, changeFrequency: "weekly" | "monthly") => ({
+    url: new URL(path, site.url).toString(),
     lastModified,
-    changeFrequency: (route === "/" ? "weekly" : "monthly") as "weekly" | "monthly",
-    priority: route === "/" ? 1 : 0.7,
-  }));
+    changeFrequency,
+    priority,
+  });
 
-  const programEntries = programs.map((program) => ({
-    url: new URL(routes.program(program.slug), site.url).toString(),
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
-
-  const resourceEntries = resources
-    .filter((r) => r.body)
-    .map((resource) => ({
-      url: new URL(routes.resource(resource.slug), site.url).toString(),
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    }));
-
-  const updateEntries = updates.map((update) => ({
-    url: new URL(routes.update(update.slug), site.url).toString(),
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
-  return [...staticEntries, ...programEntries, ...resourceEntries, ...updateEntries];
+  return [
+    ...staticRoutes.map((route) =>
+      entry(route, route === routes.home ? 1 : route === routes.courses ? 0.9 : 0.7, route === routes.home ? "weekly" : "monthly"),
+    ),
+    ...getAllCourses().map((course) => entry(routes.course(course.slug), course.origin === "srs" ? 0.8 : 0.6, "monthly")),
+    ...resources.filter((resource) => resource.body?.length).map((resource) => entry(routes.resource(resource.slug), 0.5, "monthly")),
+    ...updates.map((update) => entry(routes.update(update.slug), 0.5, "monthly")),
+  ];
 }
