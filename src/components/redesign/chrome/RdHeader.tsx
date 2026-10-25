@@ -1,10 +1,9 @@
-import Link from "next/link";
-
 import { RdButton } from "@/components/redesign/RdButton";
 import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdCoursesMenu } from "@/components/redesign/chrome/RdCoursesMenu";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { RdMobileMenu } from "@/components/redesign/chrome/RdMobileMenu";
+import { RdNavLink } from "@/components/redesign/chrome/RdNavLink";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { getSrsPrograms } from "@/content/courses";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
@@ -28,13 +27,9 @@ export function RdHeader() {
             item.isCourses ? (
               <RdCoursesMenu key={item.href} programs={programs} />
             ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="min-h-11 rounded-md border-b-2 border-transparent px-2.5 py-2.5 text-[15px] font-medium text-rd-ink transition-colors hover:text-rd-accent focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent"
-              >
+              <RdNavLink key={item.href} href={item.href}>
                 {item.label}
-              </Link>
+              </RdNavLink>
             ),
           )}
 
@@ -50,7 +45,15 @@ export function RdHeader() {
         </nav>
 
         <div className="flex items-center gap-2 nav:hidden">
-          <ThemeToggle />
+          {studentHref ? (
+            <RdButton href={studentHref} variant="text" className="hidden px-2 min-[600px]:inline-flex">
+              Student Login
+            </RdButton>
+          ) : null}
+          <RdButton href={rdEnquireHref} variant="accent" className="hidden px-4 min-[600px]:inline-flex">
+            Enquire Now
+          </RdButton>
+          <ThemeToggle className="hidden min-[600px]:block" />
           <RdMobileMenu programs={programs} studentHref={studentHref} />
         </div>
       </RdContainer>

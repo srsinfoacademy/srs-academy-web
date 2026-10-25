@@ -12,6 +12,7 @@
   --rd-elevated: #ffffff;
   --rd-muted: #f4efe4;
   --rd-inverse: #16213a;
+  --rd-inverse-hover: #24345a;
   --rd-ink: #16213a;
   --rd-body: #3a4459;
   --rd-soft: #5a6477;
@@ -21,6 +22,7 @@
   --rd-link: #1e5a43;
   --rd-line: #e7e1d3;
   --rd-line-strong: #cfc7b5;
+  --rd-line-hover: #b9af99;
   --rd-tint-green: #e3eee7;
   --rd-tint-saffron: #f6e7d6;
   --rd-eyebrow: #8a5a2e;
@@ -38,6 +40,7 @@
   --rd-elevated: #18233a;
   --rd-muted: #1e2944;
   --rd-inverse: #f3efe6;
+  --rd-inverse-hover: #e7e1d3;
   --rd-ink: #f4efe6;
   --rd-body: #d5d0c6;
   --rd-soft: #b7c0d0;
@@ -47,6 +50,7 @@
   --rd-link: #8fcbb0;
   --rd-line: #2e3b5e;
   --rd-line-strong: #3a4766;
+  --rd-line-hover: #5a6890;
   --rd-tint-green: #1a332c;
   --rd-tint-saffron: #3a2a1c;
   --rd-eyebrow: #e9a56e;
@@ -63,6 +67,7 @@
   --color-rd-elevated: var(--rd-elevated);
   --color-rd-muted: var(--rd-muted);
   --color-rd-inverse: var(--rd-inverse);
+  --color-rd-inverse-hover: var(--rd-inverse-hover);
   --color-rd-ink: var(--rd-ink);
   --color-rd-body: var(--rd-body);
   --color-rd-soft: var(--rd-soft);
@@ -72,6 +77,7 @@
   --color-rd-link: var(--rd-link);
   --color-rd-line: var(--rd-line);
   --color-rd-line-strong: var(--rd-line-strong);
+  --color-rd-line-hover: var(--rd-line-hover);
   --color-rd-tint-green: var(--rd-tint-green);
   --color-rd-tint-saffron: var(--rd-tint-saffron);
   --color-rd-eyebrow: var(--rd-eyebrow);
@@ -95,4 +101,11 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Faint 45° "jaali" lattice — hero and course headers only. */
+.rd-lattice {
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--rd-link) 7%, transparent) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--rd-accent) 7%, transparent) 0 1px, transparent 1px 22px);
 }

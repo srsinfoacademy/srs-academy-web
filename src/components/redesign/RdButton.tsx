@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 
 const styles = {
   accent: "bg-rd-accent text-rd-on-accent hover:bg-rd-accent-hover",
-  primary: "bg-rd-inverse text-rd-inverse-text hover:opacity-90",
+  primary: "bg-rd-inverse text-rd-inverse-text hover:bg-rd-inverse-hover",
   secondary: "border border-rd-line-strong bg-rd-elevated text-rd-ink hover:border-rd-ink",
   text: "bg-transparent px-0 text-rd-link hover:text-rd-accent",
 } as const;

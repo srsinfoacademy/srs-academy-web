@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
+import { isActivePath } from "@/components/redesign/chrome/RdNavLink";
 import { cn } from "@/lib/cn";
 import { coursePath } from "@/content/courses";
 import type { Course } from "@/content/courses/types";
@@ -13,6 +15,7 @@ import type { Course } from "@/content/courses/types";
  */
 export function RdCoursesMenu({ programs }: { programs: Course[] }) {
   const [open, setOpen] = useState(false);
+  const active = isActivePath(usePathname(), "/courses");
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +40,7 @@ export function RdCoursesMenu({ programs }: { programs: Course[] }) {
     <div
       ref={rootRef}
       className="relative"
+      onMouseLeave={() => setOpen(false)}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(false);
       }}
@@ -50,7 +54,7 @@ export function RdCoursesMenu({ programs }: { programs: Course[] }) {
         className={cn(
           "inline-flex min-h-11 items-center gap-1.5 rounded-md border-b-2 px-2.5 text-[15px] font-medium text-rd-ink transition-colors",
           "hover:text-rd-accent focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent",
-          open ? "border-rd-accent" : "border-transparent",
+          open || active ? "border-rd-accent" : "border-transparent",
         )}
       >
         Courses
