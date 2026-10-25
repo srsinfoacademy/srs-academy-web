@@ -65,7 +65,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         id: "cookies",
         label: "Cookies and local storage",
-        body: "This website uses one cookie to remember your light/dark theme preference, and uses your browser's local storage to remember your chosen colour accent on the light theme — neither carries personal information or identifies you. We do not use advertising cookies, and no third-party analytics or tracking script runs on this website.",
+        body: "This website does not set cookies of its own. It stores one value in your browser's local storage, “srs-theme”, to remember whether you chose the light, dark or system colour theme — it carries no personal information and does not identify you. We do not use advertising cookies, and no third-party analytics or tracking script runs on this website.",
       },
       {
         id: "retention",

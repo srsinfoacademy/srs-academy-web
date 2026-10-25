@@ -18,7 +18,7 @@ export function RdHeader() {
   const studentHref = site.portals.student.href;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-rd-line bg-rd-bg/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 print:hidden border-b border-rd-line bg-rd-bg/95 backdrop-blur-sm">
       <RdContainer className="relative flex h-[72px] items-center justify-between gap-6">
         <RdLogo />
 

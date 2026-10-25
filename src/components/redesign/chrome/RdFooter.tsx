@@ -28,7 +28,7 @@ export function RdFooter() {
   );
 
   return (
-    <footer className="bg-rd-inverse pb-7 pt-[clamp(48px,7vw,80px)] font-rd-sans text-rd-inverse-muted">
+    <footer className="print:hidden bg-rd-inverse pb-7 pt-[clamp(48px,7vw,80px)] font-rd-sans text-rd-inverse-muted">
       <RdContainer>
         <div className="grid gap-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))]">
           <div className="flex flex-col gap-4">

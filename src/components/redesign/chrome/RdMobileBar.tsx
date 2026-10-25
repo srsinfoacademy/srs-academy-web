@@ -9,7 +9,7 @@ export function RdMobileBar() {
   return (
     <nav
       aria-label="Quick actions"
-      className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 gap-2.5 border-t border-rd-line-strong bg-rd-bg/95 px-[clamp(12px,3vw,24px)] pb-[calc(10px+env(safe-area-inset-bottom))] pt-2.5 backdrop-blur-sm nav:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 print:hidden grid grid-cols-2 gap-2.5 border-t border-rd-line-strong bg-rd-bg/95 px-[clamp(12px,3vw,24px)] pb-[calc(10px+env(safe-area-inset-bottom))] pt-2.5 backdrop-blur-sm nav:hidden"
     >
       <RdButton href="/courses" variant="secondary">
         Courses

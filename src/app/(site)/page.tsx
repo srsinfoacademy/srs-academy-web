@@ -28,7 +28,7 @@ import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  ...pageMetadata({ title: site.name, description: site.description, path: "/" }),
+  ...pageMetadata({ title: site.tagline, description: site.description, path: "/" }),
   title: { absolute: `${site.name} — ${site.tagline} | Kolkata` },
 };
 
