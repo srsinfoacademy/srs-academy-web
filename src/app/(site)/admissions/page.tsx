@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
 import { RdButton } from "@/components/redesign/RdButton";
-import { RdEyebrow } from "@/components/redesign/RdEyebrow";
-import { RdFaqList } from "@/components/redesign/RdFaqList";
+import { RdFaqSection } from "@/components/redesign/RdFaqSection";
 import { RdPageHero } from "@/components/redesign/RdPageHero";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
 import { RdEnquirySection } from "@/components/redesign/enquiry/RdEnquirySection";
@@ -43,21 +42,7 @@ export default function AdmissionsPage() {
 
       <RdEnquirySection />
 
-      <RdSection tone="muted" labelledBy="admissions-faq" width="prose">
-        <RdEyebrow>FAQ</RdEyebrow>
-        <h2
-          id="admissions-faq"
-          className="mt-3 font-rd-display text-[clamp(30px,3.4vw,44px)] font-medium leading-[1.1] tracking-[-0.02em] text-rd-ink"
-        >
-          Frequently asked questions
-        </h2>
-        <div className="mt-8">
-          <RdFaqList entries={admissionFaq} group="admissions-faq" />
-        </div>
-        <RdButton href="/faq" variant="text" className="mt-6">
-          All questions <span aria-hidden="true">→</span>
-        </RdButton>
-      </RdSection>
+      <RdFaqSection id="admissions-faq" tone="muted" entries={admissionFaq} />
     </>
   );
 }

@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
 export function RdLegalPage({ document }: { document: LegalDocument }) {
   return (
     <div className="bg-rd-bg py-[clamp(40px,6vw,80px)]">
-      <RdContainer width="prose">
+      <RdContainer>
         <nav aria-label="Policies">
           <ul className="flex flex-wrap gap-2">
             {legalDocuments.map((doc) => {
@@ -37,29 +37,52 @@ export function RdLegalPage({ document }: { document: LegalDocument }) {
           </ul>
         </nav>
 
-        <RdEyebrow className="mt-10">Policies</RdEyebrow>
-        <h1 className="mt-3 font-rd-display text-[clamp(34px,4.4vw,52px)] font-medium leading-[1.06] tracking-[-0.025em] text-rd-ink">
-          {document.title}
-        </h1>
-        <p className="mt-3 text-[15px] text-rd-soft">Last updated: {document.lastUpdated}</p>
-        {document.intro ? (
-          <p className="mt-6 text-[18px] leading-[1.65] text-rd-body">{document.intro}</p>
-        ) : null}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
+          <nav aria-label="On this page" className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-rd-eyebrow">On this page</p>
+            <ul className="mt-3 flex flex-col gap-0.5 border-l border-rd-line">
+              {document.sections.map((section) => (
+                <li key={section.id}>
+                  <a
+                    href={`#${section.id}`}
+                    className="-ml-px flex min-h-9 items-center border-l-2 border-transparent pl-3 text-[14.5px] text-rd-body transition-colors hover:border-rd-accent hover:text-rd-accent"
+                  >
+                    {section.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div className="mt-10 flex flex-col">
-          {document.sections.map((section) => (
-            <section
-              key={section.id}
-              id={section.id}
-              aria-labelledby={`${section.id}-title`}
-              className="scroll-mt-24 border-t border-rd-line py-8"
-            >
-              <h2 id={`${section.id}-title`} className="font-rd-display text-[clamp(22px,2.2vw,27px)] font-medium text-rd-ink">
-                {section.label}
-              </h2>
-              <p className="mt-3 text-[16.5px] leading-[1.7] text-rd-body">{section.body}</p>
-            </section>
-          ))}
+          <div className="max-w-[75ch]">
+            <RdEyebrow>Policies</RdEyebrow>
+            <h1 className="mt-3 font-rd-display text-[clamp(34px,4.4vw,52px)] font-medium leading-[1.06] tracking-[-0.025em] text-rd-ink">
+              {document.title}
+            </h1>
+            <p className="mt-3 text-[15px] text-rd-soft">Last updated: {document.lastUpdated}</p>
+            {document.intro ? (
+              <p className="mt-6 text-[18px] leading-[1.65] text-rd-body">{document.intro}</p>
+            ) : null}
+
+            <div className="mt-10 flex flex-col">
+              {document.sections.map((section) => (
+                <section
+                  key={section.id}
+                  id={section.id}
+                  aria-labelledby={`${section.id}-title`}
+                  className="scroll-mt-28 border-t border-rd-line py-8"
+                >
+                  <h2
+                    id={`${section.id}-title`}
+                    className="font-rd-display text-[clamp(22px,2.2vw,27px)] font-medium text-rd-ink"
+                  >
+                    {section.label}
+                  </h2>
+                  <p className="mt-3 text-[16.5px] leading-[1.7] text-rd-body">{section.body}</p>
+                </section>
+              ))}
+            </div>
+          </div>
         </div>
       </RdContainer>
     </div>

@@ -6,7 +6,7 @@ import { RdButton } from "@/components/redesign/RdButton";
 import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdCourseCard } from "@/components/redesign/RdCourseCard";
 import { RdEyebrow } from "@/components/redesign/RdEyebrow";
-import { RdFaqList } from "@/components/redesign/RdFaqList";
+import { RdFaqSection } from "@/components/redesign/RdFaqSection";
 import { RdImageCredit } from "@/components/redesign/RdImageCredit";
 import { RdPill } from "@/components/redesign/RdPill";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
@@ -343,22 +343,7 @@ export default function HomePage() {
 
       <RdEnquirySection tone="muted" />
 
-      {/* FAQ */}
-      <RdSection labelledBy="home-faq" width="prose">
-        <RdEyebrow>{homeCopy.faq.eyebrow}</RdEyebrow>
-        <h2
-          id="home-faq"
-          className="mt-3 font-rd-display text-[clamp(30px,3.4vw,44px)] font-medium leading-[1.1] tracking-[-0.02em] text-rd-ink"
-        >
-          {homeCopy.faq.title}
-        </h2>
-        <div className="mt-8">
-          <RdFaqList entries={faqEntries.slice(0, HOME_FAQ_COUNT)} group="home-faq" />
-        </div>
-        <RdButton href="/faq" variant="text" className="mt-6">
-          All questions <span aria-hidden="true">→</span>
-        </RdButton>
-      </RdSection>
+      <RdFaqSection id="home-faq" entries={faqEntries.slice(0, HOME_FAQ_COUNT)} />
     </>
   );
 }

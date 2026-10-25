@@ -94,7 +94,7 @@ export function RdMobileMenu({
           id={panelId}
           ref={panelRef}
           aria-label="Main"
-          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-72px)] flex-col gap-0.5 overflow-auto overscroll-contain shadow-[var(--rd-shadow-card)] border-t border-rd-line bg-rd-bg px-[clamp(20px,4vw,40px)] pb-6 pt-3"
+          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-72px)] flex-col gap-0.5 overflow-auto overscroll-contain shadow-[var(--rd-shadow-card)] border-t border-rd-line bg-rd-bg px-[clamp(16px,4vw,64px)] pb-6 pt-3"
         >
           {rdPrimaryNav.map((item) => (
             <Link

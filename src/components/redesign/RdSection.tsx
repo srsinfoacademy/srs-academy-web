@@ -15,14 +15,12 @@ export function RdSection({
   className,
   id,
   labelledBy,
-  width = "wide",
 }: {
   children: React.ReactNode;
   tone?: keyof typeof tones;
   className?: string;
   id?: string;
   labelledBy?: string;
-  width?: "wide" | "prose";
 }) {
   return (
     <section
@@ -30,7 +28,7 @@ export function RdSection({
       aria-labelledby={labelledBy}
       className={cn("border-b border-rd-line py-[clamp(56px,8vw,104px)]", tones[tone], className)}
     >
-      <RdContainer width={width}>{children}</RdContainer>
+      <RdContainer>{children}</RdContainer>
     </section>
   );
 }

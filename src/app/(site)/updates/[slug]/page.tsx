@@ -27,7 +27,8 @@ export default async function UpdatePage({ params }: PageProps<"/updates/[slug]"
 
   return (
     <article className="bg-rd-bg py-[clamp(40px,6vw,80px)]">
-      <RdContainer width="prose">
+      <RdContainer>
+        <div className="max-w-[72ch]">
         <Link href="/updates" className="text-[15px] text-rd-link hover:text-rd-accent">
           ← All updates
         </Link>
@@ -43,6 +44,7 @@ export default async function UpdatePage({ params }: PageProps<"/updates/[slug]"
               {paragraph}
             </p>
           ))}
+        </div>
         </div>
       </RdContainer>
     </article>
