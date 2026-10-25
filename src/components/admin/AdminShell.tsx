@@ -262,7 +262,7 @@ export function AdminShell({ email, children }: { email: string; children: React
   const title = titleFor(pathname);
 
   return (
-    <div className="flex min-h-dvh flex-1">
+    <div className="flex min-h-dvh flex-1 bg-ad-bg">
       <a href="#admin-main" className="sr-only z-50 rounded-lg bg-rd-accent px-4 py-2 text-rd-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
         Skip to content
       </a>
