@@ -52,3 +52,8 @@ export const rdFooterNavGroups: { heading: string; links: RdNavLink[] }[] = [
 ];
 
 export const rdEnquireHref = "/contact";
+
+/** Enquiry form link, pre-selecting a course when a slug is given. */
+export function enquireHref(courseSlug?: string): string {
+  return courseSlug ? `/contact?course=${encodeURIComponent(courseSlug)}#enquire` : `${rdEnquireHref}#enquire`;
+}

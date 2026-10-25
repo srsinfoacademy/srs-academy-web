@@ -55,3 +55,20 @@ export type SiteRedirect = {
   destination: string;
   permanent: boolean;
 };
+
+/**
+ * Slim course shape for cards and client-side filtering. Never send the
+ * full catalogue JSON to the browser — map through `toCourseCard`.
+ */
+export type CourseCardData = {
+  slug: string;
+  name: string;
+  category: string;
+  code: string;
+  duration: string;
+  moduleCount: number;
+  origin: "catalogue" | "srs";
+  /** Lower-cased name, code, category and topic lines, for search. */
+  search: string;
+  image?: { src: string; alt: string; credit: string; creditHref: string };
+};

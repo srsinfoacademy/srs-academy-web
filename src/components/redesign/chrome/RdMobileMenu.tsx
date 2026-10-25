@@ -6,7 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { RdButton } from "@/components/redesign/RdButton";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { coursePath } from "@/content/courses";
+import { coursePath } from "@/content/courses/paths";
 import type { Course } from "@/content/courses/types";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { cn } from "@/lib/cn";

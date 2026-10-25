@@ -45,15 +45,17 @@ export function RdHeader() {
         </nav>
 
         <div className="flex items-center gap-2 nav:hidden">
-          {studentHref ? (
-            <RdButton href={studentHref} variant="text" className="hidden px-2 min-[600px]:inline-flex">
-              Student Login
+          <div className="hidden items-center gap-2 min-[600px]:flex">
+            {studentHref ? (
+              <RdButton href={studentHref} variant="text" className="px-2">
+                Student Login
+              </RdButton>
+            ) : null}
+            <RdButton href={rdEnquireHref} variant="accent" className="px-4">
+              Enquire Now
             </RdButton>
-          ) : null}
-          <RdButton href={rdEnquireHref} variant="accent" className="hidden px-4 min-[600px]:inline-flex">
-            Enquire Now
-          </RdButton>
-          <ThemeToggle className="hidden min-[600px]:block" />
+            <ThemeToggle />
+          </div>
           <RdMobileMenu programs={programs} studentHref={studentHref} />
         </div>
       </RdContainer>

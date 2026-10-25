@@ -6,7 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { isActivePath } from "@/components/redesign/chrome/RdNavLink";
 import { cn } from "@/lib/cn";
-import { coursePath } from "@/content/courses";
+import { coursePath } from "@/content/courses/paths";
 import type { Course } from "@/content/courses/types";
 
 /**

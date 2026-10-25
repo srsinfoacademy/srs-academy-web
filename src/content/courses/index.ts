@@ -1,7 +1,8 @@
 import catalogueData from "@/content/courses/courses.json";
 import redirectData from "@/content/courses/redirects.json";
 import { featuredPrograms, homeFeaturedCodes } from "@/content/courses/featured-programs";
-import type { CatalogueCourse, Course, SiteRedirect } from "@/content/courses/types";
+import type { CatalogueCourse, Course, CourseCardData, SiteRedirect } from "@/content/courses/types";
+import { site, type SiteImage } from "@/content/site";
 
 /**
  * Course helpers. Pages should use these functions rather than importing the
@@ -47,9 +48,7 @@ export function getCourseByCode(code: string): Course | undefined {
   return byCode.get(code);
 }
 
-export function coursePath(slug: string): string {
-  return `/courses/${slug}`;
-}
+export { coursePath } from "@/content/courses/paths";
 
 export function getCategories(): { category: string; count: number }[] {
   const counts = new Map<string, number>();
@@ -131,3 +130,26 @@ export function coursesInArea(areaId: string): Course[] {
 }
 
 export const legacyRedirects = redirectData as SiteRedirect[];
+
+/** Photo for a course card, when the homepage set has one. */
+export function courseImage(course: Course): SiteImage | undefined {
+  return (site.imagery.courses as Record<string, SiteImage>)[course.code];
+}
+
+/** Slim card data. `withImage` attaches the photo when one exists. */
+export function toCourseCard(course: Course, withImage = false): CourseCardData {
+  const image = withImage ? courseImage(course) : undefined;
+  return {
+    slug: course.slug,
+    name: course.name,
+    category: course.category,
+    code: course.code,
+    duration: course.duration,
+    moduleCount: course.modules.length,
+    origin: course.origin,
+    search: [course.name, course.code, course.category, course.summary ?? "", ...course.modules]
+      .join(" ")
+      .toLowerCase(),
+    ...(image ? { image } : {}),
+  };
+}

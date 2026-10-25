@@ -32,6 +32,8 @@
   --rd-focus: #b4561a;
   /** Hairline for inverse surfaces (e.g. the footer): the other theme's own line colour. */
   --rd-inverse-line: #2e3b5e;
+  --rd-shadow-card: 0 18px 36px -24px rgba(22, 33, 58, 0.35);
+  --rd-shadow-raised: 0 30px 60px -30px rgba(22, 33, 58, 0.4);
   color-scheme: light;
 }
 
@@ -59,38 +61,12 @@
   --rd-danger: #f0b4a8;
   --rd-focus: #e9a56e;
   --rd-inverse-line: #e7e1d3;
+  --rd-shadow-card: 0 18px 36px -20px rgba(0, 0, 0, 0.6);
+  --rd-shadow-raised: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
   color-scheme: dark;
 }
 
-@theme inline {
-  --color-rd-bg: var(--rd-bg);
-  --color-rd-elevated: var(--rd-elevated);
-  --color-rd-muted: var(--rd-muted);
-  --color-rd-inverse: var(--rd-inverse);
-  --color-rd-inverse-hover: var(--rd-inverse-hover);
-  --color-rd-ink: var(--rd-ink);
-  --color-rd-body: var(--rd-body);
-  --color-rd-soft: var(--rd-soft);
-  --color-rd-accent: var(--rd-accent);
-  --color-rd-accent-hover: var(--rd-accent-hover);
-  --color-rd-on-accent: var(--rd-on-accent);
-  --color-rd-link: var(--rd-link);
-  --color-rd-line: var(--rd-line);
-  --color-rd-line-strong: var(--rd-line-strong);
-  --color-rd-line-hover: var(--rd-line-hover);
-  --color-rd-tint-green: var(--rd-tint-green);
-  --color-rd-tint-saffron: var(--rd-tint-saffron);
-  --color-rd-eyebrow: var(--rd-eyebrow);
-  --color-rd-inverse-text: var(--rd-inverse-text);
-  --color-rd-inverse-muted: var(--rd-inverse-muted);
-  --color-rd-inverse-line: var(--rd-inverse-line);
-  --color-rd-danger: var(--rd-danger);
-
-  --font-rd-display: var(--font-rd-newsreader), Georgia, "Times New Roman", serif;
-  --font-rd-sans: var(--font-rd-mukta), "Mukta", system-ui, sans-serif;
-
-  --breakpoint-nav: 73.75rem;
-}
+/* The @theme block for these tokens lives at the end of globals.css, after the Knowledge OS reset. */
 
 @media (prefers-reduced-motion: reduce) {
   *,
