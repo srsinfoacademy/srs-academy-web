@@ -1,0 +1,69 @@
+/*
+ * Admin panel surfaces (SRS-Admin-Panel design): cool grey canvas, white
+ * panels, navy sidebar. Ink, accent, link and danger colours come from
+ * redesign.css; these tokens only add the admin surfaces and status pills.
+ * Utilities: bg-ad-bg, bg-ad-panel, border-ad-line, bg-ad-side, …
+ */
+
+:root {
+  --ad-bg: #f3f4f6;
+  --ad-panel: #ffffff;
+  --ad-line: #e1e4ea;
+  --ad-line-soft: #eef0f3;
+  /* Input boundary: 3:1 on white (WCAG 1.4.11). */
+  --ad-field: #8b93a3;
+  --ad-head: #f7f8fa;
+  --ad-hover: #fafbfc;
+  --ad-side: #111a2e;
+  --ad-side-text: #c9ceda;
+  --ad-side-line: #33405e;
+  --ad-side-active: rgba(255, 255, 255, 0.12);
+  --ad-pill-g-bg: #e3eee7;
+  --ad-pill-g-fg: #174a36;
+  --ad-pill-s-bg: #f6e7d6;
+  --ad-pill-s-fg: #7a3a10;
+  --ad-pill-b-bg: #e6eaf2;
+  --ad-pill-b-fg: #24345a;
+  --ad-pill-n-bg: #eef0f3;
+  --ad-pill-n-fg: #4a5468;
+  --ad-alert-bg: #fbeae6;
+  --ad-alert-line: #e8b4a8;
+  --ad-alert-fg: #8a2a16;
+  --ad-note-bg: #fdf5ec;
+  --ad-note-line: #ebd3ba;
+  --ad-note-fg: #7a3a10;
+  --ad-ok-bg: #e3eee7;
+  --ad-ok-line: #b9d5c4;
+  --ad-ok-fg: #174a36;
+}
+
+.dark {
+  --ad-bg: #0d1424;
+  --ad-panel: #16213a;
+  --ad-line: #2e3b5e;
+  --ad-line-soft: #24304d;
+  --ad-field: #7884a6;
+  --ad-head: #1b2741;
+  --ad-hover: #1b2741;
+  --ad-side: #0a101e;
+  --ad-side-text: #c9ceda;
+  --ad-side-line: #2e3b5e;
+  --ad-side-active: rgba(255, 255, 255, 0.1);
+  --ad-pill-g-bg: #1a332c;
+  --ad-pill-g-fg: #9fd8bd;
+  --ad-pill-s-bg: #3a2a1c;
+  --ad-pill-s-fg: #f2c79a;
+  --ad-pill-b-bg: #24304d;
+  --ad-pill-b-fg: #c9d3ea;
+  --ad-pill-n-bg: #24304d;
+  --ad-pill-n-fg: #c9ceda;
+  --ad-alert-bg: #3b1d17;
+  --ad-alert-line: #6e3426;
+  --ad-alert-fg: #f0b4a8;
+  --ad-note-bg: #33261a;
+  --ad-note-line: #5c4127;
+  --ad-note-fg: #f2c79a;
+  --ad-ok-bg: #1a332c;
+  --ad-ok-line: #2f5a4b;
+  --ad-ok-fg: #9fd8bd;
+}
