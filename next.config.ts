@@ -10,7 +10,8 @@ const isDev = process.env.NODE_ENV === "development";
  * 'unsafe-inline' scripts cover Next's inline bootstrap and the theme init
  * script; 'unsafe-eval' is development-only. vercel.live and pusher are the
  * Vercel preview toolbar/comments; images.unsplash.com serves the stand-in
- * photos (next/image normally proxies them through 'self').
+ * photos (next/image normally proxies them through 'self'); www.google.com
+ * frames the optional Google Maps embed set in the admin Contact Page.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -19,7 +20,7 @@ const contentSecurityPolicy = [
   "img-src 'self' blob: data: https://images.unsplash.com https://vercel.live https://vercel.com",
   "font-src 'self' data: https://vercel.live https://assets.vercel.com",
   "connect-src 'self' https://vercel.live wss://ws-us3.pusher.com",
-  "frame-src 'self' https://vercel.live",
+  "frame-src 'self' https://vercel.live https://www.google.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
