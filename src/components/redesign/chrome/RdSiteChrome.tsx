@@ -2,6 +2,7 @@ import { RdFloatingControls } from "@/components/redesign/chrome/RdFloatingContr
 import { RdFooter } from "@/components/redesign/chrome/RdFooter";
 import { RdHeader } from "@/components/redesign/chrome/RdHeader";
 import { RdMobileBar } from "@/components/redesign/chrome/RdMobileBar";
+import { RdRevealObserver } from "@/components/redesign/chrome/RdRevealObserver";
 import { RdSkipLink } from "@/components/redesign/chrome/RdSkipLink";
 
 /**
@@ -21,6 +22,7 @@ export function RdSiteChrome({ children }: { children: React.ReactNode }) {
       <RdFooter />
       <RdMobileBar />
       <RdFloatingControls />
+      <RdRevealObserver />
     </div>
   );
 }

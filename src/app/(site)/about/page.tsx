@@ -30,7 +30,7 @@ export default function AboutPage() {
       <RdPageHero eyebrow={aboutCopy.eyebrow} title={aboutCopy.title} intro={aboutCopy.intro} />
 
       <RdSection labelledBy="about-story">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+        <div data-reveal className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start">
           <div>
             <h2 id="about-story" className={h2}>
               {aboutCopy.storyTitle}
@@ -65,7 +65,7 @@ export default function AboutPage() {
         <h2 id="about-mission" className="sr-only">
           Mission and vision
         </h2>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div data-reveal="stagger" className="grid gap-5 md:grid-cols-2">
           <div className="rounded-[18px] border border-rd-line bg-rd-bg p-[clamp(22px,3vw,36px)]">
             <RdEyebrow>Mission</RdEyebrow>
             <p className="mt-4 font-rd-display text-[clamp(20px,2vw,23px)] leading-[1.45] text-rd-ink">
@@ -85,7 +85,7 @@ export default function AboutPage() {
         <h2 id="about-values" className={h2}>
           {aboutCopy.valuesTitle}
         </h2>
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
+        <ul data-reveal="stagger" className="mt-10 grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
           {aboutCopy.values.map((value) => (
             <li key={value.title} className="bg-rd-elevated p-6">
               <h3 className="text-[18px] font-semibold text-rd-ink">{value.title}</h3>

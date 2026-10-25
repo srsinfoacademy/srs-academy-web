@@ -110,3 +110,98 @@
 .rd-nav-underline.is-active::after {
   transform: scaleX(1);
 }
+
+/*
+ * Motion. Content is only hidden for the reveal when the init script has
+ * marked the page with .rd-js; a timed fallback shows it even if the
+ * observer never runs. prefers-reduced-motion turns all of it off.
+ */
+@keyframes rd-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rd-force-show {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html.rd-js [data-reveal]:not([data-reveal="stagger"]):not(.is-revealed),
+html.rd-js [data-reveal="stagger"]:not(.is-revealed) > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rd-force-show 0.01s linear 3s forwards;
+}
+
+[data-reveal]:not([data-reveal="stagger"]).is-revealed,
+[data-reveal="stagger"].is-revealed > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal="stagger"].is-revealed > :nth-child(2) { transition-delay: 70ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(3) { transition-delay: 140ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(4) { transition-delay: 210ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(5) { transition-delay: 280ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(6) { transition-delay: 350ms; }
+[data-reveal="stagger"].is-revealed > :nth-child(n + 7) { transition-delay: 400ms; }
+
+/* Hero entrance: children rise in one after another on first paint. */
+.rd-hero > * {
+  animation: rd-fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rd-hero > :nth-child(2) { animation-delay: 80ms; }
+.rd-hero > :nth-child(3) { animation-delay: 160ms; }
+.rd-hero > :nth-child(4) { animation-delay: 240ms; }
+.rd-hero > :nth-child(n + 5) { animation-delay: 320ms; }
+
+/* Card lift on hover (pointer devices only). */
+@media (hover: hover) {
+  .rd-card {
+    transition:
+      transform 0.2s ease-out,
+      box-shadow 0.2s ease-out,
+      border-color 0.2s ease-out;
+  }
+  .rd-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--rd-line-hover);
+    box-shadow: var(--rd-shadow-card);
+  }
+}
+
+/* Short colour cross-fade while the theme changes (class set by ThemeProvider). */
+html.rd-theme-transition,
+html.rd-theme-transition *,
+html.rd-theme-transition *::before,
+html.rd-theme-transition *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    fill 0.35s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.rd-js [data-reveal]:not([data-reveal="stagger"]):not(.is-revealed),
+  html.rd-js [data-reveal="stagger"]:not(.is-revealed) > *,
+  .rd-hero > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .rd-card:hover {
+    transform: none;
+  }
+}

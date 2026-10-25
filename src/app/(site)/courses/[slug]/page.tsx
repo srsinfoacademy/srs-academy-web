@@ -55,7 +55,7 @@ export default async function CourseDetailPage({ params }: PageProps<"/courses/[
   return (
     <>
       <section className="rd-lattice border-b border-rd-line bg-rd-muted py-[clamp(36px,5vw,72px)]">
-        <RdContainer>
+        <RdContainer className="rd-hero">
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[14.5px] text-rd-soft">
               <li>

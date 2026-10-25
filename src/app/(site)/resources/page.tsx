@@ -23,11 +23,11 @@ export default function ResourcesPage() {
           Articles and guides
         </h2>
         {published.length ? (
-          <ul className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))]">
+          <ul data-reveal="stagger" className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))]">
             {published.map((resource) => (
               <li
                 key={resource.slug}
-                className="flex flex-col rounded-[16px] border border-rd-line bg-rd-elevated p-6 transition-[border-color,box-shadow] hover:border-rd-line-hover hover:shadow-[var(--rd-shadow-card)]"
+                className="flex flex-col rounded-[16px] border border-rd-line bg-rd-elevated p-6 rd-card"
               >
                 <RdPill className="self-start">{resource.type}</RdPill>
                 <h3 className="mt-4 font-rd-display text-[clamp(22px,2vw,25px)] font-medium leading-tight text-rd-ink">

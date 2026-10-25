@@ -29,7 +29,7 @@ export default function TechnicalTrainingPage() {
   return (
     <>
       <section className="border-b border-rd-line bg-rd-bg py-[clamp(40px,6vw,80px)]">
-        <RdContainer className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+        <RdContainer className="rd-hero grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <RdEyebrow rule>{copy.eyebrow}</RdEyebrow>
             <h1 className="mt-4 max-w-[20ch] font-rd-display text-[clamp(38px,5vw,60px)] font-medium leading-[1.04] tracking-[-0.025em] text-rd-ink">
@@ -54,9 +54,9 @@ export default function TechnicalTrainingPage() {
 
       <RdSection id="technical-programs" labelledBy="technical-programs-title" tone="muted">
         <RdSectionHeading id="technical-programs-title" title={copy.programsTitle} />
-        <ul className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
+        <ul data-reveal="stagger" className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
           {programs.map((program) => (
-            <li key={program.slug} className="flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-6">
+            <li key={program.slug} className="rd-card flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-6">
               <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
               <h3 className="mt-2 font-rd-display text-[clamp(23px,2vw,27px)] font-medium leading-tight text-rd-ink">
                 {program.name}
@@ -79,7 +79,7 @@ export default function TechnicalTrainingPage() {
         <h2 id="technical-approach" className="sr-only">
           How the programs work
         </h2>
-        <ul className="grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
+        <ul data-reveal="stagger" className="grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
           {learnBuildAdvance.map((item) => (
             <li key={item.title} className="bg-rd-elevated p-6">
               <RdEyebrow as="div">{item.eyebrow}</RdEyebrow>

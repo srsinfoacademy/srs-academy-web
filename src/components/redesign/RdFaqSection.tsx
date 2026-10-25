@@ -18,7 +18,7 @@ export function RdFaqSection({
 }) {
   return (
     <RdSection tone={tone} labelledBy={id}>
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-16">
+      <div data-reveal className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <RdEyebrow>FAQ</RdEyebrow>
           <h2

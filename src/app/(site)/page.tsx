@@ -48,7 +48,7 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="border-b border-rd-line bg-rd-bg py-[clamp(40px,6vw,88px)]">
-        <RdContainer className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+        <RdContainer className="rd-hero grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
           <div>
             <RdEyebrow rule>{site.contact.locationSummary}</RdEyebrow>
             <h1 className="mt-5 max-w-[14ch] font-rd-display text-[clamp(40px,5.6vw,68px)] font-medium leading-[1.02] tracking-[-0.025em] text-rd-ink">
@@ -122,7 +122,7 @@ export default function HomePage() {
             </RdButton>
           }
         />
-        <ul className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
+        <ul data-reveal="stagger" className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
           {featured.map((course) => (
             <li key={course.slug}>
               <RdCourseCard course={course} />
@@ -143,14 +143,14 @@ export default function HomePage() {
             </RdButton>
           }
         />
-        <ul className="mt-10 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
+        <ul data-reveal="stagger" className="mt-10 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
           {courseAreas.map((area) => {
             const count = coursesInArea(area.id).length;
             const categories = area.categories.filter((category) => categoryCounts.has(category));
             return (
               <li
                 key={area.id}
-                className="flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-6"
+                className="rd-card flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-6"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-[15px] font-semibold text-rd-accent">{area.num}</span>
@@ -185,7 +185,7 @@ export default function HomePage() {
       {fullStack ? (
         <RdSection labelledBy="home-programs">
           <RdSectionHeading id="home-programs" eyebrow={homeCopy.programs.eyebrow} title={homeCopy.programs.title} />
-          <div className="mt-10 grid gap-5 lg:grid-cols-[1.15fr_1fr]">
+          <div data-reveal className="mt-10 grid gap-5 lg:grid-cols-[1.15fr_1fr]">
             <article className="flex flex-col rounded-[20px] border border-rd-line bg-rd-muted p-[clamp(22px,3vw,36px)]">
               <div className="flex flex-wrap gap-2">
                 <RdPill>{fullStack.category}</RdPill>
@@ -233,7 +233,7 @@ export default function HomePage() {
               {otherPrograms.map((program) => (
                 <li
                   key={program.slug}
-                  className="flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-5 transition-[border-color,box-shadow] hover:border-rd-line-hover hover:shadow-[var(--rd-shadow-card)]"
+                  className="flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-5 rd-card"
                 >
                   <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
                   <h3 className="mt-2 font-rd-display text-[22px] font-medium leading-tight text-rd-ink">{program.name}</h3>
@@ -254,7 +254,7 @@ export default function HomePage() {
       {/* Why SRS */}
       <RdSection tone="muted" labelledBy="home-why">
         <RdSectionHeading id="home-why" eyebrow={homeCopy.why.eyebrow} title={homeCopy.why.title} />
-        <ol className="mt-10 grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))]">
+        <ol data-reveal="stagger" className="mt-10 grid gap-px overflow-hidden rounded-[18px] border border-rd-line bg-rd-line [grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))]">
           {homeCopy.why.items.map((item, index) => (
             <li key={item.title} className="bg-rd-elevated p-6">
               <span
@@ -272,7 +272,7 @@ export default function HomePage() {
 
       {/* About teaser */}
       <RdSection labelledBy="home-about">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div data-reveal className="grid items-center gap-12 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-rd-muted">
             <Image
               src={site.imagery.about.src}
@@ -318,7 +318,7 @@ export default function HomePage() {
             {homeCopy.howYouLearn.title}
           </h2>
           <p className="mt-3 text-[17px] text-rd-inverse-muted">{homeCopy.howYouLearn.intro}</p>
-          <ul className="mt-10 grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
+          <ul data-reveal="stagger" className="mt-10 grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
             {learnBuildAdvance.map((item) => {
               const image = site.imagery[item.image];
               return (

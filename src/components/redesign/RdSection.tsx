@@ -50,7 +50,7 @@ export function RdSectionHeading({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col gap-6 md:flex-row md:items-end md:justify-between", className)}>
+    <div data-reveal className={cn("flex flex-col gap-6 md:flex-row md:items-end md:justify-between", className)}>
       <div className="max-w-[680px]">
         {eyebrow ? <RdEyebrow>{eyebrow}</RdEyebrow> : null}
         <h2

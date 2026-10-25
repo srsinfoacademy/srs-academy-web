@@ -16,7 +16,7 @@ export function RdEnquirySection({ tone = "plain" }: { tone?: "plain" | "muted" 
 
   return (
     <RdSection id="enquire" tone={tone} labelledBy="enquire-title" className="scroll-mt-20">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div data-reveal className="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
         <div>
           <RdEyebrow>{enquiryCopy.eyebrow}</RdEyebrow>
           <h2

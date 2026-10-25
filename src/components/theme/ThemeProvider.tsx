@@ -53,6 +53,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setChoice = useCallback((next: ThemeChoice) => {
     localStorage.setItem(THEME_STORAGE_KEY, next);
+    // Cross-fade colours for this one change (reduced motion keeps it instant via redesign.css).
+    const root = document.documentElement;
+    root.classList.add("rd-theme-transition");
+    window.setTimeout(() => root.classList.remove("rd-theme-transition"), 400);
     applyThemeChoice(next);
     window.dispatchEvent(new Event(THEME_EVENT));
   }, []);

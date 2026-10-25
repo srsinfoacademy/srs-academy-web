@@ -62,7 +62,7 @@ export default function CoursesPage() {
           title={coursesCopy.programsTitle}
           intro={coursesCopy.programsIntro}
         />
-        <ul className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
+        <ul data-reveal="stagger" className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
           {programs.map((course) => (
             <li key={course.slug}>
               <RdCourseCard course={course} />

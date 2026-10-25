@@ -32,7 +32,7 @@ export function RdPageHero({
         lattice ? "rd-lattice bg-rd-muted" : "bg-rd-bg",
       )}
     >
-      <RdContainer>
+      <RdContainer className="rd-hero">
         {before}
         {eyebrow ? <RdEyebrow rule>{eyebrow}</RdEyebrow> : null}
         <h1

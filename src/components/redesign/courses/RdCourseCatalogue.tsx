@@ -131,7 +131,7 @@ export function RdCourseCatalogue({
         </RdDashedPanel>
       ) : (
         <>
-          <ul className="mt-5 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
+          <ul data-reveal="stagger" className="mt-5 grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))]">
             {shown.map((course) => (
               <li key={course.slug}>
                 <RdCourseCard course={course} />

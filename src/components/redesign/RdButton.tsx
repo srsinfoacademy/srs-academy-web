@@ -3,8 +3,8 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 const styles = {
-  accent: "bg-rd-accent text-rd-on-accent hover:bg-rd-accent-hover",
-  primary: "bg-rd-inverse text-rd-inverse-text hover:bg-rd-inverse-hover",
+  accent: "bg-rd-accent text-rd-on-accent hover:bg-rd-accent-hover hover:shadow-[var(--rd-shadow-card)]",
+  primary: "bg-rd-inverse text-rd-inverse-text hover:bg-rd-inverse-hover hover:shadow-[var(--rd-shadow-card)]",
   secondary: "border border-rd-line-strong bg-rd-elevated text-rd-ink hover:border-rd-ink",
   text: "min-h-11 bg-transparent text-rd-link hover:text-rd-accent",
 } as const;
@@ -12,7 +12,7 @@ const styles = {
 type Variant = keyof typeof styles;
 
 const base =
-  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-[10px] text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
+  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-[10px] text-base font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-200 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
 
 export function RdButton({
   href,
@@ -31,6 +31,7 @@ export function RdButton({
     styles[variant],
     variant !== "text" && !/(^|\s)px-/.test(custom) && "px-5",
     variant !== "text" && !/(^|\s)min-h-/.test(custom) && "min-h-12",
+    variant !== "text" && "hover:-translate-y-px active:translate-y-0 motion-reduce:hover:translate-y-0",
     className,
   );
   if (href) {

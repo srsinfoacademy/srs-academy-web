@@ -33,8 +33,7 @@ export function RdCourseCard({
   return (
     <article
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-[18px] border border-rd-line bg-rd-elevated transition-[border-color,box-shadow,transform] duration-200",
-        "hover:-translate-y-0.5 hover:border-rd-line-hover hover:shadow-[var(--rd-shadow-card)]",
+        "rd-card group flex h-full flex-col overflow-hidden rounded-[18px] border border-rd-line bg-rd-elevated",
       )}
     >
       {course.image ? (
@@ -44,7 +43,7 @@ export function RdCourseCard({
             alt=""
             fill
             sizes="(min-width: 1180px) 400px, (min-width: 700px) 45vw, 100vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
           />
           <RdImageCredit image={course.image} />
         </div>
