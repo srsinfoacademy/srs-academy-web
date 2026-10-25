@@ -5,7 +5,7 @@ import { PageHero } from "@/components/page/PageHero";
 import { Container } from "@/components/ui/Container";
 import { IndexLabel } from "@/components/ui/IndexLabel";
 import { contactPage } from "@/content/pages";
-import { site } from "@/content/site";
+import { contactFacts } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { routes } from "@/lib/routes";
 
@@ -16,11 +16,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function ContactPage() {
-  const details = [
-    { label: "Address", value: site.contact.address },
-    { label: "Email", value: site.contact.email },
-    { label: "Phone", value: site.contact.phone },
-  ];
+  const details = contactFacts();
 
   return (
     <>

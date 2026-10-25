@@ -233,10 +233,6 @@ const fullStackWebDevelopment: ProgramDetail = makeDetail({
       q: "Will I receive a certificate?",
       a: "Learners who successfully complete the required activities and completion criteria may receive an SRS Academy Certificate of Completion.",
     },
-    {
-      q: "How can I know the course fee?",
-      a: "The fee for this program has not been announced yet. Contact SRS Academy for current fee and enrollment information.",
-    },
   ],
   // Was never overridden from makeDetail()'s bracketed default — fixed here
   // since this page is now the target of "related programs" links from
@@ -322,10 +318,10 @@ export const detailSections = [
 
 /**
  * The subset of `detailSections` this particular `detail` actually has
- * content for — "Fees" always appears (it has its own honest fallback), the
- * rest appear only when their data is present. Used for both the in-page
- * nav and the section index numbers, so a program with fewer sections never
- * shows a gap in the numbering.
+ * content for. Fees are never included: `site.features.showFees` is a
+ * standing rule, not a missing price. Used for both the in-page nav and
+ * the section index numbers, so a program with fewer sections never shows
+ * a gap in the numbering.
  */
 export function sectionsFor(detail: ProgramDetail): typeof detailSections[number][] {
   const has: Record<(typeof detailSections)[number]["id"], boolean> = {
@@ -334,7 +330,7 @@ export function sectionsFor(detail: ProgramDetail): typeof detailSections[number
     curriculum: detail.modules.length > 0,
     eligibility: Boolean(detail.eligibility?.length),
     certification: Boolean(detail.certification),
-    fees: true,
+    fees: false,
     admissions: Boolean(detail.admissionsSteps?.length),
     faq: Boolean(detail.faq?.length),
   };

@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Manrope, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Manrope, Mukta, Newsreader, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { baseMetadata } from "@/lib/metadata";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { THEME_PREFERENCE_COOKIE } from "@/lib/theme-preference";
 import "./globals.css";
 
@@ -55,6 +57,21 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+/** Redesign typefaces. The current pages still use Space Grotesk / Manrope. */
+const newsreader = Newsreader({
+  variable: "--font-rd-newsreader",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+const mukta = Mukta({
+  variable: "--font-rd-mukta",
+  subsets: ["latin", "devanagari"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   ...baseMetadata,
   other: {
@@ -63,8 +80,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0e0c",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAF7F0" },
+    { media: "(prefers-color-scheme: dark)", color: "#10182B" },
+  ],
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -73,13 +93,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} ${newsreader.variable} ${mukta.variable}`}
+      suppressHydrationWarning
     >
       <body className="flex min-h-dvh flex-col">
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <Script id="theme-preference" strategy="beforeInteractive">
           {THEME_PREFERENCE_SCRIPT}
         </Script>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

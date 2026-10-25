@@ -153,7 +153,7 @@ export async function POST(request: Request) {
 
   const notification = await resend.emails.send({
     from: fromEmail,
-    to: site.contact.email,
+    to: site.contact.enquiryInbox,
     replyTo: enquiry.email,
     subject: `New enquiry — ${enquiry.subject || "General"} — ${enquiry.name}`,
     html: notificationEmailHtml(enquiry, submittedAt),
@@ -170,7 +170,7 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: fromEmail,
       to: enquiry.email,
-      replyTo: site.contact.email,
+      replyTo: site.contact.enquiryInbox,
       subject: `We've received your enquiry — ${site.name}`,
       html: `<p style="font-family:sans-serif;font-size:14px;color:#111;">Thank you for contacting ${escapeHtml(site.name)}. We have received your enquiry and will get back to you as soon as possible.</p>`,
     });

@@ -1,0 +1,94 @@
+/*
+ * Redesign tokens. The cream / navy / rust palette is the light theme.
+ * `.dark` is the derived theme. Existing Knowledge OS tokens stay in
+ * tokens.css until the public pages are rebuilt on these utilities.
+ *
+ * Utilities: bg-rd-bg, text-rd-ink, font-rd-display, border-rd-line, …
+ * Nav collapses below the `nav` breakpoint (1180px).
+ */
+
+:root {
+  --rd-bg: #faf7f0;
+  --rd-elevated: #ffffff;
+  --rd-muted: #f4efe4;
+  --rd-inverse: #16213a;
+  --rd-ink: #16213a;
+  --rd-body: #3a4459;
+  --rd-soft: #5a6477;
+  --rd-accent: #b4561a;
+  --rd-accent-hover: #94450f;
+  --rd-on-accent: #ffffff;
+  --rd-link: #1e5a43;
+  --rd-line: #e7e1d3;
+  --rd-line-strong: #cfc7b5;
+  --rd-tint-green: #e3eee7;
+  --rd-tint-saffron: #f6e7d6;
+  --rd-eyebrow: #8a5a2e;
+  --rd-inverse-text: #f3efe6;
+  --rd-inverse-muted: #c9ceda;
+  --rd-danger: #a0321c;
+  --rd-focus: #b4561a;
+  color-scheme: light;
+}
+
+.dark {
+  --rd-bg: #10182b;
+  --rd-elevated: #18233a;
+  --rd-muted: #1e2944;
+  --rd-inverse: #f3efe6;
+  --rd-ink: #f4efe6;
+  --rd-body: #d5d0c6;
+  --rd-soft: #b7c0d0;
+  --rd-accent: #e9a56e;
+  --rd-accent-hover: #f2c79a;
+  --rd-on-accent: #1a120c;
+  --rd-link: #8fcbb0;
+  --rd-line: #2e3b5e;
+  --rd-line-strong: #3a4766;
+  --rd-tint-green: #1a332c;
+  --rd-tint-saffron: #3a2a1c;
+  --rd-eyebrow: #e9a56e;
+  --rd-inverse-text: #16213a;
+  --rd-inverse-muted: #3a4459;
+  --rd-danger: #f0b4a8;
+  --rd-focus: #e9a56e;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-rd-bg: var(--rd-bg);
+  --color-rd-elevated: var(--rd-elevated);
+  --color-rd-muted: var(--rd-muted);
+  --color-rd-inverse: var(--rd-inverse);
+  --color-rd-ink: var(--rd-ink);
+  --color-rd-body: var(--rd-body);
+  --color-rd-soft: var(--rd-soft);
+  --color-rd-accent: var(--rd-accent);
+  --color-rd-accent-hover: var(--rd-accent-hover);
+  --color-rd-on-accent: var(--rd-on-accent);
+  --color-rd-link: var(--rd-link);
+  --color-rd-line: var(--rd-line);
+  --color-rd-line-strong: var(--rd-line-strong);
+  --color-rd-tint-green: var(--rd-tint-green);
+  --color-rd-tint-saffron: var(--rd-tint-saffron);
+  --color-rd-eyebrow: var(--rd-eyebrow);
+  --color-rd-inverse-text: var(--rd-inverse-text);
+  --color-rd-inverse-muted: var(--rd-inverse-muted);
+  --color-rd-danger: var(--rd-danger);
+
+  --font-rd-display: var(--font-rd-newsreader), Georgia, "Times New Roman", serif;
+  --font-rd-sans: var(--font-rd-mukta), "Mukta", system-ui, sans-serif;
+
+  --breakpoint-nav: 73.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -44,7 +44,6 @@ export function ProgramBody({
     "curriculum",
     ...(hasEligibility ? ["eligibility"] : []),
     ...(hasCertification ? ["certification"] : []),
-    "fees",
     ...(hasAdmissions ? ["admissions"] : []),
     ...(hasDates ? ["dates"] : []),
     ...(hasDownloads ? ["downloads"] : []),
@@ -158,38 +157,6 @@ export function ProgramBody({
               )}
             </DetailSection>
           ) : null}
-
-          <DetailSection id="fees" index={idx("fees")} eyebrow="Fees" title="Program fees">
-            {typeof detail.fees === "string" ? (
-              <DetailRows rows={[{ label: "Program fee", value: detail.fees }]} />
-            ) : detail.fees ? (
-              <DetailRows
-                rows={[
-                  { label: "Program fee", value: detail.fees.program },
-                  { label: "Registration", value: detail.fees.registration },
-                  { label: "Payment terms", value: detail.fees.paymentTerms },
-                  { label: "Tax", value: detail.fees.tax },
-                ]}
-              />
-            ) : (
-              /*
-                No invented pricing. Confirmed messaging only: the fee itself
-                is not yet announced, and the page points at a real contact
-                route rather than a placeholder.
-              */
-              <div className="rounded-[var(--srs-radius-xl)] border border-line p-6">
-                <p className="type-index text-lime">Program fee — To be announced</p>
-                <p className="type-body-s mt-3 measure">
-                  Contact SRS Academy for current fee and enrollment information.
-                </p>
-                <div className="mt-6">
-                  <Button href={routes.contact} size="sm" variant="secondary">
-                    Contact SRS Academy
-                  </Button>
-                </div>
-              </div>
-            )}
-          </DetailSection>
 
           {hasAdmissions && detail.admissionsSteps ? (
             <DetailSection id="admissions" index={idx("admissions")} eyebrow="Admissions" title="How to apply">

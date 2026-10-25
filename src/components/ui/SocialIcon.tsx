@@ -16,6 +16,19 @@ const paths: Record<string, ReactNode> = {
       <circle cx="4" cy="4" r="2" />
     </>
   ),
+  x: <path d="M5 5l14 14M19 5L5 19" />,
+  youtube: (
+    <>
+      <rect x="2.5" y="6" width="19" height="12" rx="3" />
+      <path d="M11 9.5v5l4.5-2.5z" fill="currentColor" stroke="none" />
+    </>
+  ),
+  pinterest: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M11 17.5c.4-1.3.7-2.6.8-3.4.1-.2.1-.5 0-.7-.4.2-.9.3-1.4.3-1.8 0-3.1-1.5-3.1-3.4 0-1.5 1.2-2.8 3.2-2.8 1.7 0 2.9 1.1 2.9 2.7 0 2-1 3.4-2.4 3.4-.6 0-1.1-.4-1-1 .1-.6.4-1.3.4-1.7 0-.4-.2-.7-.7-.7-.6 0-1 .6-1 1.4 0 .5.2 1 .2 1l-.8 3.2" />
+    </>
+  ),
 };
 
 export type SocialIconId = keyof typeof paths;

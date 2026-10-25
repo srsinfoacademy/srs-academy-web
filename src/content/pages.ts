@@ -32,7 +32,7 @@ export const aboutPage: EditorialPage = {
     {
       num: "01",
       heading: "Our Story",
-      body: "SRS Academy is the academic and professional training initiative of SPRS INFOTECH PVT LTD. It was created to bring the practical technology experience of SPRS Infotech into a structured learning environment for students and aspiring professionals. SPRS INFOTECH PVT LTD works across web development, application development, software solutions, UI/UX and digital design, prototypes, mock-ups, and related technology services. Through SRS Academy, this practical industry experience is transformed into accessible, skill-focused learning programs designed to help learners understand modern tools, build practical capabilities, and prepare for technology-driven opportunities. SRS Academy operates primarily as an online learning academy, with presence and support associated with Kolkata and Mumbai.",
+      body: "SRS Academy is the academic and professional training initiative of SPRS INFOTECH PVT LTD. It was created to bring the practical technology experience of SPRS Infotech into a structured learning environment for students and aspiring professionals. SPRS INFOTECH PVT LTD works across web development, application development, software solutions, UI/UX and digital design, prototypes, mock-ups, and related technology services. Through SRS Academy, this practical industry experience is transformed into accessible, skill-focused learning programs designed to help learners understand modern tools, build practical capabilities, and prepare for technology-driven opportunities. SRS Academy operates primarily as an online learning academy, with classroom support in Kolkata.",
     },
     {
       num: "02",
@@ -112,29 +112,25 @@ export const admissionsPage: EditorialPage = {
     },
     {
       num: "04",
-      heading: "Fees / Payment Information",
-      body: "Fees and payment details vary by program and are shared during the admission process.",
+      heading: "Important Dates",
+      body: "Batch dates are not published here. They are shared during counselling, and only when a course is open.",
     },
     {
       num: "05",
-      heading: "Important Dates",
-      body: "Admission timelines and intake dates depend on current program availability.",
-    },
-    {
-      num: "06",
       heading: "Verification Process",
       body: "Submitted information may be reviewed before enrollment is confirmed.",
     },
   ],
 };
 
-/** The five-step admissions journey, in the shared node language. */
+/**
+ * Generic admission steps. Dates, batch timings and fees are not confirmed
+ * and must not be added here.
+ */
 export const admissionsJourney = [
-  { num: "01", title: "Explore a program", body: "Look through the programs available and their learning details." },
-  { num: "02", title: "Ask your questions", body: "Reach out to SRS Academy with any questions before applying." },
-  { num: "03", title: "Share the required details", body: "Provide the information needed to begin the admission process." },
-  { num: "04", title: "Complete the applicable admission steps", body: "Finish any additional steps confirmed for your chosen program." },
-  { num: "05", title: "Start learning", body: "Begin your program once admission is confirmed." },
+  { num: "01", title: "Enquire", body: "Tell us which course you are interested in and how we can reach you." },
+  { num: "02", title: "Counselling", body: "Talk with the academy team about the course and whether it fits what you want to learn." },
+  { num: "03", title: "Enrol", body: "When you are ready, the team confirms the next step to join. Batch dates are shared only when a course is open." },
 ];
 
 export const contactPage: EditorialPage = {

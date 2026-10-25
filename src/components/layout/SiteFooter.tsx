@@ -6,7 +6,7 @@ import { IndexLabel } from "@/components/ui/IndexLabel";
 import { SocialIcon } from "@/components/ui/SocialIcon";
 import { TextLink } from "@/components/ui/TextLink";
 import { footerNav } from "@/content/navigation";
-import { site } from "@/content/site";
+import { publicPhone, site } from "@/content/site";
 
 /**
  * Global footer. Server-rendered.
@@ -30,7 +30,7 @@ export function SiteFooter() {
             <address className="type-body-s flex flex-col gap-1 not-italic text-muted">
               <span>{site.contact.address}</span>
               <span>{site.contact.email}</span>
-              <span>{site.contact.phone}</span>
+              {publicPhone() ? <span>{publicPhone()}</span> : null}
             </address>
 
             <nav aria-label="Follow us">

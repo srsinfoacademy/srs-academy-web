@@ -209,19 +209,6 @@ export function CourseDetailLive({ program, course }: { program: Program; course
 
         <aside className="h-fit min-[1000px]:sticky min-[1000px]:top-24">
           <div className="rounded-[var(--radius-sl-lg)] border border-sl-ink/10 bg-white p-6">
-            <div id="fees" className="mb-4 font-sl-mono text-[10px] tracking-[0.12em] text-sl-ink/45">
-              FEES
-            </div>
-            {typeof detail.fees === "string" ? (
-              <div className="mb-5 text-2xl font-bold">{detail.fees}</div>
-            ) : detail.fees ? (
-              <div className="mb-5 text-2xl font-bold">{detail.fees.program}</div>
-            ) : (
-              <p className="mb-5 text-sm leading-relaxed text-sl-ink/60">
-                Fees for this program have not been announced yet. Contact SRS Academy
-                for current enrollment information.
-              </p>
-            )}
             <dl className="mb-6 flex flex-col gap-2.5 text-sm">
               <div className="flex justify-between">
                 <dt className="text-sl-ink/55">Duration</dt>
