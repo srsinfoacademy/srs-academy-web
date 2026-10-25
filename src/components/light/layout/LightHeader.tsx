@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { lightRoutes } from "@/lib/light/routes";
@@ -24,12 +25,16 @@ const navItems = [
 export function LightHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const wasOpenRef = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    // 24px, not a hair-trigger 8px: the header should settle into its
+    // compact state once scrolling is clearly underway, not on the first
+    // pixel of rubber-band bounce.
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -93,29 +98,61 @@ export function LightHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-[var(--sl-dur-fast)] ${
+      className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-[var(--sl-dur-fast)] ease-[var(--sl-ease)] ${
         scrolled ? "sl-glass shadow-[0_1px_0_rgba(17,17,17,.06)]" : "bg-transparent"
       }`}
     >
-      <div className="sl-container flex h-18 items-center justify-between">
+      {/*
+        Compacting header: roomy (72px) at the top of the page, settling to
+        a tighter 64px once scrolled — the height the reference design shows
+        throughout. Height/padding animate together via the row's own
+        height (flex + items-center derives the padding), so nothing needs
+        a separate padding transition.
+      */}
+      <div
+        className={`sl-container flex items-center justify-between transition-[height] duration-[var(--sl-dur-fast)] ease-[var(--sl-ease)] ${
+          scrolled ? "h-16" : "h-18"
+        }`}
+      >
         <Link href={lightRoutes.home} className="sl-focus flex items-center gap-2.5">
-          <span className="h-2 w-2 rounded-full bg-sl-lime" aria-hidden="true" />
-          <span className="font-sl-display text-xl font-bold tracking-tight">SRS Academy</span>
+          <span
+            className={`rounded-full bg-sl-lime transition-[width,height] duration-[var(--sl-dur-fast)] ease-[var(--sl-ease)] ${
+              scrolled ? "h-1.5 w-1.5" : "h-2 w-2"
+            }`}
+            aria-hidden="true"
+          />
+          <span
+            className={`font-sl-display font-bold tracking-tight transition-transform duration-[var(--sl-dur-fast)] ease-[var(--sl-ease)] origin-left ${
+              scrolled ? "text-xl scale-[0.92]" : "text-xl scale-100"
+            }`}
+          >
+            SRS Academy
+          </span>
         </Link>
 
         <nav className="hidden min-[1180px]:flex items-center gap-8" aria-label="Primary">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="sl-focus text-sm font-medium text-sl-ink/72 hover:text-sl-ink transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`sl-focus relative py-1 text-sm font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-sl-ink after:transition-transform after:duration-[var(--sl-dur-fast)] after:ease-[var(--sl-ease)] hover:after:scale-x-100 focus-visible:after:scale-x-100 ${
+                  active ? "text-sl-ink after:scale-x-100" : "text-sl-ink/72 hover:text-sl-ink"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden min-[1180px]:flex items-center gap-3">
+        <div
+          className={`hidden min-[1180px]:flex items-center gap-3 transition-transform duration-[var(--sl-dur-fast)] ease-[var(--sl-ease)] origin-right ${
+            scrolled ? "scale-95" : "scale-100"
+          }`}
+        >
           <LightButton href={lightRoutes.admissions} size="sm" variant="secondary">
             Talk to an Advisor
           </LightButton>
@@ -153,9 +190,9 @@ export function LightHeader() {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
-        className={`min-[1180px]:hidden fixed inset-x-0 top-18 bottom-0 bg-sl-paper transition-transform duration-[var(--sl-dur-med)] ease-[var(--sl-ease)] overflow-y-auto ${
-          open ? "translate-x-0" : "translate-x-full pointer-events-none"
-        }`}
+        className={`min-[1180px]:hidden fixed inset-x-0 bottom-0 bg-sl-paper transition-[transform,top] duration-[var(--sl-dur-med)] ease-[var(--sl-ease)] overflow-y-auto ${
+          scrolled ? "top-16" : "top-18"
+        } ${open ? "translate-x-0" : "translate-x-full pointer-events-none"}`}
         aria-hidden={!open}
       >
         <nav
