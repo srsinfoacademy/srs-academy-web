@@ -52,7 +52,7 @@ export function RdCoursesMenu({ programs }: { programs: Course[] }) {
         aria-controls={menuId}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "inline-flex min-h-11 items-center gap-1.5 rounded-md border-b-2 px-2.5 text-[15px] font-medium text-rd-ink transition-colors",
+          "inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-md border-b-2 px-2 text-[15px] font-medium text-rd-ink transition-colors min-[1360px]:px-3",
           "hover:text-rd-accent focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent",
           open || active ? "border-rd-accent" : "border-transparent",
         )}

@@ -18,10 +18,10 @@ export function RdHeader() {
 
   return (
     <header className="sticky top-0 z-40 print:hidden border-b border-rd-line bg-rd-bg/95 backdrop-blur-sm">
-      <RdContainer className="relative flex h-[72px] items-center justify-between gap-6">
+      <RdContainer className="relative flex h-[72px] items-center justify-between gap-4">
         <RdLogo />
 
-        <nav aria-label="Main" className="hidden items-center gap-1 nav:flex">
+        <nav aria-label="Main" className="hidden items-center gap-0.5 nav:flex min-[1360px]:gap-1">
           {rdPrimaryNav.map((item) =>
             item.isCourses ? (
               <RdCoursesMenu key={item.href} programs={programs} />

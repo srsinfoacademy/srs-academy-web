@@ -12,7 +12,7 @@ const styles = {
 type Variant = keyof typeof styles;
 
 const base =
-  "inline-flex items-center justify-center gap-1 rounded-[10px] text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
+  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-[10px] text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
 
 export function RdButton({
   href,

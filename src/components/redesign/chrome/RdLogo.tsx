@@ -21,7 +21,7 @@ export function RdLogo({
     <Link
       href="/"
       aria-label={`${site.name} home`}
-      className={cn("inline-flex min-h-11 items-center gap-2.5", className)}
+      className={cn("inline-flex min-h-11 shrink-0 items-center gap-2.5 whitespace-nowrap", className)}
     >
       <span
         className={cn(
@@ -38,7 +38,8 @@ export function RdLogo({
       ) : (
         <span className="flex flex-col items-start leading-tight">
           <span className="font-rd-sans text-[15px] font-semibold text-rd-ink">{site.name}</span>
-          <span className="font-rd-sans text-[11.5px] text-rd-soft">
+          {/* Hidden from 1180 to 1360px so the full desktop nav fits on one line. */}
+          <span className="font-rd-sans text-[11.5px] text-rd-soft nav:hidden min-[1360px]:inline">
             by {site.organisation.legalName}
           </span>
         </span>

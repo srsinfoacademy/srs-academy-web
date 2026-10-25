@@ -8,6 +8,7 @@ import { RdButton } from "@/components/redesign/RdButton";
 import { coursePath } from "@/content/courses/paths";
 import type { Course } from "@/content/courses/types";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
+import { isActivePath } from "@/components/redesign/chrome/RdNavLink";
 import { cn } from "@/lib/cn";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -93,13 +94,17 @@ export function RdMobileMenu({
           id={panelId}
           ref={panelRef}
           aria-label="Main"
-          className="absolute inset-x-0 top-full flex max-h-[calc(100vh-72px)] flex-col gap-0.5 overflow-auto border-t border-rd-line bg-rd-bg px-[clamp(20px,4vw,40px)] pb-6 pt-3"
+          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-72px)] flex-col gap-0.5 overflow-auto overscroll-contain shadow-[var(--rd-shadow-card)] border-t border-rd-line bg-rd-bg px-[clamp(20px,4vw,40px)] pb-6 pt-3"
         >
           {rdPrimaryNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="min-h-12 border-b border-rd-line py-3.5 text-[17px] font-medium text-rd-ink"
+              aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
+              className={cn(
+                "flex min-h-12 items-center gap-2 border-b border-rd-line py-3 text-[17px] font-medium text-rd-ink",
+                isActivePath(pathname, item.href) && "font-semibold text-rd-accent",
+              )}
             >
               {item.isCourses ? "All Courses" : item.label}
             </Link>
@@ -112,7 +117,11 @@ export function RdMobileMenu({
             <Link
               key={program.slug}
               href={coursePath(program.slug)}
-              className="min-h-11 py-2.5 text-base text-rd-body"
+              aria-current={pathname === coursePath(program.slug) ? "page" : undefined}
+              className={cn(
+                "flex min-h-11 items-center py-2 text-base text-rd-body",
+                pathname === coursePath(program.slug) && "font-semibold text-rd-accent",
+              )}
             >
               {program.name}
             </Link>
