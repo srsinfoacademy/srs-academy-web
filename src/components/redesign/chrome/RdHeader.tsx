@@ -4,7 +4,6 @@ import { RdCoursesMenu } from "@/components/redesign/chrome/RdCoursesMenu";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { RdMobileMenu } from "@/components/redesign/chrome/RdMobileMenu";
 import { RdNavLink } from "@/components/redesign/chrome/RdNavLink";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { getSrsPrograms } from "@/content/courses";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { site } from "@/content/site";
@@ -33,7 +32,6 @@ export function RdHeader() {
             ),
           )}
 
-          <ThemeToggle className="ml-2" />
           {studentHref ? (
             <RdButton href={studentHref} variant="secondary" className="ml-2.5 px-3.5 text-[14.5px]">
               Student Login
@@ -54,7 +52,6 @@ export function RdHeader() {
             <RdButton href={rdEnquireHref} variant="accent" className="px-4">
               Enquire Now
             </RdButton>
-            <ThemeToggle />
           </div>
           <RdMobileMenu programs={programs} studentHref={studentHref} />
         </div>

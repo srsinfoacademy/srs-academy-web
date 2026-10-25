@@ -1,10 +1,12 @@
+import { RdFloatingControls } from "@/components/redesign/chrome/RdFloatingControls";
 import { RdFooter } from "@/components/redesign/chrome/RdFooter";
 import { RdHeader } from "@/components/redesign/chrome/RdHeader";
 import { RdMobileBar } from "@/components/redesign/chrome/RdMobileBar";
 import { RdSkipLink } from "@/components/redesign/chrome/RdSkipLink";
 
 /**
- * Header, main landmark, footer and the mobile action bar. Shared by the
+ * Header, main landmark, footer, the mobile action bar and the floating
+ * theme / back-to-top controls. Shared by the
  * (site) route-group layout and the root not-found page, which renders
  * outside every route group.
  */
@@ -18,6 +20,7 @@ export function RdSiteChrome({ children }: { children: React.ReactNode }) {
       </main>
       <RdFooter />
       <RdMobileBar />
+      <RdFloatingControls />
     </div>
   );
 }
