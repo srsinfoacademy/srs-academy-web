@@ -48,7 +48,7 @@ export const courseInputSchema = z.object({
     .trim()
     .min(1, "Enter the course code.")
     .max(40)
-    .regex(/^[A-Za-z0-9_-]+$/, "Letters, numbers, hyphens and underscores only."),
+    .regex(/^[A-Za-z0-9 _-]+$/, "Letters, numbers, spaces, hyphens and underscores only."),
   category: z.string().trim().min(1, "Choose a category.").max(80),
   duration: trimmed(80),
   level: trimmed(60),
