@@ -15,7 +15,7 @@ import {
   courseAreas,
   coursePath,
   coursesInArea,
-  getAllCourses,
+  getCatalogueCourses,
   getCategories,
   getHomeFeaturedCourses,
   getSrsPrograms,
@@ -40,7 +40,7 @@ export default function HomePage() {
   const fullStack = programs.find((program) => program.curriculum?.length) ?? programs[0];
   const otherPrograms = programs.filter((program) => program.slug !== fullStack?.slug);
   const featured = getHomeFeaturedCourses().map((course) => toCourseCard(course, true));
-  const totalCourses = getAllCourses().length;
+  const totalCourses = getCatalogueCourses().length;
   const categoryCounts = new Map(getCategories().map((item) => [item.category, item.count]));
   const hero = site.imagery.hero;
 

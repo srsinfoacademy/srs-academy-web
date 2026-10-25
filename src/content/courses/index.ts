@@ -33,11 +33,20 @@ export const courses: readonly Course[] = [...merged.values()].sort((a, b) => {
   return a.sno - b.sno || a.name.localeCompare(b.name);
 });
 
+/** The spreadsheet catalogue only — the SRS programs are listed separately. */
+const catalogueOnly: readonly Course[] = courses.filter((course) => course.origin === "catalogue");
+
 const bySlug = new Map(courses.map((course) => [course.slug, course]));
 const byCode = new Map(courses.map((course) => [course.code, course]));
 
+/** Every course page: the SRS programs plus the spreadsheet catalogue. */
 export function getAllCourses(): readonly Course[] {
   return courses;
+}
+
+/** Spreadsheet catalogue rows only (what /courses lists and counts). */
+export function getCatalogueCourses(): readonly Course[] {
+  return catalogueOnly;
 }
 
 export function getCourseBySlug(slug: string): Course | undefined {
@@ -50,17 +59,18 @@ export function getCourseByCode(code: string): Course | undefined {
 
 export { coursePath } from "@/content/courses/paths";
 
+/** Catalogue categories with counts, from the spreadsheet rows only. */
 export function getCategories(): { category: string; count: number }[] {
   const counts = new Map<string, number>();
-  for (const course of courses) counts.set(course.category, (counts.get(course.category) ?? 0) + 1);
+  for (const course of catalogueOnly) counts.set(course.category, (counts.get(course.category) ?? 0) + 1);
   return [...counts.entries()]
     .map(([category, count]) => ({ category, count }))
     .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category));
 }
 
 export function getCoursesByCategory(category: string): Course[] {
-  if (!category || category === "All") return [...courses];
-  return courses.filter((course) => course.category === category);
+  if (!category || category === "All") return [...catalogueOnly];
+  return catalogueOnly.filter((course) => course.category === category);
 }
 
 /** Case-insensitive match on name, code, category, summary and topic lines. */
@@ -90,8 +100,11 @@ export function getHomeFeaturedCourses(): Course[] {
     .filter((course): course is Course => course !== undefined);
 }
 
+/** The SRS programs, in the order defined in featured-programs.ts (Full Stack first). */
 export function getSrsPrograms(): Course[] {
-  return courses.filter((course) => course.origin === "srs");
+  return featuredPrograms
+    .map((program) => bySlug.get(program.slug))
+    .filter((course): course is Course => course?.origin === "srs");
 }
 
 /**
@@ -126,7 +139,7 @@ export function coursesInArea(areaId: string): Course[] {
   const area = courseAreas.find((item) => item.id === areaId);
   if (!area) return [];
   const allowed = new Set<string>(area.categories);
-  return courses.filter((course) => allowed.has(course.category));
+  return catalogueOnly.filter((course) => allowed.has(course.category));
 }
 
 export const legacyRedirects = redirectData as SiteRedirect[];

@@ -4,7 +4,7 @@ import { RdCoursesMenu } from "@/components/redesign/chrome/RdCoursesMenu";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { RdMobileMenu } from "@/components/redesign/chrome/RdMobileMenu";
 import { RdNavLink } from "@/components/redesign/chrome/RdNavLink";
-import { getAllCourses, getCategories, getSrsPrograms } from "@/content/courses";
+import { getCatalogueCourses, getCategories, getSrsPrograms } from "@/content/courses";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { site } from "@/content/site";
 
@@ -29,7 +29,7 @@ export function RdHeader() {
                 key={item.href}
                 programs={menuPrograms}
                 categories={getCategories()}
-                totalCourses={getAllCourses().length}
+                totalCourses={getCatalogueCourses().length}
               />
             ) : (
               <RdNavLink key={item.href} href={item.href}>

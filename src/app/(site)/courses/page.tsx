@@ -6,7 +6,7 @@ import { RdCourseCard } from "@/components/redesign/RdCourseCard";
 import { RdPageHero } from "@/components/redesign/RdPageHero";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
 import { RdCourseCatalogue } from "@/components/redesign/courses/RdCourseCatalogue";
-import { getAllCourses, getCategories, getSrsPrograms, toCourseCard } from "@/content/courses";
+import { getCatalogueCourses, getCategories, getSrsPrograms, toCourseCard } from "@/content/courses";
 import { coursesCopy } from "@/content/public-pages";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function CoursesPage() {
-  const cards = getAllCourses().map((course) => toCourseCard(course, true));
+  const cards = getCatalogueCourses().map((course) => toCourseCard(course, true));
   const categories = getCategories();
   const programs = getSrsPrograms().map((course) => toCourseCard(course));
 
