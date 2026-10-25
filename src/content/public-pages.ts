@@ -128,7 +128,7 @@ export const coursesCopy = {
   eyebrow: "All courses",
   title: "Explore our courses",
   intro:
-    "Search the full SRS Academy catalogue by name, course code or topic, or filter by category. Every course has its own page with its duration and topic list.",
+    "Search the SRS Academy catalogue by course name, category or code, or filter by category. Every course has its own page with its duration and topic list.",
   programsEyebrow: "SRS programs",
   programsTitle: "Programs designed by SRS Academy",
   programsIntro:

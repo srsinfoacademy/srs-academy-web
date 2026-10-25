@@ -6,6 +6,7 @@ import { useDeferredValue, useId, useMemo, useState } from "react";
 import { RdButton } from "@/components/redesign/RdButton";
 import { RdCourseCard } from "@/components/redesign/RdCourseCard";
 import { RdDashedPanel } from "@/components/redesign/RdDashedPanel";
+import { buildSearchIndex, rankCourses } from "@/content/courses/search";
 import type { CourseCardData } from "@/content/courses/types";
 import { cn } from "@/lib/cn";
 
@@ -48,21 +49,26 @@ export function RdCourseCatalogue({
   const searchId = useId();
   const statusId = useId();
 
-  const filtered = useMemo(() => {
-    const words = deferredQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    return courses.filter(
-      (course) =>
-        (category === ALL || course.category === category) &&
-        words.every((word) => course.search.includes(word)),
-    );
-  }, [courses, category, deferredQuery]);
+  // Tokenise once per course; filtering then runs on every keystroke.
+  const indexed = useMemo(
+    () => courses.map((course) => ({ course, index: buildSearchIndex({ ...course, topics: course.topicText }) })),
+    [courses],
+  );
+
+  const { results: filtered, viaTopics } = useMemo(() => {
+    const pool = category === ALL ? indexed : indexed.filter((entry) => entry.course.category === category);
+    const ranked = rankCourses(pool, deferredQuery, (entry) => entry.index);
+    return { results: ranked.results.map((entry) => entry.course), viaTopics: ranked.viaTopics };
+  }, [indexed, category, deferredQuery]);
 
   const shown = filtered.slice(0, visible);
   const filteredActive = category !== ALL || deferredQuery.trim().length > 0;
   const status =
     filtered.length === 0
       ? "No courses match"
-      : filteredActive
+      : viaTopics
+        ? `No course names match “${deferredQuery.trim()}”. Showing ${shown.length} of ${filtered.length} courses whose topic lists mention it.`
+        : filteredActive
         ? `Showing ${shown.length} of ${filtered.length} matching courses (${courses.length} in total)`
         : `Showing ${shown.length} of ${courses.length} courses`;
 

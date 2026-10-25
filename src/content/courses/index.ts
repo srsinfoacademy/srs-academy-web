@@ -1,6 +1,7 @@
 import catalogueData from "@/content/courses/courses.json";
 import redirectData from "@/content/courses/redirects.json";
 import { featuredPrograms, homeFeaturedCodes } from "@/content/courses/featured-programs";
+import { buildSearchIndex, rankCourses } from "@/content/courses/search";
 import type { CatalogueCourse, Course, CourseCardData, SiteRedirect } from "@/content/courses/types";
 import { site, type SiteImage } from "@/content/site";
 
@@ -73,17 +74,12 @@ export function getCoursesByCategory(category: string): Course[] {
   return catalogueOnly.filter((course) => course.category === category);
 }
 
-/** Case-insensitive match on name, code, category, summary and topic lines. */
+/** Same rules as the /courses search: name, category and code first, topic lines as a fallback. */
 export function searchCourses(query: string, category?: string): Course[] {
   const pool = getCoursesByCategory(category && category !== "All" ? category : "All");
-  const needle = query.trim().toLowerCase();
-  if (!needle) return pool;
-  return pool.filter((course) => {
-    const haystack = [course.name, course.code, course.category, course.summary ?? "", ...course.modules]
-      .join(" ")
-      .toLowerCase();
-    return haystack.includes(needle);
-  });
+  return rankCourses(pool, query, (course) =>
+    buildSearchIndex({ ...course, topics: course.modules.join(" | ") }),
+  ).results;
 }
 
 export function relatedCourses(slug: string, limit = 3): Course[] {
@@ -160,9 +156,7 @@ export function toCourseCard(course: Course, withImage = false): CourseCardData 
     duration: course.duration,
     moduleCount: course.modules.length,
     origin: course.origin,
-    search: [course.name, course.code, course.category, course.summary ?? "", ...course.modules]
-      .join(" ")
-      .toLowerCase(),
+    topicText: course.modules.join(" | "),
     ...(image ? { image } : {}),
   };
 }

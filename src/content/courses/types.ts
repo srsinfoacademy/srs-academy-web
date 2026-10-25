@@ -68,7 +68,7 @@ export type CourseCardData = {
   duration: string;
   moduleCount: number;
   origin: "catalogue" | "srs";
-  /** Lower-cased name, code, category and topic lines, for search. */
-  search: string;
+  /** Topic lines joined, searched only when no name/category/code matches (see search.ts). */
+  topicText: string;
   image?: { src: string; alt: string; credit: string; creditHref: string };
 };
