@@ -73,8 +73,12 @@ export const site = {
     showFees: false,
   },
   brand: {
-    logo: "/brand/srs-logo.png",
-    logoRound: "/brand/srs-logo-round.png",
+    /** Name shown beside the mark and on the round logo. */
+    wordmark: "SRS Tech Academy",
+    /** Mark only, transparent background (header). Never use an "SPRS Academy" logo. */
+    mark: "/brand/srs-mark-512.png",
+    /** Round logo with the wordmark, transparent corners (footer). */
+    logoRound: "/brand/srs-tech-academy-logo-round-1024.png",
   },
   /**
    * Neutral Unsplash stand-ins. Replace `src` with academy photography and

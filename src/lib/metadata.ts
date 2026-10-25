@@ -2,6 +2,17 @@ import type { Metadata } from "next";
 import { site } from "@/content/site";
 
 /**
+ * Default share card (src/app/opengraph-image.png). Listed explicitly because
+ * an `openGraph` object in metadata replaces the file-based image.
+ */
+const defaultOgImage = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: site.brand.wordmark,
+};
+
+/**
  * Global metadata defaults. Marketing claims are deliberately absent: the
  * description is a placeholder until SRS Academy supplies approved copy.
  */
@@ -23,6 +34,7 @@ export const baseMetadata: Metadata = {
     description: site.description,
     url: site.url,
     locale: "en_IN",
+    images: [defaultOgImage],
   },
   twitter: {
     card: "summary_large_image",
@@ -54,6 +66,7 @@ export function pageMetadata(input: {
       title: `${input.title} — ${site.name}`,
       description,
       url: input.path,
+      images: [defaultOgImage],
     },
   };
 }
