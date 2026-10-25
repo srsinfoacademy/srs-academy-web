@@ -6,13 +6,13 @@ const styles = {
   accent: "bg-rd-accent text-rd-on-accent hover:bg-rd-accent-hover",
   primary: "bg-rd-inverse text-rd-inverse-text hover:bg-rd-inverse-hover",
   secondary: "border border-rd-line-strong bg-rd-elevated text-rd-ink hover:border-rd-ink",
-  text: "bg-transparent px-0 text-rd-link hover:text-rd-accent",
+  text: "min-h-11 bg-transparent text-rd-link hover:text-rd-accent",
 } as const;
 
 type Variant = keyof typeof styles;
 
 const base =
-  "inline-flex min-h-12 items-center justify-center rounded-[10px] px-5 text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
+  "inline-flex items-center justify-center gap-1 rounded-[10px] text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
 
 export function RdButton({
   href,
@@ -24,7 +24,15 @@ export function RdButton({
   href?: string;
   variant?: Variant;
 }) {
-  const classes = cn(base, styles[variant], variant === "text" && "min-h-11 px-0", className);
+    // Defaults only when the caller does not set its own (Tailwind cannot order conflicting utilities).
+  const custom = className ?? "";
+  const classes = cn(
+    base,
+    styles[variant],
+    variant !== "text" && !/(^|\s)px-/.test(custom) && "px-5",
+    variant !== "text" && !/(^|\s)min-h-/.test(custom) && "min-h-12",
+    className,
+  );
   if (href) {
     const external = href.startsWith("http");
     return (

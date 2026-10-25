@@ -89,7 +89,7 @@ export function RdCourseCatalogue({
           placeholder={searchPlaceholder}
           autoComplete="off"
           aria-describedby={statusId}
-          className="mt-2 h-[54px] w-full rounded-[12px] border border-rd-line-strong bg-rd-elevated px-4 text-[17px] text-rd-ink placeholder:text-rd-soft focus:border-rd-accent focus:outline focus:outline-3 focus:outline-rd-accent/35"
+          className="mt-2 h-[54px] w-full rounded-[12px] border border-rd-field bg-rd-elevated px-4 text-[17px] text-rd-ink placeholder:text-rd-soft focus:border-rd-accent focus:outline focus:outline-3 focus:outline-rd-accent/35"
         />
       </form>
 

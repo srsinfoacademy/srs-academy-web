@@ -180,7 +180,7 @@ export function RdEnquiryForm({
     "aria-invalid": errors[key] ? true : undefined,
     "aria-describedby": errors[key] ? `${id}-${key}-error` : undefined,
   });
-  const fieldBorder = (key: keyof Errors) => (errors[key] ? "border-rd-danger" : "border-rd-line-strong");
+  const fieldBorder = (key: keyof Errors) => (errors[key] ? "border-rd-danger" : "border-rd-field");
   const errorText = (key: keyof Errors) =>
     errors[key] ? (
       <p id={`${id}-${key}-error`} className="mt-1.5 text-[14px] font-medium text-rd-danger">
@@ -271,7 +271,7 @@ export function RdEnquiryForm({
             onChange={(event) => setFilter(event.target.value)}
             placeholder="Type a course name or code"
             autoComplete="off"
-            className={cn(inputClass, "mt-1 h-11 border-rd-line-strong text-[15px]")}
+            className={cn(inputClass, "mt-1 h-11 border-rd-field text-[15px]")}
           />
         </div>
         <div>
@@ -310,7 +310,7 @@ export function RdEnquiryForm({
           name="format"
           value={values.format}
           onChange={(event) => set("format", event.target.value)}
-          className={cn(inputClass, "border-rd-line-strong")}
+          className={cn(inputClass, "border-rd-field")}
         >
           {formats.map((format) => (
             <option key={format} value={format}>
@@ -330,7 +330,7 @@ export function RdEnquiryForm({
           rows={3}
           value={values.message}
           onChange={(event) => set("message", event.target.value)}
-          className={cn(inputClass, "h-auto min-h-[110px] border-rd-line-strong py-3")}
+          className={cn(inputClass, "h-auto min-h-[110px] border-rd-field py-3")}
         />
       </div>
 

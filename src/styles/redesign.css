@@ -23,6 +23,8 @@
   --rd-line: #e7e1d3;
   --rd-line-strong: #cfc7b5;
   --rd-line-hover: #b9af99;
+  /* Form-field boundary: 3:1 against white and ivory (WCAG 1.4.11). */
+  --rd-field: #8a8170;
   --rd-tint-green: #e3eee7;
   --rd-tint-saffron: #f6e7d6;
   --rd-eyebrow: #8a5a2e;
@@ -53,6 +55,7 @@
   --rd-line: #2e3b5e;
   --rd-line-strong: #3a4766;
   --rd-line-hover: #5a6890;
+  --rd-field: #7884a6;
   --rd-tint-green: #1a332c;
   --rd-tint-saffron: #3a2a1c;
   --rd-eyebrow: #e9a56e;
