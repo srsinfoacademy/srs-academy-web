@@ -88,3 +88,25 @@
     repeating-linear-gradient(45deg, color-mix(in srgb, var(--rd-link) 7%, transparent) 0 1px, transparent 1px 22px),
     repeating-linear-gradient(-45deg, color-mix(in srgb, var(--rd-accent) 7%, transparent) 0 1px, transparent 1px 22px);
 }
+
+/* Header links: 2px accent underline that grows from the centre on hover/focus and stays on the current page. */
+.rd-nav-underline {
+  position: relative;
+}
+.rd-nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--rd-accent);
+  transform: scaleX(0);
+  transition: transform 0.22s ease-out;
+}
+.rd-nav-underline:hover::after,
+.rd-nav-underline:focus-visible::after,
+.rd-nav-underline.is-active::after {
+  transform: scaleX(1);
+}

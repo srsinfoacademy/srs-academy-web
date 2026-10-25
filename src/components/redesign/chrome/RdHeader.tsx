@@ -4,7 +4,7 @@ import { RdCoursesMenu } from "@/components/redesign/chrome/RdCoursesMenu";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { RdMobileMenu } from "@/components/redesign/chrome/RdMobileMenu";
 import { RdNavLink } from "@/components/redesign/chrome/RdNavLink";
-import { getSrsPrograms } from "@/content/courses";
+import { getAllCourses, getCategories, getSrsPrograms } from "@/content/courses";
 import { rdEnquireHref, rdPrimaryNav } from "@/content/redesign-nav";
 import { site } from "@/content/site";
 
@@ -14,6 +14,7 @@ import { site } from "@/content/site";
  */
 export function RdHeader() {
   const programs = getSrsPrograms();
+  const menuPrograms = programs.map(({ slug, name, duration }) => ({ slug, name, duration }));
   const studentHref = site.portals.student.href;
 
   return (
@@ -24,7 +25,12 @@ export function RdHeader() {
         <nav aria-label="Main" className="hidden items-center gap-0.5 nav:flex min-[1360px]:gap-1">
           {rdPrimaryNav.map((item) =>
             item.isCourses ? (
-              <RdCoursesMenu key={item.href} programs={programs} />
+              <RdCoursesMenu
+                key={item.href}
+                programs={menuPrograms}
+                categories={getCategories()}
+                totalCourses={getAllCourses().length}
+              />
             ) : (
               <RdNavLink key={item.href} href={item.href}>
                 {item.label}
