@@ -51,7 +51,7 @@ Design source: the approved Claude Design file `SRS-Admin-Panel.dc.html` (navy s
 - Fonts: Newsreader (`--font-rd-newsreader`) and Mukta (`--font-rd-mukta`, latin + devanagari) via `next/font` in the root layout. Only these two fonts are loaded; use `font-rd-display` and `font-rd-sans`.
 - Theme: blocking script `THEME_INIT_SCRIPT` plus `ThemeProvider` (`useTheme`); the switcher is `RdFloatingControls`. Choice is `light` | `dark` | `system` in `localStorage` key `srs-theme`. `prefers-reduced-motion` is already global in `redesign.css`.
 - Primitives: `RdContainer` (`wide` 1360px, `prose` 820px, gutter `clamp(20px, 4vw, 56px)`) and `RdButton` (`accent` | `primary` | `secondary` | `text`).
-- Logos: `public/brand/srs-logo.png` (wordmark, background removed), `public/brand/srs-logo-round.png`. Favicon, apple icon and OG image are `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/opengraph-image.png`.
+- Logos: `public/brand/srs-mark*.png|webp` (mark, transparent; header), `public/brand/srs-tech-academy-logo-round-1024.*` (round logo; footer), `public/brand/srs-tech-academy-icon-*.*` (mark on white). Never use an "SPRS Academy" logo. Favicon, apple icon and OG image are `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/opengraph-image.png` (plus `twitter-image.png`).
 - Confirmed copy already applied on the **current** pages, so do not put it back: no `+91-900007799`, no Mumbai, Facebook URL updated, admission steps are Enquire → Counselling → Enrol, fee blocks removed from program detail. Legal refund/terms text is unchanged except the contact lines drop the phone while it is empty and use the display email. CEO line “Chief Executive Officer: S Roy” stays on About.
 - `pnpm lint` and `pnpm typecheck` pass on this commit.
 
