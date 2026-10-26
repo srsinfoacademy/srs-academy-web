@@ -3,6 +3,7 @@ import Link from "next/link";
 import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdSocialIcon } from "@/components/redesign/RdSocialIcon";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
+import { PHOTO_CREDITS_PATH } from "@/content/courses/photos";
 import { rdFooterNavGroups } from "@/content/redesign-nav";
 import { site } from "@/content/site";
 import {
@@ -109,6 +110,9 @@ export async function RdFooter() {
                 {site.portals.admin.label}
               </a>
             )}
+            <a href={PHOTO_CREDITS_PATH} className={`${linkClass} text-[13px]`}>
+              Photo credits
+            </a>
           </div>
           <ul aria-label="Follow us" className="flex flex-wrap gap-2">
             {social.map((item) => (
