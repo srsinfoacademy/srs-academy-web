@@ -38,6 +38,13 @@ Design source: the approved Claude Design file `SRS-Admin-Panel.dc.html` (navy s
 - The Blob store and the real Vercel preview were not reachable from the build sandbox; Blob was exercised through the same code path with the local store. Check one save on the Vercel preview.
 - RULES.md rule 11 ("Do not build ... Admin Panel") was the Phase 1 scope; the admin panel was requested afterwards.
 
+## Course covers — on `claude/course-covers`
+
+- Every course card (/courses incl. `?category=`, Home featured + SRS program cards, related courses, /technical-training) opens with a 16:9 cover in the card's clipped top corners.
+- Generated cover: `src/components/redesign/RdCourseCover.tsx` (inline SVG + CSS, `aria-hidden`, no image request). Variants per category and per SRS program in `src/content/courses/covers.ts`; pattern, gradient angle and rings vary deterministically from the slug (FNV-1a). Theme tints are derived from `--cv` in `redesign.css` (`.rd-cover*`); SRS programs use a navy brand cover in both themes. New admin categories get a palette colour and a book icon.
+- `CourseRecord.coverImage` (optional URL, Unsplash or site path). Card photo = `coverImage || image` (legacy stand-in field); a real photo renders with next/image, alt = course name, Unsplash credit kept for the site stand-ins. Admin form field is "Cover image URL (optional)"; saving moves a legacy `image` into `coverImage`. No upload yet.
+- Course detail hero has no image slot, so it is unchanged.
+
 ## Phase 1 foundations — DONE (do not rebuild)
 
 - `src/content/site.ts` — one config file for public facts. Display email `srsinfoacademy@gmail.com`. Resend inbox `contact.enquiryInbox` (`srsinfotechacademy@gmail.com`) is **not** for display. Phone and WhatsApp are the CEO-confirmed +91 8008138008 (`contact.phone`, `contact.phoneDigits`); render them only through the helpers, and they hide again if those fields are emptied. Address, hours, location line, social links, logo paths, Unsplash stand-ins, `features.showTestimonials === false`, `features.showFees === false`. Helpers: `publicPhone()`, `telHref()`, `whatsappHref()`, `contactFacts()`, `hoursSummary()`.

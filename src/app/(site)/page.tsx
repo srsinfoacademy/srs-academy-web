@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RdButton } from "@/components/redesign/RdButton";
 import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdCourseCard } from "@/components/redesign/RdCourseCard";
+import { RdCourseCover } from "@/components/redesign/RdCourseCover";
 import { RdEyebrow } from "@/components/redesign/RdEyebrow";
 import { RdFaqSection } from "@/components/redesign/RdFaqSection";
 import { RdImageCredit } from "@/components/redesign/RdImageCredit";
@@ -43,7 +44,7 @@ export default async function HomePage() {
   ]);
   const fullStack = programs.find((program) => program.curriculum?.length) ?? programs[0];
   const otherPrograms = programs.filter((program) => program.slug !== fullStack?.slug);
-  const featured = featuredCourses.map((course) => toPublicCard(course, true));
+  const featured = featuredCourses.map((course) => toPublicCard(course));
   const totalCourses = catalogue.length;
   const categoryCounts = new Map(publicCategories.map((item) => [item.category, item.count]));
   const hero = site.imagery.hero;
@@ -237,17 +238,20 @@ export default async function HomePage() {
               {otherPrograms.map((program) => (
                 <li
                   key={program.slug}
-                  className="flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-5 rd-card"
+                  className="rd-card group flex flex-col overflow-hidden rounded-[18px] border border-rd-line bg-rd-elevated"
                 >
-                  <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
-                  <h3 className="mt-2 font-rd-display text-[22px] font-medium leading-tight text-rd-ink">{program.name}</h3>
-                  {program.summary ? (
-                    <p className="mt-2 text-[15px] leading-[1.55] text-rd-body">{program.summary}</p>
-                  ) : null}
-                  <p className="mt-3 text-[14px] text-rd-soft">Duration: {program.duration}</p>
-                  <RdButton href={coursePath(program.slug)} variant="text" className="mt-auto self-start pt-2">
-                    View details<span className="sr-only">: {program.name}</span> <span aria-hidden="true">→</span>
-                  </RdButton>
+                  <RdCourseCover course={toPublicCard(program)} sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 100vw" />
+                  <div className="flex flex-1 flex-col p-5">
+                    <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
+                    <h3 className="mt-2 font-rd-display text-[22px] font-medium leading-tight text-rd-ink">{program.name}</h3>
+                    {program.summary ? (
+                      <p className="mt-2 text-[15px] leading-[1.55] text-rd-body">{program.summary}</p>
+                    ) : null}
+                    <p className="mt-3 text-[14px] text-rd-soft">Duration: {program.duration}</p>
+                    <RdButton href={coursePath(program.slug)} variant="text" className="mt-auto self-start pt-2">
+                      View details<span className="sr-only">: {program.name}</span> <span aria-hidden="true">→</span>
+                    </RdButton>
+                  </div>
                 </li>
               ))}
             </ul>

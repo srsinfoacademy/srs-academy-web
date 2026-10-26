@@ -22,8 +22,13 @@ export type CourseRecord = {
   summary: string;
   /** Short topic / module lines. */
   modules: string[];
-  /** https://images.unsplash.com/… or a site path such as /brand/…. Empty for a text card. */
+  /**
+   * Legacy photo field (the homepage Unsplash stand-ins). Read as the cover
+   * when `coverImage` is empty; an admin save moves it into `coverImage`.
+   */
   image: string;
+  /** Cover photo set in the admin: https://images.unsplash.com/… or a site path. Empty or missing = generated cover. */
+  coverImage?: string;
   seoTitle: string;
   seoDescription: string;
   published: boolean;

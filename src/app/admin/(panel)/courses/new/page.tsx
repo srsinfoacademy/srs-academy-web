@@ -26,7 +26,7 @@ export default async function NewCoursePage() {
         level: "",
         summary: "",
         modules: [],
-        image: "",
+        coverImage: "",
         seoTitle: "",
         seoDescription: "",
         published: false,

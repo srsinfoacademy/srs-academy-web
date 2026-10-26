@@ -174,15 +174,24 @@ export async function getPublicHomeFeatured(): Promise<CourseRecord[]> {
 
 const siteCourseImages = site.imagery.courses as Record<string, SiteImage>;
 
-/** Photo for a card: the course image, with the Unsplash credit when it is one of the site stand-ins. */
-export function courseCardImage(course: CourseRecord): SiteImage | undefined {
-  if (!course.image) return undefined;
-  const known = Object.values(siteCourseImages).find((image) => image.src === course.image);
-  return known ?? { src: course.image, alt: "", credit: "", creditHref: "" };
+/** Cover photo URL: the admin cover image, else the legacy stand-in field. Empty = generated cover. */
+export function courseCoverSrc(course: CourseRecord): string {
+  return course.coverImage || course.image || "";
 }
 
-export function toPublicCard(course: CourseRecord, withImage = false): CourseCardData {
-  const image = withImage ? courseCardImage(course) : undefined;
+/**
+ * Photo for a card: the cover photo, with the Unsplash credit when it is one
+ * of the site stand-ins. Other photos get the course name as alt text.
+ */
+export function courseCardImage(course: CourseRecord): SiteImage | undefined {
+  const src = courseCoverSrc(course);
+  if (!src) return undefined;
+  const known = Object.values(siteCourseImages).find((image) => image.src === src);
+  return known ?? { src, alt: course.name, credit: "", creditHref: "" };
+}
+
+export function toPublicCard(course: CourseRecord): CourseCardData {
+  const image = courseCardImage(course);
   return {
     slug: course.slug,
     name: course.name,

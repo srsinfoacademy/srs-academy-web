@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { RdButton } from "@/components/redesign/RdButton";
 import { RdContainer } from "@/components/redesign/RdContainer";
+import { RdCourseCover } from "@/components/redesign/RdCourseCover";
 import { RdEyebrow } from "@/components/redesign/RdEyebrow";
 import { RdImageCredit } from "@/components/redesign/RdImageCredit";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
@@ -11,7 +12,7 @@ import { technicalProgramSlugs } from "@/content/courses/featured-programs";
 import { learnBuildAdvance, technicalTrainingCopy as copy } from "@/content/public-pages";
 import { enquireHref } from "@/content/redesign-nav";
 import { site } from "@/content/site";
-import { getPublicCourseBySlug } from "@/lib/data/courses";
+import { getPublicCourseBySlug, toPublicCard } from "@/lib/data/courses";
 import type { CourseRecord } from "@/lib/data/types";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -57,20 +58,23 @@ export default async function TechnicalTrainingPage() {
         <RdSectionHeading id="technical-programs-title" title={copy.programsTitle} />
         <ul data-reveal="stagger" className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
           {programs.map((program) => (
-            <li key={program.slug} className="rd-card flex flex-col rounded-[18px] border border-rd-line bg-rd-elevated p-6">
-              <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
-              <h3 className="mt-2 font-rd-display text-[clamp(23px,2vw,27px)] font-medium leading-tight text-rd-ink">
-                {program.name}
-              </h3>
-              {program.summary ? (
-                <p className="mt-3 text-[15.5px] leading-[1.6] text-rd-body">{program.summary}</p>
-              ) : null}
-              <p className="mt-4 text-[14.5px] text-rd-soft">
-                {[program.duration, program.level].filter(Boolean).join(" · ")}
-              </p>
-              <RdButton href={coursePath(program.slug)} variant="primary" className="mt-6 self-start">
-                View Course Details<span className="sr-only">: {program.name}</span>
-              </RdButton>
+            <li key={program.slug} className="rd-card group flex flex-col overflow-hidden rounded-[18px] border border-rd-line bg-rd-elevated">
+              <RdCourseCover course={toPublicCard(program)} />
+              <div className="flex flex-1 flex-col p-6">
+                <span className="text-[13px] font-semibold text-rd-link">{program.category}</span>
+                <h3 className="mt-2 font-rd-display text-[clamp(23px,2vw,27px)] font-medium leading-tight text-rd-ink">
+                  {program.name}
+                </h3>
+                {program.summary ? (
+                  <p className="mt-3 text-[15.5px] leading-[1.6] text-rd-body">{program.summary}</p>
+                ) : null}
+                <p className="mt-4 text-[14.5px] text-rd-soft">
+                  {[program.duration, program.level].filter(Boolean).join(" · ")}
+                </p>
+                <RdButton href={coursePath(program.slug)} variant="primary" className="mt-6 self-start">
+                  View Course Details<span className="sr-only">: {program.name}</span>
+                </RdButton>
+              </div>
             </li>
           ))}
         </ul>

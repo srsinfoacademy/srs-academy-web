@@ -1,17 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { RdButton } from "@/components/redesign/RdButton";
-import { RdImageCredit } from "@/components/redesign/RdImageCredit";
+import { RdCourseCover } from "@/components/redesign/RdCourseCover";
 import { coursePath } from "@/content/courses/paths";
 import type { CourseCardData } from "@/content/courses/types";
 import { enquireHref } from "@/content/redesign-nav";
 import { cn } from "@/lib/cn";
 
 /**
- * One course card for Home, the catalogue and related lists. A photo shows
- * only when the course has one (the homepage set); every other course is a
- * text card. Never shows a fee.
+ * One course card for Home, the catalogue and related lists. Every card opens
+ * with a 16:9 cover: the course photo when it has one, otherwise a generated
+ * cover (see RdCourseCover). Never shows a fee.
  */
 export function RdCourseCard({
   course,
@@ -36,18 +35,10 @@ export function RdCourseCard({
         "rd-card group flex h-full flex-col overflow-hidden rounded-[18px] border border-rd-line bg-rd-elevated",
       )}
     >
-      {course.image ? (
-        <div className="relative aspect-[3/2] bg-rd-muted">
-          <Image
-            src={course.image.src}
-            alt=""
-            fill
-            sizes="(min-width: 1180px) 400px, (min-width: 700px) 45vw, 100vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
-          />
-          <RdImageCredit image={course.image} />
-        </div>
-      ) : null}
+      <RdCourseCover
+        course={course}
+        sizes={compact ? "(min-width: 1024px) 340px, 100vw" : undefined}
+      />
       <div className={cn("flex flex-1 flex-col", compact ? "gap-2 p-4" : "gap-3 p-[22px]")}>
         <div className="flex items-start justify-between gap-3 text-[13px] font-semibold">
           <span className="text-rd-link">{course.category}</span>
