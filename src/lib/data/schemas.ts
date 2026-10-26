@@ -20,6 +20,7 @@ export function slugify(value: string): string {
 export const SUMMARY_MAX = 200;
 export const SEO_TITLE_MAX = 70;
 export const SEO_DESCRIPTION_MAX = 170;
+export const ELIGIBILITY_MAX = 200;
 /** Minimum admin password length (ADMIN_PASSWORD). */
 export const ADMIN_PASSWORD_MIN = 6;
 
@@ -55,6 +56,7 @@ export const courseInputSchema = z.object({
   summary: z.string().trim().max(SUMMARY_MAX, `Keep the short description to ${SUMMARY_MAX} characters.`),
   modules: z.array(z.string().trim().max(300)).max(200).transform((items) => items.filter(Boolean)),
   coverImage: imageUrlSchema.default(""),
+  eligibility: z.string().trim().max(ELIGIBILITY_MAX, `Keep eligibility to ${ELIGIBILITY_MAX} characters.`).default(""),
   seoTitle: trimmed(SEO_TITLE_MAX + 30),
   seoDescription: trimmed(SEO_DESCRIPTION_MAX + 60),
   published: z.boolean(),
@@ -79,6 +81,7 @@ export const importRowSchema = z.object({
   duration: trimmed(80),
   level: trimmed(60),
   modules: z.array(z.string().trim().max(300)).max(200),
+  eligibility: z.string().trim().max(ELIGIBILITY_MAX).default(""),
 });
 export const importSchema = z.object({
   mode: z.enum(["update", "skip"]),

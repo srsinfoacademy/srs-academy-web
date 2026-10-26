@@ -161,13 +161,14 @@ export function CoursesTable({
   function exportCsv() {
     const list = selectedRows.length ? filtered.filter((row) => selected.has(row.id)) : filtered;
     downloadCsv(`srs-courses-${dateStamp()}.csv`, [
-      ["Code", "Course name", "Category", "Duration", "Level", "Status", "Type", "Topics", "URL"],
+      ["Code", "Course name", "Category", "Duration", "Level", "Eligibility", "Status", "Type", "Topics", "URL"],
       ...list.map((row) => [
         row.code,
         row.name,
         row.category,
         row.duration,
         row.level,
+        row.eligibility,
         row.published ? "Published" : "Unpublished",
         row.origin === "srs" ? "SRS program" : "Catalogue",
         row.moduleCount,

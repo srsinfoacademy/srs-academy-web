@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { CourseForm } from "@/components/admin/courses/CourseForm";
 import { site } from "@/content/site";
 import { readCategories, readCourses } from "@/lib/data/courses";
+import { storageMode } from "@/lib/data/store";
 
 export const metadata: Metadata = { title: "Add course" };
 
@@ -17,6 +18,7 @@ export default async function NewCoursePage() {
       categories={categories}
       durations={durations}
       siteUrl={site.url}
+      uploadMode={storageMode() === "blob" ? "blob" : "direct"}
       initial={{
         name: "",
         slug: "",
@@ -27,6 +29,7 @@ export default async function NewCoursePage() {
         summary: "",
         modules: [],
         coverImage: "",
+        eligibility: "",
         seoTitle: "",
         seoDescription: "",
         published: false,

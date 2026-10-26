@@ -24,6 +24,7 @@ export default async function AdminCoursesPage({ searchParams }: PageProps<"/adm
     category: course.category,
     duration: course.duration,
     level: course.level,
+    eligibility: course.eligibility ?? "",
     published: course.published,
     origin: course.origin,
     moduleCount: course.modules.length,

@@ -26,6 +26,7 @@ export function seedCourses(): CourseRecord[] {
     summary: course.summary ?? "",
     modules: [...course.modules],
     image: courseImages[course.code]?.src ?? "",
+    eligibility: "",
     seoTitle: "",
     seoDescription: "",
     published: true,
