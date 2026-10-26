@@ -36,7 +36,7 @@ export default async function EditCoursePage({ params, searchParams }: PageProps
         level: course.level,
         summary: course.summary,
         modules: course.modules,
-        image: course.image,
+        coverImage: course.coverImage || course.image,
         seoTitle: course.seoTitle,
         seoDescription: course.seoDescription,
         published: course.published,

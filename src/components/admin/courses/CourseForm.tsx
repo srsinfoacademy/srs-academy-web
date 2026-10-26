@@ -121,7 +121,7 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
   }
 
   const levelOptions = values.level && !LEVELS.includes(values.level) ? [values.level, ...LEVELS] : LEVELS;
-  const imageValid = values.image && imageUrlSchema.safeParse(values.image).success;
+  const imageValid = values.coverImage && imageUrlSchema.safeParse(values.coverImage).success;
   const seoTitle = values.seoTitle || values.name || "Course name";
   const seoDescription = values.seoDescription || values.summary || "The short description is used when no SEO description is set.";
   const host = siteUrl.replace(/^https?:\/\//, "");
@@ -339,18 +339,18 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
           </Panel>
 
           <Panel aria-labelledby="cf-img">
-            <PanelTitle id="cf-img">Course image</PanelTitle>
+            <PanelTitle id="cf-img">Cover image</PanelTitle>
             {imageValid ? (
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-ad-bg">
-                <Image src={values.image} alt="Course image preview" fill unoptimized sizes="340px" className="object-cover" />
+              <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-ad-bg">
+                <Image src={values.coverImage} alt="Cover image preview" fill unoptimized sizes="340px" className="object-cover" />
               </div>
             ) : null}
-            <Field label="Image URL" htmlFor="cf-image" error={errors.image} hint="An https://images.unsplash.com/… link or a site path like /brand/…. Leave blank for a text-only card.">
-              <input id="cf-image" type="url" value={values.image} onChange={(e) => set("image", e.target.value)} aria-invalid={Boolean(errors.image)} aria-describedby="cf-image-hint cf-image-error" className={inputClass} />
+            <Field label="Cover image URL (optional)" htmlFor="cf-image" error={errors.coverImage} hint="An https://images.unsplash.com/… link or a site path like /brand/…. Shown in a 16:9 frame. Leave blank to use the generated category cover.">
+              <input id="cf-image" type="url" value={values.coverImage} onChange={(e) => set("coverImage", e.target.value)} aria-invalid={Boolean(errors.coverImage)} aria-describedby="cf-image-hint cf-image-error" className={inputClass} />
             </Field>
-            {values.image ? (
-              <Button size="sm" className="self-start" onClick={() => set("image", "")}>
-                Remove image
+            {values.coverImage ? (
+              <Button size="sm" className="self-start" onClick={() => set("coverImage", "")}>
+                Remove cover image
               </Button>
             ) : null}
           </Panel>

@@ -210,3 +210,98 @@ html.rd-theme-transition *::after {
     transform: none;
   }
 }
+
+/*
+ * Generated course covers (RdCourseCover). `--cv` is the category colour set
+ * inline; light and dark tints are derived here so one variant works in both
+ * themes. `.rd-cover--brand` is the navy SRS program cover (same in both).
+ */
+.rd-cover {
+  --cv-bg-a: color-mix(in srgb, var(--cv) 9%, var(--rd-elevated));
+  --cv-bg-b: color-mix(in srgb, var(--cv) 24%, var(--rd-muted));
+  --cv-ink: color-mix(in srgb, var(--cv) 80%, #0b1730);
+  --cv-line: color-mix(in srgb, var(--cv) 20%, transparent);
+  --cv-tile: color-mix(in srgb, var(--rd-elevated) 82%, transparent);
+  --cv-label-bg: color-mix(in srgb, var(--rd-elevated) 88%, transparent);
+  --cv-label-ink: var(--rd-ink);
+  background-image: linear-gradient(var(--cv-angle, 135deg), var(--cv-bg-a), var(--cv-bg-b));
+}
+.dark .rd-cover {
+  --cv-bg-a: color-mix(in srgb, var(--cv) 12%, var(--rd-elevated));
+  --cv-bg-b: color-mix(in srgb, var(--cv) 30%, #0c1424);
+  --cv-ink: color-mix(in srgb, var(--cv) 45%, #ffffff);
+  --cv-line: color-mix(in srgb, var(--cv) 34%, transparent);
+  --cv-tile: color-mix(in srgb, #0c1424 50%, transparent);
+  --cv-label-bg: color-mix(in srgb, #0c1424 72%, transparent);
+  --cv-label-ink: #f4efe6;
+}
+.rd-cover.rd-cover--brand,
+.dark .rd-cover.rd-cover--brand {
+  --cv-bg-a: #002050;
+  --cv-bg-b: color-mix(in srgb, #2080e0 45%, #002050);
+  --cv-ink: #ffffff;
+  --cv-line: color-mix(in srgb, var(--cv) 50%, transparent);
+  --cv-tile: rgba(255, 255, 255, 0.1);
+  --cv-label-bg: rgba(0, 18, 48, 0.62);
+  --cv-label-ink: #ffffff;
+}
+
+.rd-cover-pattern {
+  background-position: var(--cv-pattern-offset, 0 0);
+  -webkit-mask-image: radial-gradient(circle at var(--cv-mask-x, 0%) var(--cv-mask-y, 0%), #000 0%, transparent 75%);
+  mask-image: radial-gradient(circle at var(--cv-mask-x, 0%) var(--cv-mask-y, 0%), #000 0%, transparent 75%);
+}
+.rd-cover-pattern--dots {
+  background-image: radial-gradient(var(--cv-line) 1.3px, transparent 1.8px);
+  background-size: 16px 16px;
+}
+.rd-cover-pattern--lines {
+  background-image: repeating-linear-gradient(var(--cv-pattern-angle, 45deg), var(--cv-line) 0 1px, transparent 1px 12px);
+}
+.rd-cover-pattern--grid {
+  background-image:
+    linear-gradient(var(--cv-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cv-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.rd-cover-art {
+  transition: transform 0.5s ease-out;
+}
+.group:hover .rd-cover-art {
+  transform: scale(1.03);
+}
+.rd-cover-blob {
+  fill: var(--cv-line);
+  opacity: 0.55;
+}
+.rd-cover-ring {
+  fill: none;
+  stroke: var(--cv-line);
+  stroke-width: 1.2;
+}
+.rd-cover-tile {
+  fill: var(--cv-tile);
+  stroke: var(--cv-line);
+  stroke-width: 1;
+}
+.rd-cover-icon {
+  stroke: var(--cv-ink);
+}
+.rd-cover-label {
+  background: var(--cv-label-bg);
+  color: var(--cv-label-ink);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.rd-cover-dot {
+  background: var(--cv-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .rd-cover-art {
+    transform: none;
+  }
+}
+.rd-cover--brand .rd-cover-blob {
+  opacity: 0.3;
+}

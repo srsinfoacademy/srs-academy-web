@@ -54,7 +54,7 @@ export const courseInputSchema = z.object({
   level: trimmed(60),
   summary: z.string().trim().max(SUMMARY_MAX, `Keep the short description to ${SUMMARY_MAX} characters.`),
   modules: z.array(z.string().trim().max(300)).max(200).transform((items) => items.filter(Boolean)),
-  image: imageUrlSchema,
+  coverImage: imageUrlSchema.default(""),
   seoTitle: trimmed(SEO_TITLE_MAX + 30),
   seoDescription: trimmed(SEO_DESCRIPTION_MAX + 60),
   published: z.boolean(),

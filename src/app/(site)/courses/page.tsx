@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default async function CoursesPage() {
   const [catalogue, categories, srsPrograms] = await Promise.all([getPublicCatalogue(), getPublicCategories(), getPublicSrsPrograms()]);
-  const cards = catalogue.map((course) => toPublicCard(course, true));
+  const cards = catalogue.map((course) => toPublicCard(course));
   const programs = srsPrograms.map((course) => toPublicCard(course));
 
   return (
