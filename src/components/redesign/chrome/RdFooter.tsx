@@ -4,21 +4,34 @@ import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdSocialIcon } from "@/components/redesign/RdSocialIcon";
 import { RdLogo } from "@/components/redesign/chrome/RdLogo";
 import { rdFooterNavGroups } from "@/content/redesign-nav";
-import { hoursSummary, publicPhone, site, telHref, whatsappHref } from "@/content/site";
+import { site } from "@/content/site";
+import {
+  contactHoursSummary,
+  contactPhone,
+  contactSocialLinks,
+  contactTelHref,
+  contactWhatsappHref,
+  getPublicContact,
+} from "@/lib/data/contact";
 
 const linkClass =
   "inline-flex min-h-9 items-center text-[15px] text-rd-inverse-muted underline-offset-4 transition-colors hover:text-rd-inverse-text hover:underline focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-rd-accent";
 
 /**
- * Public footer on the inverse surface. Facts come from site.ts only.
- * The Student Portal and Admin links render only when their URLs are set.
+ * Public footer on the inverse surface. Contact facts and socials come from
+ * the admin Contact Page (seeded from site.ts). The Student Portal link
+ * renders only when its URL is set; Admin / Staff Login goes to the
+ * external admin URL when set, otherwise to /admin/login.
  */
-export function RdFooter() {
-  const phone = publicPhone();
-  const tel = telHref();
-  const whatsapp = whatsappHref();
+export async function RdFooter() {
+  const contact = await getPublicContact();
+  const phone = contactPhone(contact);
+  const tel = contactTelHref(contact);
+  const whatsapp = contactWhatsappHref(contact);
+  const hours = contactHoursSummary(contact);
+  const social = contactSocialLinks(contact);
   const studentHref = site.portals.student.href;
-  const adminHref = site.portals.admin.href;
+  const adminHref = site.portals.admin.href ?? "/admin/login";
   const year = new Date().getFullYear();
 
   const groups = rdFooterNavGroups.map((group) =>
@@ -35,23 +48,25 @@ export function RdFooter() {
             <RdLogo tone="inverse" />
             <p className="max-w-[34ch] text-[15px] leading-relaxed">{site.organisation.relationship}</p>
             <address className="flex flex-col gap-1.5 text-[15px] not-italic leading-relaxed">
-              <span>{site.contact.address}</span>
+              {contact.address ? <span>{contact.address}</span> : null}
               {phone && tel ? (
                 <a href={tel} className={linkClass}>
                   <span className="sr-only">Phone: </span>
                   {phone}
                 </a>
               ) : null}
-              {phone && whatsapp ? (
+              {whatsapp ? (
                 <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                  WhatsApp {phone}
+                  WhatsApp {phone ?? `+${contact.whatsapp.replace(/\D/g, "")}`}
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               ) : null}
-              <a href={`mailto:${site.contact.email}`} className={linkClass}>
-                {site.contact.email}
-              </a>
-              <span>{hoursSummary()}</span>
+              {contact.email ? (
+                <a href={`mailto:${contact.email}`} className={linkClass}>
+                  {contact.email}
+                </a>
+              ) : null}
+              {hours ? <span>{hours}</span> : null}
             </address>
           </div>
 
@@ -85,14 +100,18 @@ export function RdFooter() {
             <span>
               © {year} {site.copyrightHolder}
             </span>
-            {adminHref ? (
-              <a href={adminHref} target="_blank" rel="noopener noreferrer" className={linkClass}>
+            {adminHref.startsWith("/") ? (
+              <Link href={adminHref} prefetch={false} rel="nofollow" className={`${linkClass} text-[13px]`}>
+                {site.portals.admin.label}
+              </Link>
+            ) : (
+              <a href={adminHref} target="_blank" rel="noopener noreferrer nofollow" className={`${linkClass} text-[13px]`}>
                 {site.portals.admin.label}
               </a>
-            ) : null}
+            )}
           </div>
           <ul aria-label="Follow us" className="flex flex-wrap gap-2">
-            {site.social.map((item) => (
+            {social.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}

@@ -4,6 +4,8 @@ import { Resend } from "resend";
 import { site } from "@/content/site";
 import { checkRateLimit } from "@/lib/contact/rate-limit";
 import type { ContactEnquiryPayload } from "@/lib/contact/types";
+import { readContact } from "@/lib/data/contact";
+import { createEnquiry } from "@/lib/data/enquiries";
 
 export const runtime = "nodejs";
 
@@ -141,10 +143,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "validation" }, { status: 400 });
   }
 
+  // Save the enquiry for the admin panel (Vercel Blob) before emailing, so a
+  // mail failure never loses it. A storage failure only logs: the email
+  // below is still the primary notification.
+  let saved = false;
+  try {
+    await createEnquiry(enquiry);
+    saved = true;
+  } catch (error) {
+    console.error("Contact form: could not save the enquiry to storage.", error);
+  }
+
+  // Notification inbox is editable in the admin (Contact Page); falls back to site.ts.
+  const inbox = await readContact()
+    .then((contact) => contact.enquiryEmail || site.contact.enquiryInbox)
+    .catch(() => site.contact.enquiryInbox);
+
   const apiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.RESEND_FROM_EMAIL;
   if (!apiKey || !fromEmail) {
     console.error("Contact form: RESEND_API_KEY or RESEND_FROM_EMAIL is not configured.");
+    if (saved) return NextResponse.json({ ok: true });
     return NextResponse.json({ ok: false, error: "server_error" }, { status: 500 });
   }
 
@@ -153,7 +172,7 @@ export async function POST(request: Request) {
 
   const notification = await resend.emails.send({
     from: fromEmail,
-    to: site.contact.enquiryInbox,
+    to: inbox,
     replyTo: enquiry.email,
     subject: `New enquiry — ${enquiry.subject || "General"} — ${enquiry.name}`,
     html: notificationEmailHtml(enquiry, submittedAt),
@@ -161,6 +180,8 @@ export async function POST(request: Request) {
 
   if (notification.error) {
     console.error("Contact form: failed to send notification email.", notification.error);
+    // Already saved for the admin panel: report success so the visitor doesn't resend a duplicate.
+    if (saved) return NextResponse.json({ ok: true });
     return NextResponse.json({ ok: false, error: "server_error" }, { status: 500 });
   }
 
@@ -170,7 +191,7 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: fromEmail,
       to: enquiry.email,
-      replyTo: site.contact.enquiryInbox,
+      replyTo: inbox,
       subject: `We've received your enquiry — ${site.name}`,
       html: `<p style="font-family:sans-serif;font-size:14px;color:#111;">Thank you for contacting ${escapeHtml(site.name)}. We have received your enquiry and will get back to you as soon as possible.</p>`,
     });

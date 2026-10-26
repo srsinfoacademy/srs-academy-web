@@ -7,6 +7,7 @@
 
 @import "tailwindcss";
 @import "../styles/redesign.css";
+@import "../styles/admin.css";
 
 @theme {
   --color-*: initial;
@@ -49,6 +50,31 @@
   --font-rd-sans: var(--font-rd-mukta), "Mukta", system-ui, sans-serif;
 
   --breakpoint-nav: 73.75rem;
+}
+
+/* Admin panel surfaces (src/styles/admin.css): bg-ad-*, border-ad-*, text-ad-*. */
+@theme inline {
+  --color-ad-bg: var(--ad-bg);
+  --color-ad-panel: var(--ad-panel);
+  --color-ad-line: var(--ad-line);
+  --color-ad-line-soft: var(--ad-line-soft);
+  --color-ad-field: var(--ad-field);
+  --color-ad-head: var(--ad-head);
+  --color-ad-hover: var(--ad-hover);
+  --color-ad-side: var(--ad-side);
+  --color-ad-side-text: var(--ad-side-text);
+  --color-ad-side-line: var(--ad-side-line);
+  --color-ad-side-active: var(--ad-side-active);
+  --color-ad-alert-bg: var(--ad-alert-bg);
+  --color-ad-alert-line: var(--ad-alert-line);
+  --color-ad-alert-fg: var(--ad-alert-fg);
+  --color-ad-note-bg: var(--ad-note-bg);
+  --color-ad-note-line: var(--ad-note-line);
+  --color-ad-note-fg: var(--ad-note-fg);
+  --color-ad-ok-bg: var(--ad-ok-bg);
+  --color-ad-ok-line: var(--ad-ok-line);
+  --color-ad-ok-fg: var(--ad-ok-fg);
+  --color-ad-white: #ffffff;
 }
 
 @layer base {

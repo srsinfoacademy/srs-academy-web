@@ -8,42 +8,45 @@ import { RdCourseCard } from "@/components/redesign/RdCourseCard";
 import { RdDashedPanel } from "@/components/redesign/RdDashedPanel";
 import { RdEyebrow } from "@/components/redesign/RdEyebrow";
 import { RdPill } from "@/components/redesign/RdPill";
-import { getAllCourses, getCourseBySlug, relatedCourses, toCourseCard } from "@/content/courses";
 import { courseDetailCopy as copy } from "@/content/public-pages";
 import { enquireHref } from "@/content/redesign-nav";
 import { site } from "@/content/site";
+import { getPublicCourseBySlug, getPublicCourses, getPublicRelatedCourses, toPublicCard } from "@/lib/data/courses";
 import { pageMetadata } from "@/lib/metadata";
 
-/** Every course gets a static page from this one template. */
-export function generateStaticParams() {
-  return getAllCourses().map((course) => ({ slug: course.slug }));
+/**
+ * Every published course gets a static page from this one template.
+ * Courses added in the admin later render on first request; unpublished or
+ * hidden ones return 404. Admin saves revalidate these pages.
+ */
+export async function generateStaticParams() {
+  return (await getPublicCourses()).map((course) => ({ slug: course.slug }));
 }
-
-export const dynamicParams = false;
 
 export async function generateMetadata({ params }: PageProps<"/courses/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const course = getCourseBySlug(slug);
+  const course = await getPublicCourseBySlug(slug);
   if (!course) return {};
   const description =
-    course.summary ??
-    `${course.name} (${course.code}) — a ${course.category.toLowerCase()} course at ${site.name}. Duration: ${course.duration}.`;
-  return pageMetadata({ title: course.name, description, path: `/courses/${course.slug}` });
+    course.seoDescription ||
+    course.summary ||
+    `${course.name} (${course.code}) — a ${course.category.toLowerCase()} course at ${site.name}.${course.duration ? ` Duration: ${course.duration}.` : ""}`;
+  return pageMetadata({ title: course.seoTitle || course.name, description, path: `/courses/${course.slug}` });
 }
 
 const h2 = "font-rd-display text-[clamp(26px,2.6vw,34px)] font-medium leading-[1.15] text-rd-ink";
 
 export default async function CourseDetailPage({ params }: PageProps<"/courses/[slug]">) {
   const { slug } = await params;
-  const course = getCourseBySlug(slug);
+  const course = await getPublicCourseBySlug(slug);
   if (!course) notFound();
 
-  const related = relatedCourses(course.slug, 3).map((item) => toCourseCard(item));
+  const related = (await getPublicRelatedCourses(course.slug, 3)).map((item) => toPublicCard(item));
   const hasCurriculum = Boolean(course.curriculum?.length);
   const isFullStack = course.slug === "full-stack-web-development";
 
   const stats = [
-    { label: "Duration", value: course.duration },
+    { label: "Duration", value: course.duration || "To be confirmed" },
     { label: "Course code", value: course.code },
     ...(course.level ? [{ label: "Level", value: course.level }] : []),
     {

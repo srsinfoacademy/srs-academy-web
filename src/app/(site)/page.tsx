@@ -11,20 +11,19 @@ import { RdImageCredit } from "@/components/redesign/RdImageCredit";
 import { RdPill } from "@/components/redesign/RdPill";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
 import { RdEnquirySection } from "@/components/redesign/enquiry/RdEnquirySection";
-import {
-  courseAreas,
-  coursePath,
-  coursesInArea,
-  getCatalogueCourses,
-  getCategories,
-  getHomeFeaturedCourses,
-  getSrsPrograms,
-  toCourseCard,
-} from "@/content/courses";
+import { courseAreas } from "@/content/courses";
+import { coursePath } from "@/content/courses/paths";
 import { faqEntries } from "@/content/faq";
 import { homeCopy, learnBuildAdvance } from "@/content/public-pages";
 import { enquireHref } from "@/content/redesign-nav";
 import { site } from "@/content/site";
+import {
+  getPublicCatalogue,
+  getPublicCategories,
+  getPublicHomeFeatured,
+  getPublicSrsPrograms,
+  toPublicCard,
+} from "@/lib/data/courses";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
@@ -35,13 +34,18 @@ export const metadata: Metadata = {
 /** Questions shown on Home; the full list lives on /faq. */
 const HOME_FAQ_COUNT = 6;
 
-export default function HomePage() {
-  const programs = getSrsPrograms();
+export default async function HomePage() {
+  const [programs, featuredCourses, catalogue, publicCategories] = await Promise.all([
+    getPublicSrsPrograms(),
+    getPublicHomeFeatured(),
+    getPublicCatalogue(),
+    getPublicCategories(),
+  ]);
   const fullStack = programs.find((program) => program.curriculum?.length) ?? programs[0];
   const otherPrograms = programs.filter((program) => program.slug !== fullStack?.slug);
-  const featured = getHomeFeaturedCourses().map((course) => toCourseCard(course, true));
-  const totalCourses = getCatalogueCourses().length;
-  const categoryCounts = new Map(getCategories().map((item) => [item.category, item.count]));
+  const featured = featuredCourses.map((course) => toPublicCard(course, true));
+  const totalCourses = catalogue.length;
+  const categoryCounts = new Map(publicCategories.map((item) => [item.category, item.count]));
   const hero = site.imagery.hero;
 
   return (
@@ -145,8 +149,8 @@ export default function HomePage() {
         />
         <ul data-reveal="stagger" className="mt-10 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
           {courseAreas.map((area) => {
-            const count = coursesInArea(area.id).length;
             const categories = area.categories.filter((category) => categoryCounts.has(category));
+            const count = categories.reduce((sum, category) => sum + (categoryCounts.get(category) ?? 0), 0);
             return (
               <li
                 key={area.id}

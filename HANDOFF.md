@@ -1,21 +1,51 @@
-# Phase 1 handoff — SRS Academy public redesign
+# Handoff — SRS Academy website (Phase 1 redesign + admin panel v1)
 
-This branch is the shared base. Build new public pages on a branch **off this one**, and open a PR **into this branch**. Do not merge, do not push to `main`, and do not change Vercel or production settings.
+Phase 1 (the public redesign) is merged into `main`. The admin panel is built on `claude/admin-panel` with a draft PR into `main` titled "Admin panel (basic) v1". Do not merge it from a session, do not push to `main`, and do not change Vercel or production settings.
 
-## Branch and PR
+## Admin panel (basic) v1 — DONE on `claude/admin-panel`
 
-- Branch: `cursor/redesign-phase-1-cdd9`
-- PR: https://github.com/srsinfoacademy/srs-academy-web/pull/24 (draft, base `main`). Do not merge it.
-- Base for your work: `cursor/redesign-phase-1-cdd9`, not `main`. Open your pull request into this branch.
+Design source: the approved Claude Design file `SRS-Admin-Panel.dc.html` (navy sidebar, white top bar, grey canvas, white panels). The prototype's sample data, "Sample data" badges and simulated-login notes were dropped; every screen shows real data.
 
-## DONE (do not rebuild)
+- **Routes:** `/admin/login`, `/admin` (dashboard), `/admin/courses`, `/admin/courses/new`, `/admin/courses/[id]`, `/admin/categories`, `/admin/enquiries`, `/admin/enquiries/[id]`, `/admin/contact`, `/admin/settings`. Signed-in screens share `src/app/admin/(panel)/layout.tsx` → `AdminShell` (collapsible sidebar persisted in `localStorage` key `srs-admin-sidebar`, mobile drawer below 1024px, top bar with course search, Light/Dark/System switch using the site `ThemeProvider`, View website, profile menu with logout). Greyed "coming later" items: Students, Admissions, Live Classes, Assignments, Certificates, Content, Portal.
+- **API:** `src/app/api/admin/*` — `login`, `logout`, `courses` (POST create), `courses/[id]` (PUT, DELETE), `courses/bulk`, `courses/import`, `categories` (one POST with an `action`), `contact` (PUT), `enquiries/[id]` (PATCH status / note / deleteNote). Server-side mutations live in `src/lib/admin/course-mutations.ts` and `category-mutations.ts`.
+- **Data module (`src/lib/data/`)** — used by both the public site and the admin:
+  - `store.ts`: private Vercel Blob JSON documents (`data/courses.json`, `data/categories.json`, `data/contact.json`, `enquiries/<id>.json`); gitignored `.admin-data/` folder in local dev without a token; read-only fallback in production without a token.
+  - `seed.ts`: seed documents from `src/content/courses` (418 catalogue rows + 5 SRS programs) and `src/content/site.ts`. Used until the first save.
+  - `courses.ts` / `contact.ts`: `getPublic*` helpers read through `unstable_cache` tagged `courses`, `categories`, `contact`. A course is public when `published` and its category is visible.
+  - `revalidate.ts`: every admin save calls `revalidateTag(tag, { expire: 0 })` plus `revalidatePath("/", "layout")` and the sitemap. Verified with a production build: a static course page returned 404 and left the sitemap right after unpublishing; About/Contact showed a new phone immediately.
+  - `schemas.ts`: zod schemas shared by forms and API (`ADMIN_PASSWORD_MIN = 6`, `SUMMARY_MAX = 200`). `import-rules.ts`: the topic / duration / category / code clean-up ported from `scripts/import-courses.py`; re-importing `content-templates/itdb_courses.xlsx` in update mode changes nothing.
+- **Public site now reads through the data module:** header course menu, mobile menu, home, `/courses` (chips accept `?category=` name or admin slug), `/courses/[slug]` (SEO title/description from admin; `dynamicParams` is now on so admin-created courses render on demand, and unpublished slugs 404), technical training, sitemap, footer, enquiry section, About address, Contact (optional Google Maps embed). `src/content/courses/index.ts` remains for the seed, `courseAreas` and the content scripts.
+- **Courses screen:** 423 rows (SRS programs flagged with a pill and a Type filter), search, category / status / type filters, sortable columns + sort menu, 25/50/100 per page, row/page/all-matching selection, bulk Publish / Unpublish / Change category / Delete (confirm), Export CSV (filtered or selected, formula-safe), Import from Excel (SheetJS in the browser → column mapping → preview → summary → upsert by course code on the server; duplicate codes in the catalogue match by occurrence; new courses start unpublished; unknown categories are created).
+- **Course form:** name, slug (auto from name until edited), code, category, duration (datalist), level, short description (200 max), repeatable modules (reorder/remove), image URL (Unsplash or site path, preview), SEO title/description with search preview, Published switch, delete.
+- **Categories:** counts, add / rename (moves courses), reorder (drag + up/down, saved immediately), show/hide, delete only when empty or after choosing where its courses go.
+- **Enquiries:** `/api/contact` keeps its validation, honeypot, timing and rate-limit checks and the Resend emails; it now also saves the enquiry first, emails the notification to the admin-set inbox (fallback `site.contact.enquiryInbox`), and returns success when the enquiry was saved even if Resend fails. Admin list (search, status filters new / contacted / follow-up / closed, CSV) and detail (reply by email / WhatsApp, status, internal notes).
+- **Contact Page:** phone (+91 8008138008 seed), WhatsApp digits, public email, enquiry notification email, address, office-hours rows, six social links, Google Maps embed URL (pasting the iframe code keeps the link), live preview, Save / Discard.
+- **Settings:** account and session, **Change password note: the password is managed via the `ADMIN_PASSWORD` env var for now (minimum 6 characters)** with the Vercel steps, data-storage status.
+- **Auth/security:** `ADMIN_EMAIL`, `ADMIN_PASSWORD` (6+ chars), `AUTH_SECRET` (16+ chars). Timing-safe compare, `jose` HS256 session cookie `srs_admin_session` (httpOnly, SameSite=Lax, Secure in production, 12h). `src/proxy.ts` guards `/admin/*` and `/api/admin/*` except login and adds `X-Robots-Tag: noindex` + `no-store`; pages and routes re-check the session. Durable login lockout (5 failures / 15 min per hashed IP, stored in Blob). All mutations: session + zod + same-origin `Origin` check. `/admin` is noindex, disallowed in `robots.txt`, not in the sitemap. CSP change: `frame-src` adds `https://www.google.com` for the map embed only.
+- **Vercel (already set by the CEO, not changed here):** `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `AUTH_SECRET` for Production and Preview; private Blob store `srs-academy-admin-data` connected, so `BLOB_READ_WRITE_TOKEN` is provided.
+- **Styling:** admin surface tokens in `src/styles/admin.css` (light + dark) exposed as `bg-ad-*` / `border-ad-*` utilities at the end of `globals.css`; ink, accent, link and danger come from `redesign.css`. Newsreader + Mukta only.
+- `pnpm lint`, `pnpm typecheck` and `pnpm build` pass.
+
+### Admin — open items
+
+- SheetJS: uses the maintained CDN build (`xlsx` from `https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz`, pinned with an integrity hash in `pnpm-lock.yaml`), lazy-loaded only in the import dialog. Builds need to reach `cdn.sheetjs.com` for `pnpm install`.
+- Single admin account; no roles, no in-app password change or reset (env var for now).
+- Documents are rewritten whole on each save: two people saving the same document at the same moment means last write wins.
+- Login lockout is durable: 5 failed attempts per IP within 15 minutes lock that IP for 15 minutes (429 with a message and `Retry-After`). Counters live in Blob at `security/login/<sha256(IP + AUTH_SECRET)>.json` (no raw IPs); a successful sign-in deletes the record. If Blob is unreachable the counter falls back to the instance's memory instead of blocking sign-in. Two simultaneous attempts can race and get one extra try. The contact-form rate limit is still in-memory per instance.
+- Blob reads retry twice on errors. If the store is still unreachable, public pages render the bundled content and log "Public data: … could not be read from storage" (a Vercel preview build failed once on a Blob 500 before this). A page built that way keeps the bundled data until the next admin save or deploy. Admin screens and saves never fall back, so an outage can't overwrite stored data.
+- Course images take a URL (Unsplash or a site path); there is no upload yet.
+- Legal pages (`src/content/legal.ts`) still read the phone and email from `site.ts`, because that text is approved policy wording. If the admin changes the phone or email, update `site.ts` too.
+- The Blob store and the real Vercel preview were not reachable from the build sandbox; Blob was exercised through the same code path with the local store. Check one save on the Vercel preview.
+- RULES.md rule 11 ("Do not build ... Admin Panel") was the Phase 1 scope; the admin panel was requested afterwards.
+
+## Phase 1 foundations — DONE (do not rebuild)
 
 - `src/content/site.ts` — one config file for public facts. Display email `srsinfoacademy@gmail.com`. Resend inbox `contact.enquiryInbox` (`srsinfotechacademy@gmail.com`) is **not** for display. Phone and WhatsApp are the CEO-confirmed +91 8008138008 (`contact.phone`, `contact.phoneDigits`); render them only through the helpers, and they hide again if those fields are emptied. Address, hours, location line, social links, logo paths, Unsplash stand-ins, `features.showTestimonials === false`, `features.showFees === false`. Helpers: `publicPhone()`, `telHref()`, `whatsappHref()`, `contactFacts()`, `hoursSummary()`.
 - `site.url` is `https://www.srstechacademy.com`. Canonicals, Open Graph and the sitemap already read it. Do not point them back at the apex.
 - Pinterest meta `p:domain_verify` = `793089aaf6d1e8ff5623e5867761095f` in `src/app/layout.tsx`. Leave it.
 - `/api/contact` still validates, honeypots, rate-limits and sends through Resend. Notifications go to `site.contact.enquiryInbox`. Do not change that route’s spam checks.
 - Course data: `content-templates/itdb_courses.xlsx` → `python3 scripts/import-courses.py` (or `pnpm courses:import`). Outputs `src/content/courses/courses.json` (418 courses) and `src/content/courses/redirects.json`. Source URL and Notes are dropped. Topics are short lines, not raw third-party paragraphs.
-- Course API: `src/content/courses/index.ts`. Use `getAllCourses`, `getCourseBySlug`, `getCourseByCode`, `getCategories`, `getCoursesByCategory`, `searchCourses`, `relatedCourses`, `coursePath`, `getHomeFeaturedCourses`, `getSrsPrograms`, `coursesInArea`, `courseAreas`. Do not import the JSON from a client component; pass a slim list from a Server Component.
+- Course API: public pages now use `src/lib/data/courses.ts` (`getPublicCourses`, `getPublicCatalogue`, `getPublicSrsPrograms`, `getPublicCourseBySlug`, `getPublicCategories`, `getPublicRelatedCourses`, `getPublicHomeFeatured`, `toPublicCard`), which reads the admin data with the bundled `src/content/courses/index.ts` data as seed. Do not import the JSON from a client component; pass a slim list from a Server Component.
 - Five SRS programs that are **not** spreadsheet rows live in `src/content/courses/featured-programs.ts` and are merged by the loader (Full Stack has a real curriculum; the other four have empty `modules` on purpose).
 - Homepage photo cards: course codes `DLS001`, `AIDMS004`, `CDEAE053`, `CCSE505`, `BMC478`, `CMM478`. Images are on `site.imagery.courses`.
 - Redesign tokens: `src/styles/redesign.css`, imported from `globals.css`. Light palette is the design. `.dark` is the derived theme. The `@theme` block that exposes them as utilities is at the end of `src/app/globals.css`. Utilities are `bg-rd-bg`, `text-rd-ink`, `text-rd-body`, `text-rd-soft`, `bg-rd-elevated`, `bg-rd-muted`, `bg-rd-inverse`, `text-rd-inverse-text`, `bg-rd-accent`, `text-rd-on-accent`, `text-rd-link`, `border-rd-line`, `border-rd-line-strong`, `bg-rd-tint-green`, `bg-rd-tint-saffron`, `text-rd-eyebrow`, `text-rd-danger`, `font-rd-display`, `font-rd-sans`. Nav breakpoint is `nav:` (1180px).
@@ -38,7 +68,7 @@ All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: s
 - **/technical-training** from `technicalProgramSlugs`.
 - **Admissions** (three `admissionsJourney` steps, now in `src/content/public-pages.ts`), **Contact**, **FAQ** (grouped by category), **Resources** + `/resources/[slug]`, **Updates** (empty state; `/updates/[slug]` generates nothing until `updates.ts` has entries), **Privacy / Terms / Refund / Accessibility** restyled from `legal.ts` text.
 - **Enquiry form** (`RdEnquiryForm`): posts JSON to the unchanged `/api/contact` (`name`, `email`, `phone`, `subject`, `message`, `honeypot`, `formRenderedAt`, `sourcePage`). Email is required because the API requires it; mobile is optional but validated as a 10-digit Indian number when given. Searchable course select (slug values, because some course names repeat) + "Not sure yet"; subject is "Name (CODE)"; course and format are written into the message when it is blank.
-- **Retired:** `/light` tree, `src/proxy.ts`, the theme-cookie script, `theme-preference.ts`, `theme-route-map.ts`, the `(main)` group, the Knowledge OS components and stylesheets, and the Space Grotesk / Manrope / IBM Plex fonts. `redirects.json` is wired into `next.config.ts` (308), then `/light/:path*` → `/` and `/programs/:slug` → `/courses`.
+- **Retired:** `/light` tree, the old theme `src/proxy.ts` (a new `src/proxy.ts` now guards the admin), the theme-cookie script, `theme-preference.ts`, `theme-route-map.ts`, the `(main)` group, the Knowledge OS components and stylesheets, and the Space Grotesk / Manrope / IBM Plex fonts. `redirects.json` is wired into `next.config.ts` (308), then `/light/:path*` → `/` and `/programs/:slug` → `/courses`.
 - **Sitemap:** static routes + every course + published resources + updates, on `site.url` (www).
 - **Privacy:** only the "Cookies and local storage" sentence changed; it now describes the `srs-theme` localStorage value.
 - **Tokens:** the redesign `@theme` block lives at the end of `src/app/globals.css` (the old reset was clearing every `rd-*` utility before). Added `--rd-inverse-hover`, `--rd-line-hover`, `--rd-field` (3:1 input borders), `--rd-shadow-card`, `--rd-shadow-raised`, `.rd-lattice`. Every text token pair passes WCAG AA in both themes.
@@ -79,13 +109,13 @@ All public pages now live in `src/app/(site)` with one layout (`RdSiteChrome`: s
 - Duplicate spreadsheet names (about 15 pairs, plus one repeated name+code) already have distinct slugs. Old `/programs/...` URLs that matched more than one row redirect to `/courses?q=...` instead of guessing.
 - Unsplash images need the credit line from `site.imagery`. `next.config.ts` already allows `images.unsplash.com`.
 - Focus: `focus-visible:outline-3` in the accent colour. Icon buttons need an accessible name. Decorative images use `alt=""`.
-- Student and admin portal links are external and optional. Hide them when the env URL is missing.
+- The Student portal link is external and optional; hide it when the env URL is missing. The footer's Admin / Staff Login link goes to `NEXT_PUBLIC_ADMIN_PORTAL_URL` when set, otherwise to `/admin/login`.
 
 ## Placeholders still open
 
 - Street address (only "Saltlake, Kolkata, West Bengal 700091" is confirmed) — no street line, no Mumbai.
 - Testimonials and original photography (`site.imagery`, `features.showTestimonials`). All photos are Unsplash stand-ins with credits.
-- Student portal and admin portal URLs (`NEXT_PUBLIC_STUDENT_PORTAL_URL`, `NEXT_PUBLIC_ADMIN_PORTAL_URL`); the links stay hidden until set.
+- Student portal URL (`NEXT_PUBLIC_STUDENT_PORTAL_URL`); the link stays hidden until set.
 - Durations, levels and module lists for Artificial Intelligence, Technology Programs, Business & Entrepreneurship and Digital Skills (their pages show "To be confirmed" and the dashed panel).
 - Batch dates and any admission step after Enrol.
 - One catalogue row, "Diploma in Computer Application & FA", has no duration (`To be confirmed`).

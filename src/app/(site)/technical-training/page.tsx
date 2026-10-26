@@ -6,12 +6,13 @@ import { RdContainer } from "@/components/redesign/RdContainer";
 import { RdEyebrow } from "@/components/redesign/RdEyebrow";
 import { RdImageCredit } from "@/components/redesign/RdImageCredit";
 import { RdSection, RdSectionHeading } from "@/components/redesign/RdSection";
-import { coursePath, getCourseBySlug } from "@/content/courses";
+import { coursePath } from "@/content/courses/paths";
 import { technicalProgramSlugs } from "@/content/courses/featured-programs";
-import type { Course } from "@/content/courses/types";
 import { learnBuildAdvance, technicalTrainingCopy as copy } from "@/content/public-pages";
 import { enquireHref } from "@/content/redesign-nav";
 import { site } from "@/content/site";
+import { getPublicCourseBySlug } from "@/lib/data/courses";
+import type { CourseRecord } from "@/lib/data/types";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -20,10 +21,10 @@ export const metadata: Metadata = pageMetadata({
   path: "/technical-training",
 });
 
-export default function TechnicalTrainingPage() {
-  const programs = technicalProgramSlugs
-    .map((slug) => getCourseBySlug(slug))
-    .filter((course): course is Course => course !== undefined);
+export default async function TechnicalTrainingPage() {
+  const programs = (await Promise.all(technicalProgramSlugs.map((slug) => getPublicCourseBySlug(slug)))).filter(
+    (course): course is CourseRecord => course !== undefined,
+  );
   const image = site.imagery.technical;
 
   return (

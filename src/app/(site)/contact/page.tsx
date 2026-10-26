@@ -15,7 +15,7 @@ export default function ContactPage() {
   return (
     <>
       <RdPageHero eyebrow={contactCopy.eyebrow} title={contactCopy.title} intro={contactCopy.intro} />
-      <RdEnquirySection />
+      <RdEnquirySection showMap />
     </>
   );
 }
