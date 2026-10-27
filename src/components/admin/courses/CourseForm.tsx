@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Alert,
@@ -53,13 +53,14 @@ type Props = {
   uploadMode: "blob" | "direct";
 };
 
-let rowKey = 0;
-const withKeys = (modules: string[]) => modules.map((value) => ({ key: ++rowKey, value }));
+// Row keys start at 0 per form so the server and client render the same ids.
+const withKeys = (modules: string[]) => modules.map((value, index) => ({ key: index, value }));
 
 export function CourseForm({ mode, id, initial, categories, durations, origin, hasCurriculum, siteUrl, savedNotice, uploadMode }: Props) {
   const router = useRouter();
   const [values, setValues] = useState<CourseFormValues>(initial);
   const [modules, setModules] = useState(() => withKeys(initial.modules.length ? initial.modules : mode === "new" ? [""] : []));
+  const nextRowKey = useRef(modules.length);
   const [slugTouched, setSlugTouched] = useState(mode === "edit");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<{ tone: "ok" | "error"; text: string } | null>(
@@ -344,7 +345,7 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
             <Button
               className="self-start"
               onClick={() => {
-                const next = [...modules, ...withKeys([""])];
+                const next = [...modules, { key: nextRowKey.current++, value: "" }];
                 updateModules(next);
                 requestAnimationFrame(() => document.getElementById(`cf-mod-${next[next.length - 1].key}`)?.focus());
               }}
