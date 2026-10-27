@@ -29,6 +29,8 @@ export type CourseRecord = {
   image: string;
   /** Cover photo set in the admin: https://images.unsplash.com/… or a site path. Empty or missing = generated cover. */
   coverImage?: string;
+  /** Who can apply, e.g. "10th pass". Admin-only for now: not shown on the website. Missing = "". */
+  eligibility?: string;
   seoTitle: string;
   seoDescription: string;
   published: boolean;

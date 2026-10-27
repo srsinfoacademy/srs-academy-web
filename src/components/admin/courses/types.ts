@@ -7,6 +7,7 @@ export type AdminCourseRow = {
   category: string;
   duration: string;
   level: string;
+  eligibility: string;
   published: boolean;
   origin: "catalogue" | "srs";
   moduleCount: number;

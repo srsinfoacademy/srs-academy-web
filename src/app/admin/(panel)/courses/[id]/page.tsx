@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CourseForm } from "@/components/admin/courses/CourseForm";
 import { site } from "@/content/site";
 import { readCategories, readCourses } from "@/lib/data/courses";
+import { storageMode } from "@/lib/data/store";
 
 export const metadata: Metadata = { title: "Edit course" };
 
@@ -26,6 +27,7 @@ export default async function EditCoursePage({ params, searchParams }: PageProps
       categories={categories}
       durations={durations}
       siteUrl={site.url}
+      uploadMode={storageMode() === "blob" ? "blob" : "direct"}
       savedNotice={saved === "1"}
       initial={{
         name: course.name,
@@ -37,6 +39,7 @@ export default async function EditCoursePage({ params, searchParams }: PageProps
         summary: course.summary,
         modules: course.modules,
         coverImage: course.coverImage || course.image,
+        eligibility: course.eligibility ?? "",
         seoTitle: course.seoTitle,
         seoDescription: course.seoDescription,
         published: course.published,

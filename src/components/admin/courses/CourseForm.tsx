@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Alert,
@@ -21,7 +21,18 @@ import {
   selectClass,
   textareaClass,
 } from "@/components/admin/ui";
-import { SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, SUMMARY_MAX, courseInputSchema, fieldErrors, imageUrlSchema, slugify, type CourseInput } from "@/lib/data/schemas";
+import {
+  ELIGIBILITY_MAX,
+  SEO_DESCRIPTION_MAX,
+  SEO_TITLE_MAX,
+  SUMMARY_MAX,
+  courseInputSchema,
+  fieldErrors,
+  imageUrlSchema,
+  slugify,
+  type CourseInput,
+} from "@/lib/data/schemas";
+import { MAX_COVER_BYTES, isCoverMime } from "@/lib/media/cover-images";
 import { cn } from "@/lib/cn";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced", "Beginner to Intermediate"];
@@ -38,15 +49,18 @@ type Props = {
   hasCurriculum?: boolean;
   siteUrl: string;
   savedNotice?: boolean;
+  /** "blob": upload straight to Vercel Blob (past the 4.5 MB function limit); "direct": post to the admin route. */
+  uploadMode: "blob" | "direct";
 };
 
-let rowKey = 0;
-const withKeys = (modules: string[]) => modules.map((value) => ({ key: ++rowKey, value }));
+// Row keys start at 0 per form so the server and client render the same ids.
+const withKeys = (modules: string[]) => modules.map((value, index) => ({ key: index, value }));
 
-export function CourseForm({ mode, id, initial, categories, durations, origin, hasCurriculum, siteUrl, savedNotice }: Props) {
+export function CourseForm({ mode, id, initial, categories, durations, origin, hasCurriculum, siteUrl, savedNotice, uploadMode }: Props) {
   const router = useRouter();
   const [values, setValues] = useState<CourseFormValues>(initial);
   const [modules, setModules] = useState(() => withKeys(initial.modules.length ? initial.modules : mode === "new" ? [""] : []));
+  const nextRowKey = useRef(modules.length);
   const [slugTouched, setSlugTouched] = useState(mode === "edit");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<{ tone: "ok" | "error"; text: string } | null>(
@@ -55,6 +69,8 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
 
   function set<K extends keyof CourseFormValues>(key: K, value: CourseFormValues[K]) {
     setDirty(true);
@@ -108,6 +124,51 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
     }
     setStatus({ tone: "ok", text: "Saved. The website shows the change within a few seconds." });
     router.refresh();
+  }
+
+  /** Uploads a cover image and puts its /media/courses/… path in the Cover image URL box. */
+  async function uploadCover(file: File) {
+    setUploadMessage(null);
+    if (!isCoverMime(file.type)) return setUploadMessage({ tone: "error", text: "Use a JPG, PNG or WEBP image." });
+    if (file.size > MAX_COVER_BYTES) return setUploadMessage({ tone: "error", text: "The image is larger than 5 MB." });
+    setUploading(true);
+    try {
+      let path: string;
+      if (uploadMode === "blob") {
+        const prepared = await adminFetch<{ pathname?: string; signature?: string }>("/api/admin/media/courses/client", "POST", {
+          action: "prepare",
+          contentType: file.type,
+          size: file.size,
+        });
+        if (!prepared.ok || !prepared.data.pathname) throw new Error(apiMessage(prepared.data, "The upload couldn't start."));
+        const { upload } = await import("@vercel/blob/client");
+        await upload(prepared.data.pathname, file, {
+          access: "private",
+          contentType: file.type,
+          handleUploadUrl: "/api/admin/media/courses/token",
+          clientPayload: prepared.data.signature,
+        });
+        const verified = await adminFetch<{ path?: string }>("/api/admin/media/courses/client", "POST", {
+          action: "verify",
+          pathname: prepared.data.pathname,
+        });
+        if (!verified.ok || !verified.data.path) throw new Error(apiMessage(verified.data, "The upload couldn't be checked."));
+        path = verified.data.path;
+      } else {
+        const form = new FormData();
+        form.append("file", file);
+        const res = await fetch("/api/admin/media/courses", { method: "POST", body: form, credentials: "same-origin" });
+        const data = (await res.json().catch(() => ({}))) as { path?: string; message?: string; error?: string };
+        if (!res.ok || !data.path) throw new Error(apiMessage(data, "The upload failed."));
+        path = data.path;
+      }
+      set("coverImage", path);
+      setErrors((prev) => ({ ...prev, coverImage: "" }));
+      setUploadMessage({ tone: "ok", text: "Image uploaded. Save the course to use it as the cover." });
+    } catch (error) {
+      setUploadMessage({ tone: "error", text: error instanceof Error && error.message ? error.message : "The upload failed. Try again." });
+    }
+    setUploading(false);
   }
 
   async function remove() {
@@ -284,7 +345,7 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
             <Button
               className="self-start"
               onClick={() => {
-                const next = [...modules, ...withKeys([""])];
+                const next = [...modules, { key: nextRowKey.current++, value: "" }];
                 updateModules(next);
                 requestAnimationFrame(() => document.getElementById(`cf-mod-${next[next.length - 1].key}`)?.focus());
               }}
@@ -338,6 +399,32 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
             ) : null}
           </Panel>
 
+          <Panel aria-labelledby="cf-elig">
+            <PanelTitle id="cf-elig">Eligibility</PanelTitle>
+            <Field
+              label="Eligibility (optional)"
+              htmlFor="cf-eligibility"
+              error={errors.eligibility}
+              aside={
+                <span className={values.eligibility.length > ELIGIBILITY_MAX ? "font-semibold text-rd-danger" : undefined}>
+                  {values.eligibility.length}/{ELIGIBILITY_MAX}
+                </span>
+              }
+              hint="Who can join this course. Kept in the admin for now; not shown on the website."
+            >
+              <input
+                id="cf-eligibility"
+                value={values.eligibility}
+                onChange={(e) => set("eligibility", e.target.value)}
+                placeholder="e.g. 10th pass, 12th pass, Any graduate"
+                maxLength={ELIGIBILITY_MAX + 50}
+                aria-invalid={Boolean(errors.eligibility)}
+                aria-describedby="cf-eligibility-hint cf-eligibility-error"
+                className={inputClass}
+              />
+            </Field>
+          </Panel>
+
           <Panel aria-labelledby="cf-img">
             <PanelTitle id="cf-img">Cover image</PanelTitle>
             {imageValid ? (
@@ -345,9 +432,42 @@ export function CourseForm({ mode, id, initial, categories, durations, origin, h
                 <Image src={values.coverImage} alt="Cover image preview" fill unoptimized sizes="340px" className="object-cover" />
               </div>
             ) : null}
-            <Field label="Cover image URL (optional)" htmlFor="cf-image" error={errors.coverImage} hint="An https://images.unsplash.com/… link or a site path like /brand/…. Shown in a 16:9 frame. Leave blank to use the generated category cover.">
+            <Field label="Cover image URL (optional)" htmlFor="cf-image" error={errors.coverImage} hint="An https://images.unsplash.com/… link, a site path like /brand/…, or upload an image below. Shown in a 16:9 frame. Leave blank to use the generated category cover.">
               <input id="cf-image" type="url" value={values.coverImage} onChange={(e) => set("coverImage", e.target.value)} aria-invalid={Boolean(errors.coverImage)} aria-describedby="cf-image-hint cf-image-error" className={inputClass} />
             </Field>
+            <div className="flex flex-col gap-1.5">
+              <label
+                htmlFor="cf-upload"
+                className={cn(
+                  "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 self-start rounded-[10px] border border-ad-field bg-ad-panel px-4 text-[15px] font-semibold text-rd-ink hover:border-rd-ink",
+                  "focus-within:outline focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-rd-focus",
+                  uploading && "cursor-wait opacity-60",
+                )}
+              >
+                {uploading ? "Uploading…" : "Upload image"}
+                <input
+                  id="cf-upload"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  disabled={uploading}
+                  aria-describedby="cf-upload-hint"
+                  className="sr-only"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    e.target.value = "";
+                    if (file) void uploadCover(file);
+                  }}
+                />
+              </label>
+              <span id="cf-upload-hint" className="text-[13px] leading-snug text-rd-soft">
+                JPG, PNG or WEBP, up to 5 MB. Fills in the Cover image URL above.
+              </span>
+              {uploadMessage ? (
+                <span role={uploadMessage.tone === "error" ? "alert" : "status"} className={cn("text-[13.5px]", uploadMessage.tone === "error" ? "text-rd-danger" : "text-rd-link")}>
+                  {uploadMessage.text}
+                </span>
+              ) : null}
+            </div>
             {values.coverImage ? (
               <Button size="sm" className="self-start" onClick={() => set("coverImage", "")}>
                 Remove cover image

@@ -6,7 +6,7 @@ import { Alert, Button, Dialog, adminFetch, apiMessage, focusRing, selectClass }
 import { codeKey, matchCategory, modulesFrom, prettyDuration } from "@/lib/data/import-rules";
 import { cn } from "@/lib/cn";
 
-type FieldKey = "ignore" | "name" | "code" | "category" | "duration" | "level" | "modules";
+type FieldKey = "ignore" | "name" | "code" | "category" | "duration" | "level" | "modules" | "eligibility";
 
 const FIELDS: { value: FieldKey; label: string }[] = [
   { value: "ignore", label: "Don’t import" },
@@ -16,6 +16,7 @@ const FIELDS: { value: FieldKey; label: string }[] = [
   { value: "duration", label: "Duration" },
   { value: "level", label: "Level" },
   { value: "modules", label: "Syllabus / modules" },
+  { value: "eligibility", label: "Eligibility" },
 ];
 
 const STEPS = ["Upload", "Match columns", "Confirm", "Done"];
@@ -23,6 +24,7 @@ const MAX_BYTES = 10 * 1024 * 1024;
 
 function guessField(header: string): FieldKey {
   const h = header.toLowerCase();
+  if (/eligib/.test(h)) return "eligibility";
   if (/categ/.test(h)) return "category";
   if (/code/.test(h)) return "code";
   if (/name|title/.test(h)) return "name";
@@ -109,6 +111,7 @@ export function CourseImportDialog({
       duration: prettyDuration(get(row, "duration")).slice(0, 80),
       level: get(row, "level").replace(/\s+/g, " ").slice(0, 60),
       modules: modulesFrom(get(row, "modules")).slice(0, 200),
+      eligibility: get(row, "eligibility").replace(/\s+/g, " ").trim().slice(0, 200),
     }));
   }, [parsed, mapping, categories]);
 

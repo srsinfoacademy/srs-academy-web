@@ -11,7 +11,9 @@ const isDev = process.env.NODE_ENV === "development";
  * script; 'unsafe-eval' is development-only. vercel.live and pusher are the
  * Vercel preview toolbar/comments; images.unsplash.com serves the stand-in
  * photos (next/image normally proxies them through 'self'); www.google.com
- * frames the optional Google Maps embed set in the admin Contact Page.
+ * frames the optional Google Maps embed set in the admin Contact Page;
+ * connect-src vercel.com lets the admin upload cover images straight to the
+ * private Blob store (vercel.com/api/blob), past the 4.5 MB function limit.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -19,7 +21,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline' https://vercel.live",
   "img-src 'self' blob: data: https://images.unsplash.com https://vercel.live https://vercel.com",
   "font-src 'self' data: https://vercel.live https://assets.vercel.com",
-  "connect-src 'self' https://vercel.live wss://ws-us3.pusher.com",
+  "connect-src 'self' https://vercel.live wss://ws-us3.pusher.com https://vercel.com",
   "frame-src 'self' https://vercel.live https://www.google.com",
   "object-src 'none'",
   "base-uri 'self'",

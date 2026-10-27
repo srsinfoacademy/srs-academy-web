@@ -44,6 +44,7 @@ function fromInput(input: CourseInput) {
     modules: input.modules,
     coverImage: input.coverImage,
     image: "",
+    eligibility: input.eligibility,
     seoTitle: input.seoTitle,
     seoDescription: input.seoDescription,
     published: input.published,
@@ -156,6 +157,7 @@ export async function importCourses(rows: ImportRow[], mode: "update" | "skip"):
         duration: row.duration || current.duration,
         level: row.level || current.level,
         modules: row.modules.length ? row.modules : current.modules,
+        eligibility: row.eligibility || current.eligibility || "",
         updatedAt: now,
       };
       result.updated += 1;
@@ -175,6 +177,7 @@ export async function importCourses(rows: ImportRow[], mode: "update" | "skip"):
         summary: "",
         modules: row.modules,
         image: "",
+        eligibility: row.eligibility,
         seoTitle: "",
         seoDescription: "",
         published: false,
