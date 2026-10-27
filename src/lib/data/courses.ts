@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { unstable_cache } from "next/cache";
 
 import { featuredPrograms, homeFeaturedCodes } from "@/content/courses/featured-programs";
+import { coursePhoto, photoCredit, photoNeedsCredit } from "@/content/courses/photos";
 import type { CourseCardData } from "@/content/courses/types";
 import { site, type SiteImage } from "@/content/site";
 import { seedCategories, seedCourses } from "@/lib/data/seed";
@@ -174,20 +175,35 @@ export async function getPublicHomeFeatured(): Promise<CourseRecord[]> {
 
 const siteCourseImages = site.imagery.courses as Record<string, SiteImage>;
 
-/** Cover photo URL: the admin cover image, else the legacy stand-in field. Empty = generated cover. */
-export function courseCoverSrc(course: CourseRecord): string {
-  return course.coverImage || course.image || "";
-}
-
 /**
- * Photo for a card: the cover photo, with the Unsplash credit when it is one
- * of the site stand-ins. Other photos get the course name as alt text.
+ * Photo for a card, in order of precedence:
+ * 1. the admin "Cover image" (course name as alt text);
+ * 2. the real course photo mapped by slug (src/content/courses/photos.ts),
+ *    with an author + licence credit when its licence is CC BY;
+ * 3. the legacy stand-in field (homepage Unsplash photos, with their credit).
+ * Undefined means the card draws its generated cover, which RdCourseCover
+ * also falls back to if the photo fails to load.
  */
 export function courseCardImage(course: CourseRecord): SiteImage | undefined {
-  const src = courseCoverSrc(course);
-  if (!src) return undefined;
-  const known = Object.values(siteCourseImages).find((image) => image.src === src);
-  return known ?? { src, alt: course.name, credit: "", creditHref: "" };
+  if (course.coverImage) {
+    const known = Object.values(siteCourseImages).find((image) => image.src === course.coverImage);
+    return known ?? { src: course.coverImage, alt: course.name, credit: "", creditHref: "" };
+  }
+  const photo = coursePhoto(course.slug, course.origin);
+  if (photo) {
+    const credited = photoNeedsCredit(photo);
+    return {
+      src: photo.src,
+      alt: photo.alt || course.name,
+      credit: credited ? photoCredit(photo) : "",
+      creditHref: credited ? photo.sourceUrl : "",
+    };
+  }
+  if (course.image) {
+    const known = Object.values(siteCourseImages).find((image) => image.src === course.image);
+    return known ?? { src: course.image, alt: course.name, credit: "", creditHref: "" };
+  }
+  return undefined;
 }
 
 export function toPublicCard(course: CourseRecord): CourseCardData {
