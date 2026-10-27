@@ -1,7 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
-import Image from "next/image";
 
-import { RdImageCredit } from "@/components/redesign/RdImageCredit";
+import { RdCoverPhoto } from "@/components/redesign/RdCoverPhoto";
 import { coverLayout, coverVariant, type CoverIcon } from "@/content/courses/covers";
 import type { CourseCardData } from "@/content/courses/types";
 import { cn } from "@/lib/cn";
@@ -90,11 +89,12 @@ const icons: Record<CoverIcon, ReactNode> = {
 type CoverCourse = Pick<CourseCardData, "slug" | "name" | "category" | "origin" | "image">;
 
 /**
- * Cover at the top of every course card, in one 16:9 frame. A real photo
- * (the admin "Cover image", or a site stand-in with its Unsplash credit)
- * renders with next/image; every other course gets a generated cover drawn
- * inline, so there is no image request and no layout shift. The generated
- * cover is decorative and hidden from assistive technology.
+ * Cover at the top of every course card, in one 16:9 frame. A photo (the
+ * admin "Cover image", the course's mapped real photo, or a site stand-in)
+ * renders lazily with next/image, with a credit when its licence needs
+ * one. Courses without a photo, and photos that fail to load, get a
+ * generated cover drawn inline, so there is no layout shift either way.
+ * The generated cover is decorative and hidden from assistive technology.
  */
 export function RdCourseCover({
   course,
@@ -106,22 +106,23 @@ export function RdCourseCover({
   className?: string;
 }) {
   const frame = cn("relative aspect-[16/9] w-full overflow-hidden bg-rd-muted", className);
+  const generated = <GeneratedCover course={course} frame={frame} />;
 
   if (course.image) {
     return (
-      <div className={frame}>
-        <Image
-          src={course.image.src}
-          alt={course.name}
-          fill
-          sizes={sizes}
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
-        />
-        {course.image.credit && course.image.creditHref ? <RdImageCredit image={course.image} /> : null}
-      </div>
+      <RdCoverPhoto
+        image={{ ...course.image, alt: course.image.alt || course.name }}
+        sizes={sizes}
+        frameClassName={frame}
+        fallback={generated}
+      />
     );
   }
 
+  return generated;
+}
+
+function GeneratedCover({ course, frame }: { course: CoverCourse; frame: string }) {
   const variant = coverVariant(course);
   const layout = coverLayout(course.slug);
   const style = {
